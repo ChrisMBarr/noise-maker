@@ -7,10 +7,11 @@ function $$(multiElSelector) {
 function toggleDisplay($elements) {
   function t(el) {
     const currentDisplay = getComputedStyle(el).display;
-    if (currentDisplay === 'block') {
+    if (currentDisplay !== 'none') {
+      el.attributes['data-prev-display'] = currentDisplay;
       el.style.display = 'none';
     } else if (currentDisplay === 'none') {
-      el.style.display = 'block';
+      el.style.display = el.attributes['data-prev-display'] ?? 'block';
     }
   }
 
