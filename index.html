@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+    />
+    <title>Grainy</title>
+  </head>
+  <body class="container-fluid">
+    <div class="d-flex h-100">
+      <aside class="flex-shrink-0">
+        <div id="svg-controls" class="p-3">
+          <div class="form-control-wrapper">
+            <label class="form-label" for="ctrl-bg-color">Background Color</label>
+            <input
+              type="color"
+              class="form-control form-control-color"
+              id="ctrl-bg-color"
+              value="#F5F5F5"
+              data-target="#demo-output"
+              data-target-style-prop="background-color"
+            />
+          </div>
+
+          <div class="form-control-wrapper">
+            <label class="form-label" for="ctrl-blend-mode">
+              Mix Blend Mode
+              <i
+                class="bi bi-question-circle-fill tip"
+                title="How the noise should blend with the background color"
+              ></i>
+            </label>
+            <select
+              class="form-select"
+              id="ctrl-blend-mode"
+              data-target="#demo-output svg"
+              data-target-style-prop="mix-blend-mode"
+            >
+              <option selected>normal</option>
+              <option>multiply</option>
+              <option>screen</option>
+              <option>overlay</option>
+              <option>darken</option>
+              <option>lighten</option>
+              <option>color-dodge</option>
+              <option>color-burn</option>
+              <option>hard-light</option>
+              <option>soft-light</option>
+              <option>difference</option>
+              <option>exclusion</option>
+              <option>hue</option>
+              <option>saturation</option>
+              <option>color</option>
+              <option>luminosity</option>
+            </select>
+          </div>
+
+          <div class="form-control-wrapper">
+            <div class="form-check mb-0">
+              <input type="checkbox" class="form-check-input" id="ctrl-separate-frequencies" />
+              <label class="form-check-label" for="ctrl-separate-frequencies">
+                Separate X &amp; Y Frequencies
+              </label>
+            </div>
+          </div>
+
+          <div class="form-control-wrapper">
+            <label class="form-label baseFrequencyToggleDisplay" for="ctrl-base-frequency-x"
+              >Base Frequency
+              <i
+                class="bi bi-question-circle-fill tip"
+                title="The size/scale of the grain in the noise"
+              ></i>
+            </label>
+            <label
+              class="form-label baseFrequencyToggleDisplay"
+              for="ctrl-base-frequency-x"
+              class=""
+              style="display: none"
+              >Base Frequency X
+              <i
+                class="bi bi-question-circle-fill tip"
+                title="The size/scale of the grain in the noise on the X-axis"
+              ></i>
+            </label>
+            <div class="row">
+              <div class="col-sm-9">
+                <input
+                  type="range"
+                  class="form-range"
+                  id="ctrl-base-frequency-x"
+                  min="0.001"
+                  max="1"
+                  value="0.05"
+                  step="0.001"
+                  data-target="#grainy-output feTurbulence"
+                  data-target-attr="baseFrequency"
+                  data-force-reload-svg="true"
+                />
+              </div>
+              <div class="col-sm-3">
+                <output></output>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-control-wrapper baseFrequencyToggleDisplay" style="display: none">
+            <label class="form-label" for="ctrl-base-frequency-y"
+              >Base Frequency Y
+              <i
+                class="bi bi-question-circle-fill tip"
+                title="The size/scale of the grain in the noise on the Y-axis"
+              ></i>
+            </label>
+            <div class="row">
+              <div class="col-sm-9">
+                <input
+                  type="range"
+                  class="form-range"
+                  id="ctrl-base-frequency-y"
+                  min="0.001"
+                  max="1"
+                  value="0.05"
+                  step="0.001"
+                  data-target="#grainy-output feTurbulence"
+                  data-target-attr="baseFrequency"
+                  data-force-reload-svg="true"
+                />
+              </div>
+              <div class="col-sm-3">
+                <output></output>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-control-wrapper">
+            <label class="form-label" for="ctrl-num-octives">
+              Octaves
+              <i
+                class="bi bi-question-circle-fill tip"
+                title="The level of detail shown in the noise"
+              ></i>
+            </label>
+            <div class="row">
+              <div class="col-sm-9">
+                <input
+                  type="range"
+                  class="form-range"
+                  id="ctrl-num-octives"
+                  min="1"
+                  max="6"
+                  value="1"
+                  step="1"
+                  data-target="#grainy-output feTurbulence"
+                  data-target-attr="numOctaves"
+                  data-force-reload-svg="true"
+                />
+              </div>
+              <div class="col-sm-3">
+                <output></output>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-control-wrapper">
+            <label class="form-label" for="ctrl-noise-type">Noise Type</label>
+            <select
+              class="form-select"
+              id="ctrl-noise-type"
+              data-target="#grainy-output feTurbulence"
+              data-target-attr="type"
+              data-force-reload-svg="true"
+            >
+              <option selected>turbulence</option>
+              <option>fractalNoise</option>
+            </select>
+          </div>
+
+          <div class="form-control-wrapper">
+            <label class="form-label" for="ctrl-seed">
+              Random Seed
+              <i
+                class="bi bi-question-circle-fill tip"
+                title="The starting number for the random number generator"
+              ></i>
+            </label>
+            <input
+              class="form-control"
+              type="number"
+              id="ctrl-seed"
+              min="0"
+              value="0"
+              data-target="#grainy-output feTurbulence"
+              data-target-attr="seed"
+              data-force-reload-svg="true"
+            />
+          </div>
+
+          <button type="button" class="btn btn-primary" id="btn-get-code">
+            <i class="bi bi-code-slash"></i>
+            Get Code
+          </button>
+        </div>
+
+        <div id="code-modal" class="modal">
+          <dialog class="modal-dialog" aria-labelledby="code-modal-title">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 id="code-modal-title" class="modal-title">Your Texture Code</h5>
+                <button type="button" class="btn-close" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <div class="form-control-wrapper">
+                  <label class="form-label" for="code-html">HTML</label>
+                  <textarea
+                    class="form-control form-control-sm font-monospace"
+                    readonly
+                    autofocus
+                    rows="6"
+                    id="code-html"
+                  ></textarea>
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-light btn-copy"
+                    data-target="#code-html"
+                  >
+                    <i class="bi bi-clipboard"></i>
+                    copy
+                  </button>
+                </div>
+
+                <div class="form-control-wrapper">
+                  <label class="form-label" for="code-css">CSS</label>
+                  <textarea
+                    class="form-control form-control-sm font-monospace"
+                    readonly
+                    rows="6"
+                    id="code-css"
+                  ></textarea>
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-light btn-copy"
+                    data-target="#code-css"
+                  >
+                    <i class="bi bi-clipboard"></i>
+                    copy
+                  </button>
+                </div>
+
+                <div class="form-control-wrapper">
+                  <label class="form-label" for="code-usage">Usage</label>
+                  <textarea
+                    class="form-control form-control-sm font-monospace"
+                    readonly
+                    rows="3"
+                    id="code-usage"
+                  >
+&lt;div class="bg-texture"&gt;
+  This element has a cool background!
+&lt;/div&gt;</textarea
+                  >
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-light btn-copy"
+                    data-target="#code-usage"
+                  >
+                    <i class="bi bi-clipboard"></i>
+                    copy
+                  </button>
+                </div>
+              </div>
+            </div>
+          </dialog>
+        </div>
+      </aside>
+
+      <main class="w-100">
+        <div id="demo-output" class="w-100 h-100">
+          <svg class="w-100 h-100">
+            <filter id="grainy-output" x="0%" y="0%" width="100%" height="100%">
+              <feTurbulence
+                type="turbulence"
+                baseFrequency="0.69"
+                numOctaves="1"
+                seed="0"
+                stitchTiles="stitch"
+              ></feTurbulence>
+            </filter>
+
+            <rect
+              x="0"
+              y="0"
+              width="100%"
+              height="100%"
+              filter="url(#grainy-output)"
+              fill="none"
+            ></rect>
+          </svg>
+        </div>
+      </main>
+    </div>
+    <script src="utils.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>

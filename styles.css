@@ -1,0 +1,44 @@
+body {
+  height: 100vh;
+}
+
+aside {
+  width: 350px;
+}
+
+.tip {
+  color: var(--bs-info);
+  cursor: help;
+}
+
+dialog {
+  padding: 0;
+  border: none;
+  background-color: transparent;
+}
+
+dialog::backdrop {
+  background-color: #000;
+  opacity: 0.5;
+}
+
+dialog .form-control-sm {
+  font-size: calc(var(--bs-body-font-size) * 0.75);
+}
+
+.form-control-wrapper {
+  margin-bottom: 1rem;
+  position: relative;
+}
+
+.form-control-wrapper output {
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.btn-copy {
+  position: absolute;
+  right: var(--bs-border-width);
+  top: calc(2rem + var(--bs-border-width)); /*line-height + form label bottom margin*/
+  border-top-right-radius: 0 !important;
+  border-top-left-radius: 0 !important;
+}
