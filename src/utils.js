@@ -4,3 +4,20 @@ function $(singeElSelector) {
 function $$(multiElSelector) {
   return document.querySelectorAll(multiElSelector);
 }
+function toggleDisplay($elements) {
+  function t(el) {
+    const currentDisplay = getComputedStyle(el).display;
+    if (currentDisplay === 'block') {
+      el.style.display = 'none';
+    } else if (currentDisplay === 'none') {
+      el.style.display = 'block';
+    }
+  }
+
+  //works with a nodelist or a single element
+  if ($elements.length) {
+    Array.from($elements).forEach(t);
+  } else {
+    t($elements);
+  }
+}
