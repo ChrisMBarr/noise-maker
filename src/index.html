@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>Grainy</title>
+  </head>
+  <body>
+    <aside>
+      <div class="ctrl">
+        <label for="ctrl-bg-color">Background Color</label>
+        <input
+          type="color"
+          id="ctrl-bg-color"
+          value="#FFFFFF"
+          data-target="#demo-output"
+          data-target-style-prop="backgroundColor"
+        />
+        <output></output>
+      </div>
+
+      <div class="ctrl">
+        <label for="ctrl-blend-mode">Blend Mode</label>
+        <select
+          id="ctrl-blend-mode"
+          data-target="#demo-output svg"
+          data-target-style-prop="mixBlendMode"
+        >
+          <option selected>normal</option>
+          <option>multiply</option>
+          <option>screen</option>
+          <option>overlay</option>
+          <option>darken</option>
+          <option>lighten</option>
+          <option>color-dodge</option>
+          <option>color-burn</option>
+          <option>hard-light</option>
+          <option>soft-light</option>
+          <option>difference</option>
+          <option>exclusion</option>
+          <option>hue</option>
+          <option>saturation</option>
+          <option>color</option>
+          <option>luminosity</option>
+        </select>
+      </div>
+
+      <div class="ctrl">
+        <label for="ctrl-base-frequency">Base Frequency</label>
+        <input
+          type="range"
+          id="ctrl-base-frequency"
+          min="0.001"
+          max="1"
+          value="0.05"
+          step="0.001"
+          data-target="#grainy-output feTurbulence"
+          data-target-attr="baseFrequency"
+          data-force-reload-svg="true"
+        />
+        <output></output>
+      </div>
+
+      <div class="ctrl">
+        <label for="ctrl-num-octives" title="The level of detail shown in the noise">
+          Octaves
+        </label>
+        <input
+          type="range"
+          id="ctrl-num-octives"
+          min="1"
+          max="10"
+          value="1"
+          step="1"
+          data-target="#grainy-output feTurbulence"
+          data-target-attr="numOctaves"
+          data-force-reload-svg="true"
+        />
+        <output></output>
+      </div>
+
+      <div class="ctrl">
+        <label for="ctrl-noise-type">Noise Type</label>
+        <select
+          id="ctrl-noise-type"
+          data-target="#grainy-output feTurbulence"
+          data-target-attr="type"
+          data-force-reload-svg="true"
+        >
+          <option selected>turbulence</option>
+          <option>fractalNoise</option>
+        </select>
+      </div>
+
+      <div class="ctrl">
+        <label for="ctrl-seed" title="The starting number for the random number generator">
+          Random Seed
+        </label>
+        <input
+          type="number"
+          id="ctrl-seed"
+          min="0"
+          value="0"
+          data-target="#grainy-output feTurbulence"
+          data-target-attr="seed"
+          data-force-reload-svg="true"
+        />
+      </div>
+    </aside>
+
+    <main>
+      <div id="demo-output">
+        <svg>
+          <filter id="grainy-output" x="0%" y="0%" width="100%" height="100%">
+            <feTurbulence
+              type="turbulence"
+              baseFrequency="0.69"
+              numOctaves="1"
+              seed="0"
+              stitchTiles="stitch"
+            ></feTurbulence>
+          </filter>
+
+          <rect
+            x="0"
+            y="0"
+            width="100%"
+            height="100%"
+            filter="url(#grainy-output)"
+            fill="none"
+          ></rect>
+        </svg>
+      </div>
+    </main>
+
+    <script src="utils.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
