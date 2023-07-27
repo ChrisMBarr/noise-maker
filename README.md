@@ -1,2 +1,3 @@
-# grainy
+# Grainy
+
 Makes grainy SVG textures

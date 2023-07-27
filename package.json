@@ -1,0 +1,29 @@
+{
+  "name": "grainy",
+  "version": "1.0.0",
+  "description": "Makes grainy SVG textures",
+  "homepage": "https://github.com/FiniteLooper/grainy#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FiniteLooper/grainy.git"
+  },
+  "bugs": {
+    "url": "https://github.com/FiniteLooper/grainy/issues"
+  },
+  "keywords": [
+  ],
+  "files": [
+    "!**/*.json",
+    "LICENSE",
+    "README.md"
+  ],
+  "prettier": {
+    "singleQuote": true,
+    "printWidth": 100
+  },
+  "license": "MIT",
+  "dependencies": {
+  },
+  "devDependencies": {
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "cSpell.userWords": [], // only use words from .cspell.json
+  "cSpell.enabled": true,
+  "editor.formatOnSave": true,
+  "explorer.fileNesting.patterns": {
+    "tsconfig.json": "tsconfig.*.json",
+    "package.json": "package-lock.json"
+  },
+  "explorer.fileNesting.expand": false,
+  "files.exclude": {
+    "**/.gitignore": true,
+    "**/.gitkeep": true,
+    ".cspell.json": false,
+    ".editorconfig": true,
+    ".prettierignore": true,
+    "node_modules": true
+  },
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true
+}

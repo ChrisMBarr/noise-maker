@@ -1,0 +1,29 @@
+name: CI
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - README.md
+      - .gitignore
+      - .github/**
+      - .vscode/**
+      - .cspell.json
+  pull_request:
+    branches:
+      - main
+permissions:
+  contents: write
+jobs:
+  build-and-test:
+    concurrency: ci-${{ github.ref }} # Recommended if you intend to make multiple deployments in quick succession.
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout ⏬
+        uses: actions/checkout@v3
+
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: src/
