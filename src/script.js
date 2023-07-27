@@ -1,27 +1,36 @@
 const $svgFilter = $('#grainy-output');
 const $controls = $$('.ctrl');
+const $baseFrequencyX = $('#ctrl-base-frequency-x');
+const $baseFrequencyToggleDisplay = $$('.baseFrequencyToggleDisplay');
+let separateBaseFrequencies = false;
 
 //Loop through all the controls and run an event any time one changes
 Array.from($controls).forEach((ctrl) => {
   const $input = ctrl.querySelector('input, select');
   const $outputDisplay = ctrl.querySelector('output');
 
-  $input.addEventListener('input', (ev) => {
-    update($input, $outputDisplay);
+  $input.addEventListener('input', () => {
+    update($input, $outputDisplay, false);
   });
 
   //Initialize
-  update($input, $outputDisplay);
+  update($input, $outputDisplay, true);
 });
 
 /**
  * @description This runs any time an input element changes value
- * @param {HTMLElement} $inputEl
- * @param {HTMLElement} $outputDisplay
+ * @param {HTMLInputElement} $inputEl
+ * @param {HTMLOutputElement} $outputDisplay
  */
-function update($inputEl, $outputDisplay) {
+function update($inputEl, $outputDisplay, isInit) {
   if ($outputDisplay) {
     $outputDisplay.innerHTML = $inputEl.value;
+  }
+
+  if (!isInit && $inputEl.id === 'ctrl-separate-frequencies') {
+    separateBaseFrequencies = $inputEl.checked;
+    toggleDisplay($baseFrequencyToggleDisplay);
+    update($baseFrequencyX, $outputDisplay);
   }
 
   const tgtSelector = $inputEl.attributes.getNamedItem('data-target');
@@ -31,13 +40,28 @@ function update($inputEl, $outputDisplay) {
     if (tgtStyleProp) {
       $(tgtSelector.value).style[tgtStyleProp.value] = $inputEl.value;
     } else if (tgtAttr) {
-      $(tgtSelector.value).attributes[tgtAttr.value].value = $inputEl.value;
+      if (separateBaseFrequencies && tgtAttr.value === 'baseFrequency') {
+        const combinedBaseFreq = `${$baseFrequencyX.value} ${$('#ctrl-base-frequency-y').value}`;
+        $(tgtSelector.value).attributes[tgtAttr.value].value = combinedBaseFreq;
+      } else {
+        $(tgtSelector.value).attributes[tgtAttr.value].value = $inputEl.value;
+      }
     }
 
     if ($inputEl.attributes.getNamedItem('data-force-reload-svg')) {
       forceReloadSvg();
     }
   }
+}
+
+function toggleDisplay($elements) {
+  Array.from($elements).forEach((el) => {
+    if (el.style.display === '') {
+      el.style.display = 'none';
+    } else if (el.style.display === 'none') {
+      el.style.display = '';
+    }
+  });
 }
 
 function forceReloadSvg() {

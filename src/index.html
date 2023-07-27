@@ -13,7 +13,7 @@
         <input
           type="color"
           id="ctrl-bg-color"
-          value="#FFFFFF"
+          value="#F5F5F5"
           data-target="#demo-output"
           data-target-style-prop="backgroundColor"
         />
@@ -47,10 +47,36 @@
       </div>
 
       <div class="ctrl">
-        <label for="ctrl-base-frequency">Base Frequency</label>
+        <label for="ctrl-separate-frequencies">
+          <input type="checkbox" id="ctrl-separate-frequencies" />
+          Separate X &amp; Y Frequencies
+        </label>
+      </div>
+
+      <div class="ctrl">
+        <label for="ctrl-base-frequency-x" class="baseFrequencyToggleDisplay">Base Frequency</label>
+        <label for="ctrl-base-frequency-x" class="baseFrequencyToggleDisplay" style="display: none"
+          >Base Frequency X</label
+        >
         <input
           type="range"
-          id="ctrl-base-frequency"
+          id="ctrl-base-frequency-x"
+          min="0.001"
+          max="1"
+          value="0.05"
+          step="0.001"
+          data-target="#grainy-output feTurbulence"
+          data-target-attr="baseFrequency"
+          data-force-reload-svg="true"
+        />
+        <output></output>
+      </div>
+
+      <div class="ctrl baseFrequencyToggleDisplay" style="display: none">
+        <label for="ctrl-base-frequency-y">Base Frequency Y</label>
+        <input
+          type="range"
+          id="ctrl-base-frequency-y"
           min="0.001"
           max="1"
           value="0.05"
@@ -70,7 +96,7 @@
           type="range"
           id="ctrl-num-octives"
           min="1"
-          max="10"
+          max="6"
           value="1"
           step="1"
           data-target="#grainy-output feTurbulence"
