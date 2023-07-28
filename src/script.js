@@ -161,7 +161,7 @@ function closeDialog(ev, self) {
 }
 
 function writeCodeToFields() {
-  const filterId = 'grainy-texture';
+  const $svgFilter = $('#demo-output svg filter');
 
   const textureStylesStr = Object.keys(textureStyles)
     //skip the mix-blend-mode if it's set to 'normal'
@@ -172,19 +172,17 @@ function writeCodeToFields() {
       const val = textureStyles[k];
       if (k === 'filter') {
         const filterValues = getPropsAsCssString(val);
-        return `  filter: url(#${filterId}) ${filterValues};`;
+        return `  filter: url(#${$svgFilter.id}) ${filterValues};`;
       }
       return `  ${k}: ${val};`;
     })
     .join('\n');
 
-  $ctrlCodeHtml.value = `<svg xmlns="http://www.w3.org/2000/svg" class="hidden-svg">
-  <filter id="${filterId}">
-    ${$('#grainy-output').innerHTML.trim()}
-  </filter>
-</svg>`;
+  $ctrlCodeHtml.value = `<svg xmlns="http://www.w3.org/2000/svg" class="hidden-svg">${prettyIndentHtml(
+    $svgFilter.outerHTML
+  )}</svg>`;
 
-  $ctrlCodeCss.innerHTML = `.bg-texture {
+  $ctrlCodeCss.value = `.bg-texture {
 ${textureStylesStr}
 }
 .hidden-svg {
@@ -197,4 +195,18 @@ ${textureStylesStr}
   left: 0;
   top: 0;
 }`;
+}
+
+function prettyIndentHtml(htmlStr) {
+  const tagLevels = {
+    filter: 2,
+    feTurbulence: 4,
+  };
+
+  Object.keys(tagLevels).forEach((k) => {
+    const pattern = new RegExp(`\\s*(<\\/?${k})`, 'ig');
+    htmlStr = htmlStr.replace(pattern, `\n${' '.repeat(tagLevels[k])}$1`);
+  });
+
+  return `${htmlStr}\n`;
 }
