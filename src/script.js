@@ -1,35 +1,49 @@
 const $baseFrequencyX = $('#ctrl-base-frequency-x');
+const $baseFrequencyY = $('#ctrl-base-frequency-y');
 const $baseFrequencyToggleDisplay = $$('.baseFrequencyToggleDisplay');
-let separateBaseFrequencies = false;
 const textureStyles = {
   filter: {},
 };
 
 //Loop through all the controls and run an event any time one changes
 Array.from($$('#svg-controls .form-control-wrapper')).forEach((ctrl) => {
-  const $input = ctrl.querySelector('input:not([data-enable]), select');
+  const $input = ctrl.querySelector(
+    'select, input:not([data-enable]):not([data-toggle-visibility])'
+  );
   const $enableInput = ctrl.querySelector('input[data-enable]');
+  const $toggleVisibilityInput = ctrl.querySelector('input[data-toggle-visibility]');
   const $outputDisplay = ctrl.querySelector('output');
-
-  //Form inputs
-  $input.addEventListener('input', () => {
-    updateTexture($input, $outputDisplay, false);
-  });
 
   //Checkboxes to enable/disable other inputs
   if ($enableInput) {
-    const enableTgt = $enableInput.attributes.getNamedItem('data-enable');
+    const $enableTgt = $($enableInput.attributes.getNamedItem('data-enable').value);
     $enableInput.addEventListener('input', () => {
-      $(enableTgt.value).disabled = !$enableInput.checked;
-      updateTexture($(enableTgt.value), $outputDisplay, false);
+      $enableTgt.disabled = !$enableInput.checked;
+      updateTexture($enableTgt, $outputDisplay, false);
     });
 
     //Initialize
-    $(enableTgt.value).disabled = !$enableInput.checked;
+    $enableTgt.disabled = !$enableInput.checked;
   }
 
-  //Initialize
-  updateTexture($input, $outputDisplay, true);
+  if ($toggleVisibilityInput) {
+    const $toggleTargets = $$(
+      $toggleVisibilityInput.attributes.getNamedItem('data-toggle-visibility').value
+    );
+    $toggleVisibilityInput.addEventListener('input', () => {
+      toggleDisplay($toggleTargets);
+    });
+  }
+
+  //Form inputs
+  if ($input) {
+    $input.addEventListener('input', () => {
+      updateTexture($input, $outputDisplay, false);
+    });
+
+    //Initialize
+    updateTexture($input, $outputDisplay, true);
+  }
 });
 
 /**
@@ -64,8 +78,11 @@ function updateTexture($inputEl, $outputDisplay, isInit) {
       } else if (tgtFilterProp) {
         updateTextureFilter($tgt, tgtFilterProp.value, val, isDisabled);
       } else if (tgtAttr) {
-        if (separateBaseFrequencies && tgtAttr.value === 'baseFrequency') {
-          const combinedBaseFreq = `${$baseFrequencyX.value} ${$('#ctrl-base-frequency-y').value}`;
+        if ($inputEl.id === $baseFrequencyX.id || $inputEl.id === $baseFrequencyY.id) {
+          let combinedBaseFreq = $baseFrequencyX.value;
+          if (!$baseFrequencyY.disabled) {
+            combinedBaseFreq += ` ${$baseFrequencyY.value}`;
+          }
           $tgt.attributes[tgtAttr.value].value = combinedBaseFreq;
         } else {
           $tgt.attributes[tgtAttr.value].value = val;
