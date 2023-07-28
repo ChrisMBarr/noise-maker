@@ -1,16 +1,32 @@
 const $baseFrequencyX = $('#ctrl-base-frequency-x');
 const $baseFrequencyToggleDisplay = $$('.baseFrequencyToggleDisplay');
 let separateBaseFrequencies = false;
-const textureStyles = {};
+const textureStyles = {
+  filter: {},
+};
 
 //Loop through all the controls and run an event any time one changes
 Array.from($$('#svg-controls .form-control-wrapper')).forEach((ctrl) => {
-  const $input = ctrl.querySelector('input, select');
+  const $input = ctrl.querySelector('input:not([data-enable]), select');
+  const $enableInput = ctrl.querySelector('input[data-enable]');
   const $outputDisplay = ctrl.querySelector('output');
 
+  //Form inputs
   $input.addEventListener('input', () => {
     updateTexture($input, $outputDisplay, false);
   });
+
+  //Checkboxes to enable/disable other inputs
+  if ($enableInput) {
+    const enableTgt = $enableInput.attributes.getNamedItem('data-enable');
+    $enableInput.addEventListener('input', () => {
+      $(enableTgt.value).disabled = !$enableInput.checked;
+      updateTexture($(enableTgt.value), $outputDisplay, false);
+    });
+
+    //Initialize
+    $(enableTgt.value).disabled = !$enableInput.checked;
+  }
 
   //Initialize
   updateTexture($input, $outputDisplay, true);
@@ -22,34 +38,43 @@ Array.from($$('#svg-controls .form-control-wrapper')).forEach((ctrl) => {
  * @param {HTMLOutputElement} $outputDisplay
  */
 function updateTexture($inputEl, $outputDisplay, isInit) {
+  const isDisabled = $inputEl.disabled;
+  const suffix = $inputEl.attributes.getNamedItem('data-target-filter-prop-suffix');
+  const val = suffix ? $inputEl.value + suffix.value : $inputEl.value;
+
   if ($outputDisplay) {
-    $outputDisplay.innerHTML = $inputEl.value;
+    $outputDisplay.innerHTML = isDisabled ? '' : val;
   }
 
   if (!isInit && $inputEl.id === 'ctrl-separate-frequencies') {
     separateBaseFrequencies = $inputEl.checked;
     toggleDisplay($baseFrequencyToggleDisplay);
     updateTexture($baseFrequencyX, $outputDisplay);
-  }
+  } else {
+    const tgtSelector = $inputEl.attributes.getNamedItem('data-target');
+    const tgtStyleProp = $inputEl.attributes.getNamedItem('data-target-style-prop');
+    const tgtFilterProp = $inputEl.attributes.getNamedItem('data-target-filter-prop');
+    const tgtAttr = $inputEl.attributes.getNamedItem('data-target-attr');
+    if (tgtSelector) {
+      const $tgt = $(tgtSelector.value);
 
-  const tgtSelector = $inputEl.attributes.getNamedItem('data-target');
-  const tgtStyleProp = $inputEl.attributes.getNamedItem('data-target-style-prop');
-  const tgtAttr = $inputEl.attributes.getNamedItem('data-target-attr');
-  if (tgtSelector) {
-    if (tgtStyleProp) {
-      $(tgtSelector.value).style[tgtStyleProp.value] = $inputEl.value;
-      textureStyles[tgtStyleProp.value] = $inputEl.value;
-    } else if (tgtAttr) {
-      if (separateBaseFrequencies && tgtAttr.value === 'baseFrequency') {
-        const combinedBaseFreq = `${$baseFrequencyX.value} ${$('#ctrl-base-frequency-y').value}`;
-        $(tgtSelector.value).attributes[tgtAttr.value].value = combinedBaseFreq;
-      } else {
-        $(tgtSelector.value).attributes[tgtAttr.value].value = $inputEl.value;
+      if (tgtStyleProp) {
+        $tgt.style[tgtStyleProp.value] = val;
+        textureStyles[tgtStyleProp.value] = val;
+      } else if (tgtFilterProp) {
+        updateTextureFilter($tgt, tgtFilterProp.value, val, isDisabled);
+      } else if (tgtAttr) {
+        if (separateBaseFrequencies && tgtAttr.value === 'baseFrequency') {
+          const combinedBaseFreq = `${$baseFrequencyX.value} ${$('#ctrl-base-frequency-y').value}`;
+          $tgt.attributes[tgtAttr.value].value = combinedBaseFreq;
+        } else {
+          $tgt.attributes[tgtAttr.value].value = val;
+        }
       }
-    }
 
-    if ($inputEl.attributes.getNamedItem('data-force-reload-svg')) {
-      forceReloadSvg();
+      if ($inputEl.attributes.getNamedItem('data-force-reload-svg')) {
+        forceReloadSvg();
+      }
     }
   }
 }
@@ -69,6 +94,21 @@ function forceReloadSvg() {
 
   //force it into a new GPU rendering layer
   $clone.style['transform'] = 'translateZ(0)';
+}
+
+function updateTextureFilter($tgt, tgtFilterProp, val, isDisabled) {
+  textureStyles.filter[tgtFilterProp] = isDisabled ? null : val;
+  $tgt.style.filter = getPropsAsCssString(textureStyles.filter);
+}
+
+function getPropsAsCssString(obj) {
+  return Object.keys(obj)
+    .map((key) => {
+      const val = obj[key];
+      return val == null ? '' : `${key}(${val})`;
+    })
+    .filter((v) => v !== '')
+    .join(' ');
 }
 
 //================================================
@@ -102,28 +142,50 @@ const $ctrlCodeCss = $('#code-css');
 $modalDialog.addEventListener('click', function (ev) {
   closeDialog(ev, this);
 });
+
 $modalDialog.querySelector('.btn-close').addEventListener('click', function (ev) {
   closeDialog(ev, this);
 });
 
 function openDialog() {
+  writeCodeToFields();
+  toggleDisplay($modal);
+  $modalDialog.showModal();
+}
+
+function closeDialog(ev, self) {
+  if (ev.target == self) {
+    $modalDialog.close();
+    toggleDisplay($modal);
+  }
+}
+
+function writeCodeToFields() {
   const filterId = 'grainy-texture';
-  $ctrlCodeHtml.value = `<svg xmlns="http://www.w3.org/2000/svg" class="hidden-svg">
-  <filter id="${filterId}">
-    ${$('#grainy-output').innerHTML.trim()}
-  </filter>
-</svg>`;
 
   const textureStylesStr = Object.keys(textureStyles)
     //skip the mix-blend-mode if it's set to 'normal'
     .filter(
       (k) => k !== 'mix-blend-mode' || (k === 'mix-blend-mode' && textureStyles[k] !== 'normal')
     )
-    .map((k) => `  ${k}: ${textureStyles[k]};`)
+    .map((k) => {
+      const val = textureStyles[k];
+      if (k === 'filter') {
+        const filterValues = getPropsAsCssString(val);
+        return `  filter: url(#${filterId}) ${filterValues};`;
+      }
+      return `  ${k}: ${val};`;
+    })
     .join('\n');
+
+  $ctrlCodeHtml.value = `<svg xmlns="http://www.w3.org/2000/svg" class="hidden-svg">
+  <filter id="${filterId}">
+    ${$('#grainy-output').innerHTML.trim()}
+  </filter>
+</svg>`;
+
   $ctrlCodeCss.innerHTML = `.bg-texture {
 ${textureStylesStr}
-  filter: url(#${filterId});
 }
 .hidden-svg {
   height: 0px;
@@ -134,16 +196,5 @@ ${textureStylesStr}
   z-index: -999;
   left: 0;
   top: 0;
-}
-`;
-
-  toggleDisplay($modal);
-  $modalDialog.showModal();
-}
-
-function closeDialog(ev, self) {
-  if (ev.target == self) {
-    $modalDialog.close();
-    toggleDisplay($modal);
-  }
+}`;
 }

@@ -17,9 +17,9 @@
     <title>Grainy</title>
   </head>
   <body class="d-flex">
-    <aside class="flex-shrink-0 p-3">
-      <div id="svg-controls" class="d-flex flex-column gap-3">
-        <div class="card">
+    <aside class="flex-shrink-0 overflow-auto">
+      <div id="svg-controls" class="d-flex flex-column">
+        <div class="card m-3">
           <div class="card-body">
             <h5 class="card-title">Turbulence</h5>
 
@@ -57,9 +57,7 @@
                     data-force-reload-svg="true"
                   />
                 </div>
-                <div class="col-sm-3">
-                  <output></output>
-                </div>
+                <output class="col-sm-3"></output>
               </div>
             </div>
 
@@ -86,9 +84,7 @@
                     data-force-reload-svg="true"
                   />
                 </div>
-                <div class="col-sm-3">
-                  <output></output>
-                </div>
+                <output class="col-sm-3"></output>
               </div>
             </div>
 
@@ -124,9 +120,7 @@
                     data-force-reload-svg="true"
                   />
                 </div>
-                <div class="col-sm-3">
-                  <output></output>
-                </div>
+                <output class="col-sm-3"></output>
               </div>
             </div>
 
@@ -171,14 +165,14 @@
           </div>
         </div>
 
-        <div class="card">
+        <div class="card m-3 mb-0">
           <div class="card-body">
             <h5 class="card-title">Effects</h5>
 
             <div class="row">
               <div class="col">
-                <div class="form-control-wrapper mb-0">
-                  <label class="form-label" for="ctrl-bg-color">Background Color</label>
+                <div class="form-control-wrapper">
+                  <label class="form-label" for="ctrl-bg-color">BG Color</label>
                   <input
                     type="color"
                     class="form-control form-control-color w-100"
@@ -190,7 +184,7 @@
                 </div>
               </div>
               <div class="col">
-                <div class="form-control-wrapper mb-0">
+                <div class="form-control-wrapper">
                   <label class="form-label" for="ctrl-blend-mode">
                     Blend Mode
                     <i
@@ -224,13 +218,99 @@
                 </div>
               </div>
             </div>
+
+            <div class="form-control-wrapper">
+              <label class="form-label" for="ctrl-saturation"> Saturation </label>
+              <div class="row">
+                <div class="col-2">
+                  <div class="form-check mb-0">
+                    <input
+                      type="checkbox"
+                      class="form-check-input"
+                      data-enable="#ctrl-num-saturation"
+                    />
+                  </div>
+                </div>
+                <div class="col-sm-7">
+                  <input
+                    type="range"
+                    class="form-range"
+                    id="ctrl-num-saturation"
+                    min="0"
+                    max="10"
+                    value="1"
+                    step="0.1"
+                    data-target="#demo-output svg"
+                    data-target-filter-prop="saturate"
+                  />
+                </div>
+                <output class="col-sm-3"></output>
+              </div>
+            </div>
+
+            <div class="form-control-wrapper">
+              <label class="form-label" for="ctrl-brightness"> Brightness </label>
+              <div class="row">
+                <div class="col-2">
+                  <div class="form-check mb-0">
+                    <input
+                      type="checkbox"
+                      class="form-check-input"
+                      data-enable="#ctrl-num-brightness"
+                    />
+                  </div>
+                </div>
+                <div class="col-sm-7">
+                  <input
+                    type="range"
+                    class="form-range"
+                    id="ctrl-num-brightness"
+                    min="0"
+                    max="10"
+                    value="1"
+                    step="0.1"
+                    data-target="#demo-output svg"
+                    data-target-filter-prop="brightness"
+                  />
+                </div>
+                <output class="col-sm-3"></output>
+              </div>
+            </div>
+
+            <div class="form-control-wrapper">
+              <label class="form-label" for="ctrl-blur"> Blur </label>
+              <div class="row">
+                <div class="col-2">
+                  <div class="form-check mb-0">
+                    <input type="checkbox" class="form-check-input" data-enable="#ctrl-num-blur" />
+                  </div>
+                </div>
+                <div class="col-sm-7">
+                  <input
+                    type="range"
+                    class="form-range"
+                    id="ctrl-num-blur"
+                    min="0"
+                    max="10"
+                    value="1"
+                    step="0.1"
+                    data-target="#demo-output svg"
+                    data-target-filter-prop="blur"
+                    data-target-filter-prop-suffix="px"
+                  />
+                </div>
+                <output class="col-sm-3"></output>
+              </div>
+            </div>
           </div>
         </div>
 
-        <button type="button" class="btn btn-primary" id="btn-get-code">
-          <i class="bi bi-code-slash"></i>
-          Get Code
-        </button>
+        <div class="bg-white p-3 position-sticky bottom-0">
+          <button type="button" class="btn btn-primary w-100" id="btn-get-code">
+            <i class="bi bi-code-slash"></i>
+            Get Code
+          </button>
+        </div>
       </div>
 
       <div id="code-modal" class="modal">
