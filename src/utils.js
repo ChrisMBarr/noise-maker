@@ -4,6 +4,10 @@ function $(singeElSelector) {
 function $$(multiElSelector) {
   return document.querySelectorAll(multiElSelector);
 }
+function attr(node, attrName) {
+  const attr = node.attributes.getNamedItem(attrName);
+  return attr ? attr.value : null;
+}
 function toggleDisplay($elements) {
   function t(el) {
     const currentDisplay = getComputedStyle(el).display;

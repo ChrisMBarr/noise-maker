@@ -16,7 +16,7 @@ Array.from($$('#svg-controls .form-control-wrapper')).forEach((ctrl) => {
 
   //Checkboxes to enable/disable other inputs
   if ($enableInput) {
-    const $enableTgt = $($enableInput.attributes.getNamedItem('data-enable').value);
+    const $enableTgt = $(attr($enableInput, 'data-enable'));
     $enableInput.addEventListener('input', () => {
       $enableTgt.disabled = !$enableInput.checked;
       updateTexture($enableTgt, $outputDisplay, false);
@@ -27,9 +27,7 @@ Array.from($$('#svg-controls .form-control-wrapper')).forEach((ctrl) => {
   }
 
   if ($toggleVisibilityInput) {
-    const $toggleTargets = $$(
-      $toggleVisibilityInput.attributes.getNamedItem('data-toggle-visibility').value
-    );
+    const $toggleTargets = $$(attr($toggleVisibilityInput, 'data-toggle-visibility'));
     $toggleVisibilityInput.addEventListener('input', () => {
       toggleDisplay($toggleTargets);
     });
@@ -53,8 +51,8 @@ Array.from($$('#svg-controls .form-control-wrapper')).forEach((ctrl) => {
  */
 function updateTexture($inputEl, $outputDisplay, isInit) {
   const isDisabled = $inputEl.disabled;
-  const suffix = $inputEl.attributes.getNamedItem('data-target-filter-prop-suffix');
-  const val = suffix ? $inputEl.value + suffix.value : $inputEl.value;
+  const suffix = attr($inputEl, 'data-target-filter-prop-suffix');
+  const val = suffix ? $inputEl.value + suffix : $inputEl.value;
 
   if ($outputDisplay) {
     $outputDisplay.innerHTML = isDisabled ? '' : val;
@@ -65,31 +63,31 @@ function updateTexture($inputEl, $outputDisplay, isInit) {
     toggleDisplay($baseFrequencyToggleDisplay);
     updateTexture($baseFrequencyX, $outputDisplay);
   } else {
-    const tgtSelector = $inputEl.attributes.getNamedItem('data-target');
-    const tgtStyleProp = $inputEl.attributes.getNamedItem('data-target-style-prop');
-    const tgtFilterProp = $inputEl.attributes.getNamedItem('data-target-filter-prop');
-    const tgtAttr = $inputEl.attributes.getNamedItem('data-target-attr');
+    const tgtSelector = attr($inputEl, 'data-target');
+    const tgtStyleProp = attr($inputEl, 'data-target-style-prop');
+    const tgtFilterProp = attr($inputEl, 'data-target-filter-prop');
+    const tgtAttr = attr($inputEl, 'data-target-attr');
     if (tgtSelector) {
-      const $tgt = $(tgtSelector.value);
+      const $tgt = $(tgtSelector);
 
       if (tgtStyleProp) {
-        $tgt.style[tgtStyleProp.value] = val;
-        textureStyles[tgtStyleProp.value] = val;
+        $tgt.style[tgtStyleProp] = val;
+        textureStyles[tgtStyleProp] = val;
       } else if (tgtFilterProp) {
-        updateTextureFilter($tgt, tgtFilterProp.value, val, isDisabled);
+        updateTextureFilter($tgt, tgtFilterProp, val, isDisabled);
       } else if (tgtAttr) {
         if ($inputEl.id === $baseFrequencyX.id || $inputEl.id === $baseFrequencyY.id) {
           let combinedBaseFreq = $baseFrequencyX.value;
           if (!$baseFrequencyY.disabled) {
             combinedBaseFreq += ` ${$baseFrequencyY.value}`;
           }
-          $tgt.attributes[tgtAttr.value].value = combinedBaseFreq;
+          $tgt.attributes[tgtAttr].value = combinedBaseFreq;
         } else {
-          $tgt.attributes[tgtAttr.value].value = val;
+          $tgt.attributes[tgtAttr].value = val;
         }
       }
 
-      if ($inputEl.attributes.getNamedItem('data-force-reload-svg')) {
+      if (attr($inputEl, 'data-force-reload-svg')) {
         forceReloadSvg();
       }
     }
@@ -136,9 +134,9 @@ $('#btn-get-code').addEventListener('click', openDialog);
 //All the 'copy' buttons
 Array.from($$('.btn-copy')).forEach((btn) => {
   btn.addEventListener('click', () => {
-    const tgtSelector = btn.attributes.getNamedItem('data-target');
+    const tgtSelector = attr(btn, 'data-target');
     if (tgtSelector) {
-      navigator.clipboard.writeText($(tgtSelector.value).value).then(
+      navigator.clipboard.writeText($(tgtSelector).value).then(
         () => {},
         () => {
           alert('could not copy text, please select and copy it manually!');
