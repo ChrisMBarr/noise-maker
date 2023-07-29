@@ -1,14 +1,14 @@
 {
-  "name": "grainy",
+  "name": "noise-maker",
   "version": "1.0.0",
-  "description": "Makes grainy SVG textures",
-  "homepage": "https://github.com/FiniteLooper/grainy#readme",
+  "description": "Makes noise based SVG patterns/textures",
+  "homepage": "https://github.com/FiniteLooper/noise-maker#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/FiniteLooper/grainy.git"
+    "url": "git+https://github.com/FiniteLooper/noise-maker.git"
   },
   "bugs": {
-    "url": "https://github.com/FiniteLooper/grainy/issues"
+    "url": "https://github.com/FiniteLooper/noise-maker/issues"
   },
   "keywords": [
   ],

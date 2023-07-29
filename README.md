@@ -1,5 +1,5 @@
-# Grainy
+# Noise Maker
 
-Makes grainy SVG textures
+Makes noise based SVG patterns/textures
 
-https://finitelooper.github.io/grainy/
+https://finitelooper.github.io/noise-maker/
