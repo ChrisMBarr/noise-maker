@@ -62,7 +62,7 @@ function updateTexture($inputEl, $outputDisplay, isInit) {
     separateBaseFrequencies = $inputEl.checked;
     toggleDisplay($baseFrequencyToggleDisplay);
     updateTexture($baseFrequencyX, $outputDisplay);
-  } else {
+  } else if (!isDisabled) {
     const tgtSelector = attr($inputEl, 'data-target');
     const tgtStyleProp = attr($inputEl, 'data-target-style-prop');
     const tgtFilterProp = attr($inputEl, 'data-target-filter-prop');
