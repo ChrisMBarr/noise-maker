@@ -30,17 +30,21 @@ Array.from($$('#svg-controls .form-control-wrapper')).forEach((ctrl) => {
     const $toggleTargets = $$(attr($toggleVisibilityInput, 'data-toggle-visibility'));
     $toggleVisibilityInput.addEventListener('input', () => {
       toggleDisplay($toggleTargets);
+
+      if ($toggleVisibilityInput.id === 'ctrl-separate-frequencies') {
+        updateTexture($baseFrequencyX, $outputDisplay);
+      }
     });
   }
 
   //Form inputs
   if ($input) {
     $input.addEventListener('input', () => {
-      updateTexture($input, $outputDisplay, false);
+      updateTexture($input, $outputDisplay);
     });
 
     //Initialize
-    updateTexture($input, $outputDisplay, true);
+    updateTexture($input, $outputDisplay);
   }
 });
 
@@ -49,7 +53,7 @@ Array.from($$('#svg-controls .form-control-wrapper')).forEach((ctrl) => {
  * @param {HTMLInputElement} $inputEl
  * @param {HTMLOutputElement} $outputDisplay
  */
-function updateTexture($inputEl, $outputDisplay, isInit) {
+function updateTexture($inputEl, $outputDisplay) {
   const isDisabled = $inputEl.disabled;
   const suffix = attr($inputEl, 'data-target-filter-prop-suffix');
   const val = suffix ? $inputEl.value + suffix : $inputEl.value;
@@ -58,11 +62,7 @@ function updateTexture($inputEl, $outputDisplay, isInit) {
     $outputDisplay.innerHTML = isDisabled ? '' : val;
   }
 
-  if (!isInit && $inputEl.id === 'ctrl-separate-frequencies') {
-    separateBaseFrequencies = $inputEl.checked;
-    toggleDisplay($baseFrequencyToggleDisplay);
-    updateTexture($baseFrequencyX, $outputDisplay);
-  } else if (!isDisabled) {
+  if (!isDisabled) {
     const tgtSelector = attr($inputEl, 'data-target');
     const tgtStyleProp = attr($inputEl, 'data-target-style-prop');
     const tgtFilterProp = attr($inputEl, 'data-target-filter-prop');
