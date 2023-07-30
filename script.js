@@ -139,9 +139,13 @@ function getPropsAsCssString(obj) {
 }
 
 function createLightingElement() {
-  const diffuseLightingEl = document.createElement('feDiffuseLighting');
+  const diffuseLightingEl = document.createElementNS(
+    'http://www.w3.org/2000/svg',
+    'feDiffuseLighting'
+  );
   diffuseLightingEl.setAttribute('in', 'noise'); //needs to match the `result` property on the `feTurbulence` element
-  diffuseLightingEl.appendChild(document.createElement('feDistantLight'));
+  const distantLightEl = document.createElementNS('http://www.w3.org/2000/svg', 'feDistantLight');
+  diffuseLightingEl.appendChild(distantLightEl);
   return diffuseLightingEl;
 }
 
