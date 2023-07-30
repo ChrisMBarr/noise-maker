@@ -16,31 +16,47 @@ Array.from($$('#svg-controls .form-control-wrapper')).forEach((ctrl) => {
 
   //Checkboxes to enable/disable other inputs
   if ($enableInput) {
-    const $enableTgt = $(attr($enableInput, 'data-enable'));
+    const $enableTargets = $$(attr($enableInput, 'data-enable'));
     $enableInput.addEventListener('input', () => {
-      $enableTgt.disabled = !$enableInput.checked;
-      updateTexture($enableTgt, $outputDisplay, false);
+      const isChecked = $enableInput.checked;
+      $enableTargets.forEach((t) => (t.disabled = !isChecked));
+
+      if ($enableInput.id === 'ctrl-enable-lighting') {
+        //special condition when enabling/disabling lighting
+        const $svgFilter = $('#noise-filter');
+        if (isChecked) {
+          $svgFilter.appendChild(createLightingElement());
+        } else {
+          $svgFilter.querySelector('feDiffuseLighting').remove();
+        }
+      }
+
+      $enableTargets.forEach((t) => updateTexture(t, $outputDisplay, false));
     });
 
     //Initialize
-    $enableTgt.disabled = !$enableInput.checked;
+    $enableTargets.forEach((t) => (t.disabled = !$enableInput.checked));
   }
 
   if ($toggleVisibilityInput) {
     const $toggleTargets = $$(attr($toggleVisibilityInput, 'data-toggle-visibility'));
     $toggleVisibilityInput.addEventListener('input', () => {
       toggleDisplay($toggleTargets);
+
+      if ($toggleVisibilityInput.id === 'ctrl-separate-frequencies') {
+        updateTexture($baseFrequencyX, $outputDisplay);
+      }
     });
   }
 
   //Form inputs
   if ($input) {
     $input.addEventListener('input', () => {
-      updateTexture($input, $outputDisplay, false);
+      updateTexture($input, $outputDisplay);
     });
 
     //Initialize
-    updateTexture($input, $outputDisplay, true);
+    updateTexture($input, $outputDisplay);
   }
 });
 
@@ -49,7 +65,7 @@ Array.from($$('#svg-controls .form-control-wrapper')).forEach((ctrl) => {
  * @param {HTMLInputElement} $inputEl
  * @param {HTMLOutputElement} $outputDisplay
  */
-function updateTexture($inputEl, $outputDisplay, isInit) {
+function updateTexture($inputEl, $outputDisplay) {
   const isDisabled = $inputEl.disabled;
   const suffix = attr($inputEl, 'data-target-filter-prop-suffix');
   const val = suffix ? $inputEl.value + suffix : $inputEl.value;
@@ -58,11 +74,7 @@ function updateTexture($inputEl, $outputDisplay, isInit) {
     $outputDisplay.innerHTML = isDisabled ? '' : val;
   }
 
-  if (!isInit && $inputEl.id === 'ctrl-separate-frequencies') {
-    separateBaseFrequencies = $inputEl.checked;
-    toggleDisplay($baseFrequencyToggleDisplay);
-    updateTexture($baseFrequencyX, $outputDisplay);
-  } else {
+  if (!isDisabled) {
     const tgtSelector = attr($inputEl, 'data-target');
     const tgtStyleProp = attr($inputEl, 'data-target-style-prop');
     const tgtFilterProp = attr($inputEl, 'data-target-filter-prop');
@@ -81,9 +93,9 @@ function updateTexture($inputEl, $outputDisplay, isInit) {
           if (!$baseFrequencyY.disabled) {
             combinedBaseFreq += ` ${$baseFrequencyY.value}`;
           }
-          $tgt.attributes[tgtAttr].value = combinedBaseFreq;
+          attr($tgt, tgtAttr, combinedBaseFreq);
         } else {
-          $tgt.attributes[tgtAttr].value = val;
+          attr($tgt, tgtAttr, val);
         }
       }
 
@@ -124,6 +136,13 @@ function getPropsAsCssString(obj) {
     })
     .filter((v) => v !== '')
     .join(' ');
+}
+
+function createLightingElement() {
+  const diffuseLightingEl = document.createElement('feDiffuseLighting');
+  diffuseLightingEl.setAttribute('in', 'noise'); //needs to match the `result` property on the `feTurbulence` element
+  diffuseLightingEl.appendChild(document.createElement('feDistantLight'));
+  return diffuseLightingEl;
 }
 
 //================================================
