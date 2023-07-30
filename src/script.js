@@ -81,9 +81,9 @@ function updateTexture($inputEl, $outputDisplay, isInit) {
           if (!$baseFrequencyY.disabled) {
             combinedBaseFreq += ` ${$baseFrequencyY.value}`;
           }
-          $tgt.attributes[tgtAttr].value = combinedBaseFreq;
+          attr($tgt, tgtAttr, combinedBaseFreq);
         } else {
-          $tgt.attributes[tgtAttr].value = val;
+          attr($tgt, tgtAttr, val);
         }
       }
 

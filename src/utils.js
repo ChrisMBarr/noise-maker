@@ -4,9 +4,15 @@ function $(singeElSelector) {
 function $$(multiElSelector) {
   return document.querySelectorAll(multiElSelector);
 }
-function attr(node, attrName) {
-  const attr = node.attributes.getNamedItem(attrName);
-  return attr ? attr.value : null;
+function attr(node, attrName, newValue) {
+  if (newValue) {
+    //Set a value
+    node.setAttribute(attrName, newValue);
+    return null;
+  } else {
+    //return a value
+    return node.getAttribute(attrName);
+  }
 }
 function toggleDisplay($elements) {
   function t(el) {
