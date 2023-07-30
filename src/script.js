@@ -1,3 +1,4 @@
+const svgNs = 'http://www.w3.org/2000/svg';
 const $baseFrequencyX = $('#ctrl-base-frequency-x');
 const $baseFrequencyY = $('#ctrl-base-frequency-y');
 const $baseFrequencyToggleDisplay = $$('.baseFrequencyToggleDisplay');
@@ -74,34 +75,32 @@ function updateTexture($inputEl, $outputDisplay) {
     $outputDisplay.innerHTML = isDisabled ? '' : val;
   }
 
-  if (!isDisabled) {
-    const tgtSelector = attr($inputEl, 'data-target');
-    const tgtStyleProp = attr($inputEl, 'data-target-style-prop');
-    const tgtFilterProp = attr($inputEl, 'data-target-filter-prop');
-    const tgtAttr = attr($inputEl, 'data-target-attr');
-    if (tgtSelector) {
-      const $tgt = $(tgtSelector);
+  const tgtSelector = attr($inputEl, 'data-target');
+  const tgtStyleProp = attr($inputEl, 'data-target-style-prop');
+  const tgtFilterProp = attr($inputEl, 'data-target-filter-prop');
+  const tgtAttr = attr($inputEl, 'data-target-attr');
+  if (tgtSelector) {
+    const $tgt = $(tgtSelector);
 
-      if (tgtStyleProp) {
-        $tgt.style[tgtStyleProp] = val;
-        textureStyles[tgtStyleProp] = val;
-      } else if (tgtFilterProp) {
-        updateTextureFilter($tgt, tgtFilterProp, val, isDisabled);
-      } else if (tgtAttr) {
-        if ($inputEl.id === $baseFrequencyX.id || $inputEl.id === $baseFrequencyY.id) {
-          let combinedBaseFreq = $baseFrequencyX.value;
-          if (!$baseFrequencyY.disabled) {
-            combinedBaseFreq += ` ${$baseFrequencyY.value}`;
-          }
-          attr($tgt, tgtAttr, combinedBaseFreq);
-        } else {
-          attr($tgt, tgtAttr, val);
+    if (!isDisabled && tgtStyleProp) {
+      $tgt.style[tgtStyleProp] = val;
+      textureStyles[tgtStyleProp] = val;
+    } else if (!isDisabled && tgtAttr) {
+      if ($inputEl.id === $baseFrequencyX.id || $inputEl.id === $baseFrequencyY.id) {
+        let combinedBaseFreq = $baseFrequencyX.value;
+        if (!$baseFrequencyY.disabled) {
+          combinedBaseFreq += ` ${$baseFrequencyY.value}`;
         }
+        attr($tgt, tgtAttr, combinedBaseFreq);
+      } else {
+        attr($tgt, tgtAttr, val);
       }
+    } else if (tgtFilterProp) {
+      updateTextureFilter($tgt, tgtFilterProp, val, isDisabled);
+    }
 
-      if (attr($inputEl, 'data-force-reload-svg')) {
-        forceReloadSvg();
-      }
+    if (attr($inputEl, 'data-force-reload-svg')) {
+      forceReloadSvg();
     }
   }
 }
@@ -139,12 +138,11 @@ function getPropsAsCssString(obj) {
 }
 
 function createLightingElement() {
-  const diffuseLightingEl = document.createElementNS(
-    'http://www.w3.org/2000/svg',
-    'feDiffuseLighting'
-  );
-  diffuseLightingEl.setAttribute('in', 'noise'); //needs to match the `result` property on the `feTurbulence` element
-  const distantLightEl = document.createElementNS('http://www.w3.org/2000/svg', 'feDistantLight');
+  //feDiffuseLighting, feSpecularLighting
+  const diffuseLightingEl = document.createElementNS(svgNs, 'feDiffuseLighting');
+  diffuseLightingEl.setAttributeNS(svgNs, 'in', 'noise'); //needs to match the `result` property on the `feTurbulence` element
+  //feDistantLight, fePointLight, feSpotLight
+  const distantLightEl = document.createElementNS(svgNs, 'feDistantLight');
   diffuseLightingEl.appendChild(distantLightEl);
   return diffuseLightingEl;
 }
