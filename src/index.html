@@ -180,7 +180,7 @@
           </div>
         </div>
 
-        <!-- <div class="card m-3">
+        <div class="card m-3">
           <div class="card-body">
             <h5 class="card-title">Lighting</h5>
 
@@ -201,28 +201,29 @@
               <div class="form-control-wrapper">
                 <label class="form-label" for="ctrl-lighting-lighting-color">
                   Lighting Color
-                  <i class="bi bi-question-circle-fill tip" title="????"></i>
+                  <i
+                    class="bi bi-question-circle-fill tip"
+                    title="The color of the light source"
+                  ></i>
                 </label>
-                <div class="row">
-                  <div class="col-sm-9">
-                    <input
-                      type="color"
-                      class="form-control form-control-color w-100"
-                      value="#FFFFFF"
-                      id="ctrl-lighting-lighting-color"
-                      data-target="#noise-filter feDiffuseLighting"
-                      data-target-attr="lighting-color"
-                      data-force-reload-svg="true"
-                    />
-                  </div>
-                  <output class="col-sm-3"></output>
-                </div>
+                <input
+                  type="color"
+                  class="form-control form-control-color w-100"
+                  value="#FFFFFF"
+                  id="ctrl-lighting-lighting-color"
+                  data-target="#noise-filter feDiffuseLighting"
+                  data-target-attr="lighting-color"
+                  data-force-reload-svg="true"
+                />
               </div>
 
               <div class="form-control-wrapper">
                 <label class="form-label" for="ctrl-lighting-surface-scale">
                   Surface Scale
-                  <i class="bi bi-question-circle-fill tip" title="????"></i>
+                  <i
+                    class="bi bi-question-circle-fill tip"
+                    title="The depth of the shadow or lighting effect on the texture"
+                  ></i>
                 </label>
                 <div class="row">
                   <div class="col-sm-9">
@@ -231,7 +232,7 @@
                       class="form-range"
                       id="ctrl-lighting-surface-scale"
                       min="1"
-                      max="6"
+                      max="10"
                       value="1"
                       step="1"
                       data-target="#noise-filter feDiffuseLighting"
@@ -245,8 +246,11 @@
 
               <div class="form-control-wrapper">
                 <label class="form-label" for="ctrl-lighting-azimuth">
-                  Azimuth
-                  <i class="bi bi-question-circle-fill tip" title="????"></i>
+                  Direction
+                  <i
+                    class="bi bi-question-circle-fill tip"
+                    title="The azimuth or direction the light source comes from, in degrees."
+                  ></i>
                 </label>
                 <div class="row">
                   <div class="col-sm-9">
@@ -256,7 +260,7 @@
                       id="ctrl-lighting-azimuth"
                       min="1"
                       max="360"
-                      value="1"
+                      value="45"
                       step="1"
                       data-target="#noise-filter feDistantLight"
                       data-target-attr="azimuth"
@@ -270,7 +274,10 @@
               <div class="form-control-wrapper">
                 <label class="form-label" for="ctrl-lighting-elevation">
                   Elevation
-                  <i class="bi bi-question-circle-fill tip" title="????"></i>
+                  <i
+                    class="bi bi-question-circle-fill tip"
+                    title="The height of the light source"
+                  ></i>
                 </label>
                 <div class="row">
                   <div class="col-sm-9">
@@ -280,7 +287,7 @@
                       id="ctrl-lighting-elevation"
                       min="1"
                       max="360"
-                      value="1"
+                      value="60"
                       step="1"
                       data-target="#noise-filter feDistantLight"
                       data-target-attr="elevation"
@@ -293,7 +300,6 @@
             </div>
           </div>
         </div>
-        </div> -->
 
         <div class="card m-3 mb-0">
           <div class="card-body">
