@@ -16,14 +16,16 @@ Array.from($$('#svg-controls .form-control-wrapper')).forEach((ctrl) => {
 
   //Checkboxes to enable/disable other inputs
   if ($enableInput) {
-    const $enableTgt = $(attr($enableInput, 'data-enable'));
+    const $enableTargets = $$(attr($enableInput, 'data-enable'));
     $enableInput.addEventListener('input', () => {
-      $enableTgt.disabled = !$enableInput.checked;
-      updateTexture($enableTgt, $outputDisplay, false);
+      const isChecked = $enableInput.checked;
+      $enableTargets.forEach((t) => (t.disabled = !isChecked));
+
+      $enableTargets.forEach((t) => updateTexture(t, $outputDisplay, false));
     });
 
     //Initialize
-    $enableTgt.disabled = !$enableInput.checked;
+    $enableTargets.forEach((t) => (t.disabled = !$enableInput.checked));
   }
 
   if ($toggleVisibilityInput) {
