@@ -21,6 +21,16 @@ Array.from($$('#svg-controls .form-control-wrapper')).forEach((ctrl) => {
       const isChecked = $enableInput.checked;
       $enableTargets.forEach((t) => (t.disabled = !isChecked));
 
+      if ($enableInput.id === 'ctrl-enable-lighting') {
+        //special condition when enabling/disabling lighting
+        const $svgFilter = $('#noise-filter');
+        if (isChecked) {
+          $svgFilter.appendChild(createLightingElement());
+        } else {
+          $svgFilter.querySelector('feDiffuseLighting').remove();
+        }
+      }
+
       $enableTargets.forEach((t) => updateTexture(t, $outputDisplay, false));
     });
 
@@ -126,6 +136,13 @@ function getPropsAsCssString(obj) {
     })
     .filter((v) => v !== '')
     .join(' ');
+}
+
+function createLightingElement() {
+  const diffuseLightingEl = document.createElement('feDiffuseLighting');
+  diffuseLightingEl.setAttribute('in', 'noise'); //needs to match the `result` property on the `feTurbulence` element
+  diffuseLightingEl.appendChild(document.createElement('feDistantLight'));
+  return diffuseLightingEl;
 }
 
 //================================================

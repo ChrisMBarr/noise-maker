@@ -198,9 +198,101 @@
             </div>
 
             <div id="lighting-controls" style="display: none">
+              <div class="form-control-wrapper">
+                <label class="form-label" for="ctrl-lighting-lighting-color">
+                  Lighting Color
+                  <i class="bi bi-question-circle-fill tip" title="????"></i>
+                </label>
+                <div class="row">
+                  <div class="col-sm-9">
+                    <input
+                      type="color"
+                      class="form-control form-control-color w-100"
+                      value="#FFFFFF"
+                      id="ctrl-lighting-lighting-color"
+                      data-target="#noise-filter feDiffuseLighting"
+                      data-target-attr="lighting-color"
+                      data-force-reload-svg="true"
+                    />
+                  </div>
+                  <output class="col-sm-3"></output>
+                </div>
+              </div>
 
+              <div class="form-control-wrapper">
+                <label class="form-label" for="ctrl-lighting-surface-scale">
+                  Surface Scale
+                  <i class="bi bi-question-circle-fill tip" title="????"></i>
+                </label>
+                <div class="row">
+                  <div class="col-sm-9">
+                    <input
+                      type="range"
+                      class="form-range"
+                      id="ctrl-lighting-surface-scale"
+                      min="1"
+                      max="6"
+                      value="1"
+                      step="1"
+                      data-target="#noise-filter feDiffuseLighting"
+                      data-target-attr="surfaceScale"
+                      data-force-reload-svg="true"
+                    />
+                  </div>
+                  <output class="col-sm-3"></output>
+                </div>
+              </div>
+
+              <div class="form-control-wrapper">
+                <label class="form-label" for="ctrl-lighting-azimuth">
+                  Azimuth
+                  <i class="bi bi-question-circle-fill tip" title="????"></i>
+                </label>
+                <div class="row">
+                  <div class="col-sm-9">
+                    <input
+                      type="range"
+                      class="form-range"
+                      id="ctrl-lighting-azimuth"
+                      min="1"
+                      max="360"
+                      value="1"
+                      step="1"
+                      data-target="#noise-filter feDistantLight"
+                      data-target-attr="azimuth"
+                      data-force-reload-svg="true"
+                    />
+                  </div>
+                  <output class="col-sm-3"></output>
+                </div>
+              </div>
+
+              <div class="form-control-wrapper">
+                <label class="form-label" for="ctrl-lighting-elevation">
+                  Elevation
+                  <i class="bi bi-question-circle-fill tip" title="????"></i>
+                </label>
+                <div class="row">
+                  <div class="col-sm-9">
+                    <input
+                      type="range"
+                      class="form-range"
+                      id="ctrl-lighting-elevation"
+                      min="1"
+                      max="360"
+                      value="1"
+                      step="1"
+                      data-target="#noise-filter feDistantLight"
+                      data-target-attr="elevation"
+                      data-force-reload-svg="true"
+                    />
+                  </div>
+                  <output class="col-sm-3"></output>
+                </div>
+              </div>
             </div>
           </div>
+        </div>
         </div> -->
 
         <div class="card m-3 mb-0">
@@ -425,14 +517,8 @@
     <main class="w-100">
       <div id="demo-output" class="w-100 h-100">
         <svg class="w-100 h-100">
-          <filter id="noise-filter" result="noise">
-            <feTurbulence
-              type="turbulence"
-              baseFrequency="0.69"
-              numOctaves="1"
-              seed="0"
-              stitchTiles="stitch"
-            ></feTurbulence>
+          <filter id="noise-filter">
+            <feTurbulence stitchTiles="stitch" result="noise"></feTurbulence>
           </filter>
 
           <rect
