@@ -1,69 +1,86 @@
 const svgNs = 'http://www.w3.org/2000/svg';
 const $baseFrequencyX = $('#ctrl-base-frequency-x');
 const $baseFrequencyY = $('#ctrl-base-frequency-y');
-const $baseFrequencyToggleDisplay = $$('.baseFrequencyToggleDisplay');
 const textureStyles = {
   filter: {},
 };
 
 //Loop through all the controls and run an event any time one changes
-Array.from($$('#svg-controls .form-control-wrapper')).forEach((ctrl) => {
-  const $input = ctrl.querySelector(
-    'select, input:not([data-enable]):not([data-toggle-visibility])'
+$('#svg-controls .form-control-wrapper').each((_i, ctrl) => {
+  const $input = $(ctrl).find('select, input:not([data-enable]):not([data-toggle-visibility])');
+  const $enableInput = $(ctrl).find('input[data-enable]');
+  const $toggleVisibilityInput = $(ctrl).find(
+    'input[data-toggle-visibility], select[data-toggle-visibility]'
   );
-  const $enableInput = ctrl.querySelector('input[data-enable]');
-  const $toggleVisibilityInput = ctrl.querySelector('input[data-toggle-visibility]');
-  const $outputDisplay = ctrl.querySelector('output');
+  const $outputDisplay = $(ctrl).find('output');
 
   //Checkboxes to enable/disable other inputs
-  if ($enableInput) {
-    const $enableTargets = $$(attr($enableInput, 'data-enable'));
-    $enableInput.addEventListener('input', () => {
-      const isChecked = $enableInput.checked;
-      $enableTargets.forEach((t) => (t.disabled = !isChecked));
+  if ($enableInput.length) {
+    const $enableTargets = $($enableInput.attr('data-enable'));
+    $enableInput.on('input', () => {
+      const isChecked = $enableInput.is(':checked');
+      $enableTargets.attr('disabled', !isChecked);
 
-      if ($enableInput.id === 'ctrl-enable-lighting') {
+      if ($enableInput.attr('id') === 'ctrl-enable-lighting') {
         //special condition when enabling/disabling lighting
         const $svgFilter = $('#noise-filter');
         if (isChecked) {
-          $svgFilter.appendChild(createLightingElement());
+          $svgFilter.append(createLightingElement());
         } else {
-          const lightingElement = $svgFilter.querySelector('feDiffuseLighting');
-          if (lightingElement) {
-            lightingElement.remove();
-          }
+          $svgFilter.find('feDiffuseLighting, feSpecularLighting').remove();
         }
       }
 
-      $enableTargets.forEach((t) => updateTexture(t, $outputDisplay, false));
+      $enableTargets.each((_i, t) => updateTexture($(t), $outputDisplay));
+      $enableTargets.trigger('input');
     });
 
     //Initialize
-    $enableInput.dispatchEvent(new Event('input'));
+    $enableInput.trigger('input');
   }
 
-  if ($toggleVisibilityInput) {
-    const $toggleTargets = $$(attr($toggleVisibilityInput, 'data-toggle-visibility'));
-    $toggleVisibilityInput.addEventListener('input', () => {
-      toggleDisplay($toggleTargets, $toggleVisibilityInput.checked);
+  if ($toggleVisibilityInput.length) {
+    if ($toggleVisibilityInput.is(':checkbox')) {
+      const $toggleTargets = $($toggleVisibilityInput.attr('data-toggle-visibility'));
+      $toggleVisibilityInput.on('input', () => {
+        $toggleTargets.toggle($toggleVisibilityInput.is(':checked'));
 
-      if ($toggleVisibilityInput.id === 'ctrl-separate-frequencies') {
-        updateTexture($baseFrequencyX, $outputDisplay);
-      }
-    });
+        if ($toggleVisibilityInput.attr('id') === 'ctrl-separate-frequencies') {
+          updateTexture($baseFrequencyX, $outputDisplay);
+        }
+      });
+      //Initialize
+      $toggleTargets.toggle($toggleVisibilityInput.is(':checked'));
+    } else if ($toggleVisibilityInput.is('select')) {
+      const $allToggles = $toggleVisibilityInput.find('option[data-toggle-visibility-and-enable]');
+      const allTargetsSelectorStr = $allToggles
+        .toArray()
+        .map((x) => {
+          return $(x).attr('data-toggle-visibility-and-enable');
+        })
+        .join(',');
+      const $allTargets = $(allTargetsSelectorStr);
 
-    //Initialize
-    toggleDisplay($toggleTargets, $toggleVisibilityInput.checked);
+      $toggleVisibilityInput.on('input', () => {
+        const selectedVal = $toggleVisibilityInput.val();
+        const $currentTarget = $toggleVisibilityInput.find(`option[value=${selectedVal}]`);
+        const $toggleTargets = $($currentTarget.attr('data-toggle-visibility-and-enable'));
+
+        $allTargets.hide().find('input, select').attr('disabled', 'disabled');
+        const $enabledInputs = $toggleTargets.show().find('input, select').removeAttr('disabled'); //.trigger('input');
+        $enabledInputs.each((_i, t) => updateTexture($(t), $outputDisplay));
+      });
+    }
   }
 
   //Form inputs
-  if ($input) {
-    $input.addEventListener('input', () => {
+  if ($input.length) {
+    $input.on('input', () => {
       updateTexture($input, $outputDisplay);
     });
 
     //Initialize
-    $input.dispatchEvent(new Event('input'));
+    $input.trigger('input');
   }
 });
 
@@ -73,39 +90,43 @@ Array.from($$('#svg-controls .form-control-wrapper')).forEach((ctrl) => {
  * @param {HTMLOutputElement} $outputDisplay
  */
 function updateTexture($inputEl, $outputDisplay) {
-  const isDisabled = $inputEl.disabled;
-  const suffix = attr($inputEl, 'data-target-filter-prop-suffix');
-  const val = suffix ? $inputEl.value + suffix : $inputEl.value;
+  const isDisabled = $inputEl.is(':disabled');
+  const suffix = $inputEl.attr('data-target-filter-prop-suffix');
+  const val = suffix ? $inputEl.val() + suffix : $inputEl.val();
 
-  if ($outputDisplay) {
-    $outputDisplay.innerHTML = isDisabled ? '' : val;
+  if ($outputDisplay.length) {
+    $outputDisplay.text(isDisabled ? '' : val);
   }
 
-  const tgtSelector = attr($inputEl, 'data-target');
-  const tgtStyleProp = attr($inputEl, 'data-target-style-prop');
-  const tgtFilterProp = attr($inputEl, 'data-target-filter-prop');
-  const tgtAttr = attr($inputEl, 'data-target-attr');
+  const tgtSelector = $inputEl.attr('data-target');
+  const tgtStyleProp = $inputEl.attr('data-target-style-prop');
+  const tgtFilterProp = $inputEl.attr('data-target-filter-prop');
+  const tgtAttr = $inputEl.attr('data-target-attr');
+
   if (tgtSelector) {
     const $tgt = $(tgtSelector);
 
     if (!isDisabled && tgtStyleProp) {
-      $tgt.style[tgtStyleProp] = val;
+      $tgt.css(tgtStyleProp, val);
       textureStyles[tgtStyleProp] = val;
     } else if (!isDisabled && tgtAttr) {
-      if ($inputEl.id === $baseFrequencyX.id || $inputEl.id === $baseFrequencyY.id) {
-        let combinedBaseFreq = $baseFrequencyX.value;
+      if (
+        $inputEl.attr('id') === $baseFrequencyX.attr('id') ||
+        $inputEl.attr('id') === $baseFrequencyY.attr('id')
+      ) {
+        let combinedBaseFreq = $baseFrequencyX.val();
         if (!$baseFrequencyY.disabled) {
-          combinedBaseFreq += ` ${$baseFrequencyY.value}`;
+          combinedBaseFreq += ` ${$baseFrequencyY.val()}`;
         }
-        attr($tgt, tgtAttr, combinedBaseFreq);
+        $tgt.attr(tgtAttr, combinedBaseFreq);
       } else {
-        attr($tgt, tgtAttr, val);
+        $tgt.attr(tgtAttr, val);
       }
     } else if (tgtFilterProp) {
       updateTextureFilter($tgt, tgtFilterProp, val, isDisabled);
     }
 
-    if (attr($inputEl, 'data-force-reload-svg')) {
+    if ($inputEl.attr('data-force-reload-svg')) {
       forceReloadSvg();
     }
   }
@@ -116,21 +137,21 @@ function forceReloadSvg() {
   const $svg = $('#demo-output svg');
 
   //remove any styles it has
-  if ($svg.attributes.style && $svg.attributes.style.transform) {
-    $svg.attributes.style.transform.value = '';
+  if ($svg.css('transform')) {
+    $svg.css('transform', '');
   }
 
   //clone the element and replace it
-  var $clone = $svg.cloneNode(true);
-  $svg.parentNode.replaceChild($clone, $svg);
+  var $clone = $svg.clone();
+  $svg.replaceWith($clone);
 
   //force it into a new GPU rendering layer
-  $clone.style['transform'] = 'translateZ(0)';
+  $clone.css('transform', 'translateZ(0)');
 }
 
 function updateTextureFilter($tgt, tgtFilterProp, val, isDisabled) {
   textureStyles.filter[tgtFilterProp] = isDisabled ? null : val;
-  $tgt.style.filter = getPropsAsCssString(textureStyles.filter);
+  $tgt.css('filter', getPropsAsCssString(textureStyles.filter));
 }
 
 function getPropsAsCssString(obj) {
@@ -144,61 +165,62 @@ function getPropsAsCssString(obj) {
 }
 
 function createLightingElement() {
-  //feDiffuseLighting, feSpecularLighting
-  const diffuseLightingEl = document.createElementNS(svgNs, 'feDiffuseLighting');
-  diffuseLightingEl.setAttributeNS(svgNs, 'in', 'noise'); //needs to match the `result` property on the `feTurbulence` element
-  //feDistantLight, fePointLight, feSpotLight
-  const distantLightEl = document.createElementNS(svgNs, 'feDistantLight');
-  diffuseLightingEl.appendChild(distantLightEl);
-  return diffuseLightingEl;
+  const lightingPrimitiveType = $('#ctrl-lighting-primitive-type').val();
+  const lightType = 'feDistantLight'; //$('#ctrl-light-type').val();
+
+  const lightingPrimitiveEl = document.createElementNS(svgNs, lightingPrimitiveType);
+  lightingPrimitiveEl.setAttributeNS(svgNs, 'in', 'noise'); //needs to match the `result` property on the `feTurbulence` element
+
+  let lightEl = document.createElementNS(svgNs, lightType);
+  lightingPrimitiveEl.appendChild(lightEl);
+
+  return lightingPrimitiveEl;
 }
 
 //================================================
 // Buttons
 //================================================
-$('#btn-get-code').addEventListener('click', openDialog);
+$('#btn-get-code').on('click', openDialog);
 
 //All the 'copy' buttons
-Array.from($$('.btn-copy')).forEach((btn) => {
-  btn.addEventListener('click', () => {
-    const tgtSelector = attr(btn, 'data-target');
-    if (tgtSelector) {
-      navigator.clipboard.writeText($(tgtSelector).value).then(
-        () => {},
-        () => {
-          alert('could not copy text, please select and copy it manually!');
-        }
-      );
-    }
-  });
+$('.btn-copy').on('click', (btn) => {
+  const tgtSelector = $(btn).attr('data-target');
+  if (tgtSelector) {
+    navigator.clipboard.writeText($(tgtSelector).val()).then(
+      () => {},
+      () => {
+        alert('could not copy text, please select and copy it manually!');
+      }
+    );
+  }
 });
 
 //================================================
 // Dialog
 //================================================
 const $modal = $('#code-modal');
-const $modalDialog = $modal.querySelector('dialog');
+const $modalDialog = $modal.find('dialog');
 const $ctrlCodeHtml = $('#code-html');
 const $ctrlCodeCss = $('#code-css');
 
-$modalDialog.addEventListener('click', function (ev) {
+$modalDialog.on('click', function (ev) {
   closeDialog(ev, this);
 });
 
-$modalDialog.querySelector('.btn-close').addEventListener('click', function (ev) {
+$modalDialog.find('.btn-close').on('click', function (ev) {
   closeDialog(ev, this);
 });
 
 function openDialog() {
   writeCodeToFields();
-  toggleDisplay($modal, true);
-  $modalDialog.showModal();
+  $modal.show();
+  $modalDialog.get(0).showModal();
 }
 
 function closeDialog(ev, self) {
   if (ev.target == self) {
-    $modalDialog.close();
-    toggleDisplay($modal, false);
+    $modalDialog.get(0).close();
+    $modal.hide();
   }
 }
 
@@ -214,17 +236,19 @@ function writeCodeToFields() {
       const val = textureStyles[k];
       if (k === 'filter') {
         const filterValues = getPropsAsCssString(val);
-        return `  filter: url(#${$svgFilter.id}) ${filterValues};`;
+        return `  filter: url(#${$svgFilter.attr('id')}) ${filterValues};`;
       }
       return `  ${k}: ${val};`;
     })
     .join('\n');
 
-  $ctrlCodeHtml.value = `<svg xmlns="http://www.w3.org/2000/svg" class="hidden-svg">${prettyIndentHtml(
-    $svgFilter.outerHTML
-  )}</svg>`;
+  $ctrlCodeHtml.val(
+    `<svg xmlns="${svgNs}" class="hidden-svg">${prettyIndentHtml(
+      $svgFilter.get(0).outerHTML
+    )}</svg>`
+  );
 
-  $ctrlCodeCss.value = `.bg-texture {
+  $ctrlCodeCss.val(`.bg-texture {
 ${textureStylesStr}
 }
 .hidden-svg {
@@ -236,7 +260,7 @@ ${textureStylesStr}
   z-index: -999;
   left: 0;
   top: 0;
-}`;
+}`);
 }
 
 function prettyIndentHtml(htmlStr) {
