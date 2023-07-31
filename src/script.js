@@ -28,7 +28,10 @@ Array.from($$('#svg-controls .form-control-wrapper')).forEach((ctrl) => {
         if (isChecked) {
           $svgFilter.appendChild(createLightingElement());
         } else {
-          $svgFilter.querySelector('feDiffuseLighting').remove();
+          const lightingElement = $svgFilter.querySelector('feDiffuseLighting');
+          if (lightingElement) {
+            lightingElement.remove();
+          }
         }
       }
 
@@ -36,18 +39,21 @@ Array.from($$('#svg-controls .form-control-wrapper')).forEach((ctrl) => {
     });
 
     //Initialize
-    $enableTargets.forEach((t) => (t.disabled = !$enableInput.checked));
+    $enableInput.dispatchEvent(new Event('input'));
   }
 
   if ($toggleVisibilityInput) {
     const $toggleTargets = $$(attr($toggleVisibilityInput, 'data-toggle-visibility'));
     $toggleVisibilityInput.addEventListener('input', () => {
-      toggleDisplay($toggleTargets);
+      toggleDisplay($toggleTargets, $toggleVisibilityInput.checked);
 
       if ($toggleVisibilityInput.id === 'ctrl-separate-frequencies') {
         updateTexture($baseFrequencyX, $outputDisplay);
       }
     });
+
+    //Initialize
+    toggleDisplay($toggleTargets, $toggleVisibilityInput.checked);
   }
 
   //Form inputs
@@ -57,7 +63,7 @@ Array.from($$('#svg-controls .form-control-wrapper')).forEach((ctrl) => {
     });
 
     //Initialize
-    updateTexture($input, $outputDisplay);
+    $input.dispatchEvent(new Event('input'));
   }
 });
 
@@ -185,14 +191,14 @@ $modalDialog.querySelector('.btn-close').addEventListener('click', function (ev)
 
 function openDialog() {
   writeCodeToFields();
-  toggleDisplay($modal);
+  toggleDisplay($modal, true);
   $modalDialog.showModal();
 }
 
 function closeDialog(ev, self) {
   if (ev.target == self) {
     $modalDialog.close();
-    toggleDisplay($modal);
+    toggleDisplay($modal, false);
   }
 }
 

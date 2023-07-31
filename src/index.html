@@ -30,25 +30,17 @@
       <div id="svg-controls" class="d-flex flex-column">
         <div class="card m-3 mb-0">
           <div class="card-body">
-            <h5 class="card-title">Turbulence</h5>
+            <h5 class="card-title">Noise</h5>
 
             <div class="form-control-wrapper">
-              <label class="form-label baseFrequencyToggleDisplay" for="ctrl-base-frequency-x"
+              <label class="form-label" for="ctrl-base-frequency-x"
                 >Base Frequency
+                <span class="baseFrequencyToggleDisplay" data-display="inline" style="display: none"
+                  >X</span
+                >
                 <i
                   class="bi bi-question-circle-fill tip"
                   title="The size/scale of the grain in the noise"
-                ></i>
-              </label>
-              <label
-                class="form-label baseFrequencyToggleDisplay"
-                for="ctrl-base-frequency-x"
-                class=""
-                style="display: none"
-                >Base Frequency X
-                <i
-                  class="bi bi-question-circle-fill tip"
-                  title="The size/scale of the grain in the noise on the X-axis"
                 ></i>
               </label>
               <div class="row">
@@ -150,8 +142,8 @@
                     data-target-attr="type"
                     data-force-reload-svg="true"
                   >
-                    <option selected>turbulence</option>
-                    <option>fractalNoise</option>
+                    <option value="turbulence" selected>Turbulence</option>
+                    <option value="fractalNoise">Fractal Noise</option>
                   </select>
                 </div>
               </div>
@@ -286,7 +278,7 @@
                       class="form-range"
                       id="ctrl-lighting-elevation"
                       min="1"
-                      max="360"
+                      max="270"
                       value="60"
                       step="1"
                       data-target="#noise-filter feDistantLight"

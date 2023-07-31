@@ -14,14 +14,15 @@ function attr(node, attrName, newValue) {
     return node.getAttribute(attrName);
   }
 }
-function toggleDisplay($elements) {
+function toggleDisplay($elements, show) {
   function t(el) {
     const currentDisplay = getComputedStyle(el).display;
-    if (currentDisplay !== 'none') {
+    if (!show) {
       el.attributes['data-prev-display'] = currentDisplay;
       el.style.display = 'none';
-    } else if (currentDisplay === 'none') {
-      el.style.display = el.attributes['data-prev-display'] ?? 'block';
+    } else {
+      const displayPref = attr(el, 'data-display') ?? 'block';
+      el.style.display = attr(el, 'data-prev-display') ?? displayPref;
     }
   }
 
