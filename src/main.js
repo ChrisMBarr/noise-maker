@@ -117,7 +117,7 @@ function updateTexture($inputEl, $outputDisplay) {
         $inputEl.attr('id') === $baseFrequencyY.attr('id')
       ) {
         let combinedBaseFreq = $baseFrequencyX.val();
-        if (!$baseFrequencyY.disabled) {
+        if (!$baseFrequencyY.is(':disabled')) {
           combinedBaseFreq += ` ${$baseFrequencyY.val()}`;
         }
         $tgt.attr(tgtAttr, combinedBaseFreq);
