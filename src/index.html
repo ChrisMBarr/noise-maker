@@ -510,7 +510,163 @@
                 </div>
               </div>
 
-              <div id="light-type-spot-options">Spot!</div>
+              <div id="light-type-spot-options">
+                <div class="form-control-wrapper">
+                  <label class="form-label" for="ctrl-lighting-spot-cone-angle">
+                    Cone Angle
+                    <i
+                      class="bi bi-question-circle-fill tip"
+                      title="The angle in degrees between the spot light axis (i.e. the axis between the light source and the point to which it is pointing at) and the spot light cone. So it defines a limiting cone which restricts the region where the light is projected. No light is projected outside the cone."
+                    ></i>
+                  </label>
+                  <div class="row">
+                    <div class="col-sm-9">
+                      <input
+                        type="range"
+                        class="form-range"
+                        id="ctrl-lighting-spot-cone-angle"
+                        min="1"
+                        max="360"
+                        value="45"
+                        step="0.1"
+                        disabled
+                        data-target="#noise-filter feSpotLight"
+                        data-target-attr="limitingConeAngle"
+                        data-force-reload-svg="true"
+                      />
+                    </div>
+                    <output class="col-sm-3"></output>
+                  </div>
+                </div>
+                <div class="form-control-wrapper">
+                  <label class="form-label" for="ctrl-lighting-spot-x"> X </label>
+                  <div class="row">
+                    <div class="col-sm-9">
+                      <input
+                        type="range"
+                        class="form-range"
+                        id="ctrl-lighting-spot-x"
+                        min="0"
+                        max="1000"
+                        value="100"
+                        step="0.1"
+                        disabled
+                        data-target="#noise-filter feSpotLight"
+                        data-target-attr="x"
+                        data-force-reload-svg="true"
+                      />
+                    </div>
+                    <output class="col-sm-3"></output>
+                  </div>
+                </div>
+                <div class="form-control-wrapper">
+                  <label class="form-label" for="ctrl-lighting-spot-y"> Y </label>
+                  <div class="row">
+                    <div class="col-sm-9">
+                      <input
+                        type="range"
+                        class="form-range"
+                        id="ctrl-lighting-spot-y"
+                        min="0"
+                        max="1000"
+                        value="100"
+                        step="0.1"
+                        disabled
+                        data-target="#noise-filter feSpotLight"
+                        data-target-attr="y"
+                        data-force-reload-svg="true"
+                      />
+                    </div>
+                    <output class="col-sm-3"></output>
+                  </div>
+                </div>
+                <div class="form-control-wrapper">
+                  <label class="form-label" for="ctrl-lighting-spot-z"> Z </label>
+                  <div class="row">
+                    <div class="col-sm-9">
+                      <input
+                        type="range"
+                        class="form-range"
+                        id="ctrl-lighting-spot-z"
+                        min="0"
+                        max="100"
+                        value="50"
+                        step="0.1"
+                        disabled
+                        data-target="#noise-filter feSpotLight"
+                        data-target-attr="z"
+                        data-force-reload-svg="true"
+                      />
+                    </div>
+                    <output class="col-sm-3"></output>
+                  </div>
+                </div>
+                <div class="form-control-wrapper">
+                  <label class="form-label" for="ctrl-lighting-spot-pointsat-x">
+                    Points At X
+                  </label>
+                  <div class="row">
+                    <div class="col-sm-9">
+                      <input
+                        type="range"
+                        class="form-range"
+                        id="ctrl-lighting-spot-pointsat-x"
+                        min="0"
+                        max="1000"
+                        value="100"
+                        step="0.1"
+                        disabled
+                        data-target="#noise-filter feSpotLight"
+                        data-target-attr="pointsAtX"
+                        data-force-reload-svg="true"
+                      />
+                    </div>
+                    <output class="col-sm-3"></output>
+                  </div>
+                </div>
+                <div class="form-control-wrapper">
+                  <label class="form-label" for="ctrl-lighting-spot-pointsat-y">Points At Y</label>
+                  <div class="row">
+                    <div class="col-sm-9">
+                      <input
+                        type="range"
+                        class="form-range"
+                        id="ctrl-lighting-spot-pointsat-y"
+                        min="0"
+                        max="1000"
+                        value="100"
+                        step="0.1"
+                        disabled
+                        data-target="#noise-filter feSpotLight"
+                        data-target-attr="pointsAtY"
+                        data-force-reload-svg="true"
+                      />
+                    </div>
+                    <output class="col-sm-3"></output>
+                  </div>
+                </div>
+                <div class="form-control-wrapper">
+                  <label class="form-label" for="ctrl-lighting-spot-pointsat-z">Points At Z</label>
+                  <div class="row">
+                    <div class="col-sm-9">
+                      <input
+                        type="range"
+                        class="form-range"
+                        id="ctrl-lighting-spot-pointsat-z"
+                        min="0"
+                        max="100"
+                        value="50"
+                        step="0.1"
+                        disabled
+                        data-target="#noise-filter feSpotLight"
+                        data-target-attr="pointsAtZ"
+                        data-force-reload-svg="true"
+                      />
+                    </div>
+                    <output class="col-sm-3"></output>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
