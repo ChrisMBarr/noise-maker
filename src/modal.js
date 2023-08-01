@@ -8,7 +8,7 @@ $(() => {
 
   //All the 'copy' buttons
   $('.btn-copy').on('click', (btn) => {
-    const tgtSelector = $(btn).attr('data-target');
+    const tgtSelector = $(btn).data('target');
     if (tgtSelector) {
       navigator.clipboard.writeText($(tgtSelector).val()).then(
         () => {},

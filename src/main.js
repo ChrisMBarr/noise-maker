@@ -20,7 +20,7 @@ $(() => {
 
     //Checkboxes to enable/disable other inputs
     if ($enableInput.length) {
-      const $enableTargets = $($enableInput.attr('data-enable'));
+      const $enableTargets = $($enableInput.data('enable'));
       $enableInput.on('input', () => {
         const isChecked = $enableInput.is(':checked');
         $enableTargets.attr('disabled', !isChecked);
@@ -45,7 +45,7 @@ $(() => {
 
     if ($toggleVisibilityInput.length) {
       if ($toggleVisibilityInput.is(':checkbox')) {
-        const $toggleTargets = $($toggleVisibilityInput.attr('data-toggle-visibility'));
+        const $toggleTargets = $($toggleVisibilityInput.data('toggle-visibility'));
         $toggleVisibilityInput.on('input', () => {
           $toggleTargets.toggle($toggleVisibilityInput.is(':checked'));
 
@@ -62,7 +62,7 @@ $(() => {
         const allTargetsSelectorStr = $allToggles
           .toArray()
           .map((x) => {
-            return $(x).attr('data-toggle-visibility-and-enable');
+            return $(x).data('toggle-visibility-and-enable');
           })
           .join(',');
         const $allTargets = $(allTargetsSelectorStr);
@@ -70,7 +70,7 @@ $(() => {
         $toggleVisibilityInput.on('input', () => {
           const selectedVal = $toggleVisibilityInput.val();
           const $currentTarget = $toggleVisibilityInput.find(`option[value=${selectedVal}]`);
-          const $toggleTargets = $($currentTarget.attr('data-toggle-visibility-and-enable'));
+          const $toggleTargets = $($currentTarget.data('toggle-visibility-and-enable'));
 
           $allTargets.hide().find('input, select').attr('disabled', 'disabled');
           const $enabledInputs = $toggleTargets.show().find('input, select').removeAttr('disabled'); //.trigger('input');
@@ -93,17 +93,17 @@ $(() => {
 
 function updateTexture($inputEl, $outputDisplay) {
   const isDisabled = $inputEl.is(':disabled');
-  const suffix = $inputEl.attr('data-target-filter-prop-suffix');
+  const suffix = $inputEl.data('target-filter-prop-suffix');
   const val = suffix ? $inputEl.val() + suffix : $inputEl.val();
 
   if ($outputDisplay.length) {
     $outputDisplay.text(isDisabled ? '' : val);
   }
 
-  const tgtSelector = $inputEl.attr('data-target');
-  const tgtStyleProp = $inputEl.attr('data-target-style-prop');
-  const tgtFilterProp = $inputEl.attr('data-target-filter-prop');
-  const tgtAttr = $inputEl.attr('data-target-attr');
+  const tgtSelector = $inputEl.data('target');
+  const tgtStyleProp = $inputEl.data('target-style-prop');
+  const tgtFilterProp = $inputEl.data('target-filter-prop');
+  const tgtAttr = $inputEl.data('target-attr');
 
   if (tgtSelector) {
     const $tgt = $(tgtSelector);
@@ -128,7 +128,7 @@ function updateTexture($inputEl, $outputDisplay) {
       updateTextureFilter($tgt, tgtFilterProp, val, isDisabled);
     }
 
-    if ($inputEl.attr('data-force-reload-svg')) {
+    if ($inputEl.data('force-reload-svg')) {
       forceReloadSvg();
     }
   }
