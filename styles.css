@@ -21,6 +21,10 @@ aside {
   cursor: help;
 }
 
+.modal {
+  --bs-modal-width: 600px !important;
+}
+
 dialog {
   padding: 0;
   border: none;
