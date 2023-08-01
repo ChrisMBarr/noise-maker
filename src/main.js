@@ -1,6 +1,7 @@
 const svgNs = 'http://www.w3.org/2000/svg';
 let $baseFrequencyX;
 let $baseFrequencyY;
+let lightingEffectsEnabled = false;
 const textureStyles = {
   filter: {},
 };
@@ -26,12 +27,11 @@ $(() => {
         $enableTargets.attr('disabled', !isChecked);
 
         if ($enableInput.attr('id') === 'ctrl-enable-lighting') {
-          //special condition when enabling/disabling lighting
-          const $svgFilter = $('#noise-filter');
+          lightingEffectsEnabled = isChecked;
           if (isChecked) {
-            $svgFilter.append(createLightingElement());
+            createLightingElement();
           } else {
-            $svgFilter.find('feDiffuseLighting, feSpecularLighting').remove();
+            clearLightingEffects();
           }
         }
 
@@ -73,8 +73,19 @@ $(() => {
           const $toggleTargets = $($currentTarget.data('toggle-visibility-and-enable'));
 
           $allTargets.hide().find('input, select').attr('disabled', 'disabled');
-          const $enabledInputs = $toggleTargets.show().find('input, select').removeAttr('disabled'); //.trigger('input');
+          const $enabledInputs = $toggleTargets.show().find('input, select').removeAttr('disabled');
+
           $enabledInputs.each((_i, t) => updateTexture($(t), $outputDisplay));
+
+          const id = $toggleVisibilityInput.attr('id');
+          if (lightingEffectsEnabled && id === 'ctrl-lighting-primitive-type') {
+            clearLightingEffects();
+            createLightingElement();
+
+            $('#lighting-controls .shared-lighting-controls')
+              .find('input:not(:disabled), select:not(:disabled):not(#' + id + ')')
+              .trigger('input');
+          }
         });
       }
     }

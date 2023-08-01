@@ -30,15 +30,21 @@ function getPropsAsCssString(obj) {
     .join(' ');
 }
 
+function clearLightingEffects() {
+  $('#noise-filter').find('feDiffuseLighting, feSpecularLighting').remove();
+}
+
 function createLightingElement() {
+  const $svgFilter = $('#noise-filter');
+  const result = $svgFilter.find('feTurbulence').attr('result');
   const lightingPrimitiveType = $('#ctrl-lighting-primitive-type').val();
-  const lightType = 'feDistantLight'; //$('#ctrl-light-type').val();
+  const lightType = $('#ctrl-light-type').val();
 
   const lightingPrimitiveEl = document.createElementNS(svgNs, lightingPrimitiveType);
-  lightingPrimitiveEl.setAttributeNS(svgNs, 'in', 'noise'); //needs to match the `result` property on the `feTurbulence` element
+  lightingPrimitiveEl.setAttributeNS(svgNs, 'in', result);
 
   let lightEl = document.createElementNS(svgNs, lightType);
   lightingPrimitiveEl.appendChild(lightEl);
 
-  return lightingPrimitiveEl;
+  $svgFilter.append(lightingPrimitiveEl);
 }

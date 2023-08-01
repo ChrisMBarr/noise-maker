@@ -35,9 +35,7 @@
             <div class="form-control-wrapper">
               <label class="form-label" for="ctrl-base-frequency-x"
                 >Base Frequency
-                <span class="baseFrequencyToggleDisplay" data-display="inline" style="display: none"
-                  >X</span
-                >
+                <span class="baseFrequencyToggleDisplay" data-display="inline">X</span>
                 <i
                   class="bi bi-question-circle-fill tip"
                   title="The size/scale of the grain in the noise"
@@ -62,7 +60,7 @@
               </div>
             </div>
 
-            <div class="form-control-wrapper baseFrequencyToggleDisplay" style="display: none">
+            <div class="form-control-wrapper baseFrequencyToggleDisplay">
               <label class="form-label" for="ctrl-base-frequency-y"
                 >Base Frequency Y
                 <i
@@ -182,17 +180,17 @@
                   type="checkbox"
                   class="form-check-input"
                   id="ctrl-enable-lighting"
-                  data-toggle-visibility="#lighting-controls"
-                  data-enable="#shared-lighting-controls input, #shared-lighting-controls select"
+                  data-toggle-visibility="#lighting-controls, #light-color"
+                  data-enable="#lighting-controls .shared-lighting-controls input, #lighting-controls .shared-lighting-controls select"
                 />
-                <label class="form-check-label" for="ctrl-enable-lighting"> Enable Lighting </label>
+                <label class="form-check-label" for="ctrl-enable-lighting"> Enable </label>
               </div>
             </div>
 
-            <div id="lighting-controls" style="display: none">
-              <div class="row" id="shared-lighting-controls">
+            <div id="lighting-controls">
+              <div class="row">
                 <div class="col">
-                  <div class="form-control-wrapper">
+                  <div class="form-control-wrapper" id="light-color">
                     <label class="form-label" for="ctrl-lighting-lighting-color">
                       Light Color
                       <i
@@ -212,13 +210,14 @@
                   </div>
                 </div>
                 <div class="col">
-                  <div class="form-control-wrapper">
+                  <div class="form-control-wrapper shared-lighting-controls">
                     <label class="form-label" for="ctrl-lighting-primitive-type">
-                      Lighting Type
+                      Primitive Type
                     </label>
                     <select
                       class="form-select"
                       id="ctrl-lighting-primitive-type"
+                      disabled
                       data-toggle-visibility
                     >
                       <option
@@ -239,13 +238,41 @@
                 </div>
               </div>
 
-              <div id="lighting-primitive-diffuse-options" style="display: none">
+              <div class="form-control-wrapper shared-lighting-controls">
+                <label class="form-label" for="ctrl-lighting-surface-scale">
+                  Surface Scale
+                  <i
+                    class="bi bi-question-circle-fill tip"
+                    title="The depth of the shadow or lighting effect on the texture"
+                  ></i>
+                </label>
+                <div class="row">
+                  <div class="col-sm-9">
+                    <input
+                      type="range"
+                      class="form-range"
+                      id="ctrl-lighting-surface-scale"
+                      min="0.1"
+                      max="10"
+                      value="1"
+                      step="0.1"
+                      disabled
+                      data-target="#noise-filter feDiffuseLighting, #noise-filter feSpecularLighting"
+                      data-target-attr="surfaceScale"
+                      data-force-reload-svg="true"
+                    />
+                  </div>
+                  <output class="col-sm-3"></output>
+                </div>
+              </div>
+
+              <div id="lighting-primitive-diffuse-options">
                 <div class="form-control-wrapper">
-                  <label class="form-label" for="ctrl-lighting-surface-scale">
-                    Surface Scale
+                  <label class="form-label" for="ctrl-lighting-diffuse-constant">
+                    Diffuse Constant
                     <i
                       class="bi bi-question-circle-fill tip"
-                      title="The depth of the shadow or lighting effect on the texture"
+                      title="It's used to determine the final RGB value of a given pixel. The brighter the light color, the smaller this number should be."
                     ></i>
                   </label>
                   <div class="row">
@@ -253,14 +280,44 @@
                       <input
                         type="range"
                         class="form-range"
-                        id="ctrl-lighting-surface-scale"
-                        min="1"
+                        id="ctrl-lighting-diffuse-constant"
+                        min="0.1"
                         max="10"
                         value="1"
-                        step="1"
+                        step="0.1"
                         disabled
                         data-target="#noise-filter feDiffuseLighting"
-                        data-target-attr="surfaceScale"
+                        data-target-attr="diffuseConstant"
+                        data-force-reload-svg="true"
+                      />
+                    </div>
+                    <output class="col-sm-3"></output>
+                  </div>
+                </div>
+              </div>
+
+              <div id="lighting-primitive-specular-options">
+                <div class="form-control-wrapper">
+                  <label class="form-label" for="ctrl-lighting-specular-exponent">
+                    Specular Exponent
+                    <i
+                      class="bi bi-question-circle-fill tip"
+                      title="The focus for the light source. The bigger the value the brighter the light."
+                    ></i>
+                  </label>
+                  <div class="row">
+                    <div class="col-sm-9">
+                      <input
+                        type="range"
+                        class="form-range"
+                        id="ctrl-lighting-specular-exponent"
+                        min="1"
+                        max="50"
+                        value="1"
+                        step="0.1"
+                        disabled
+                        data-target="#noise-filter feSpecularLighting"
+                        data-target-attr="specularExponent"
                         data-force-reload-svg="true"
                       />
                     </div>
@@ -268,6 +325,61 @@
                   </div>
                 </div>
 
+                <div class="form-control-wrapper">
+                  <label class="form-label" for="ctrl-lighting-specular-constant">
+                    Specular Constant
+                    <i
+                      class="bi bi-question-circle-fill tip"
+                      title="The ratio of reflection of the specular lighting. The bigger the value the stronger the reflection."
+                    ></i>
+                  </label>
+                  <div class="row">
+                    <div class="col-sm-9">
+                      <input
+                        type="range"
+                        class="form-range"
+                        id="ctrl-lighting-specular-constant"
+                        min="0.1"
+                        max="10"
+                        value="1"
+                        step="0.1"
+                        disabled
+                        data-target="#noise-filter feSpecularLighting"
+                        data-target-attr="specularConstant"
+                        data-force-reload-svg="true"
+                      />
+                    </div>
+                    <output class="col-sm-3"></output>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-control-wrapper shared-lighting-controls">
+                <label class="form-label" for="ctrl-light-type"> Light Type </label>
+                <select class="form-select" id="ctrl-light-type" disabled data-toggle-visibility>
+                  <option
+                    value="feDistantLight"
+                    data-toggle-visibility-and-enable="#light-type-distance-options"
+                    selected
+                  >
+                    Distance
+                  </option>
+                  <option
+                    value="fePointLight"
+                    data-toggle-visibility-and-enable="#light-type-point-options"
+                  >
+                    Point
+                  </option>
+                  <option
+                    value="feSpotLight"
+                    data-toggle-visibility-and-enable="#light-type-spot-options"
+                  >
+                    Spot
+                  </option>
+                </select>
+              </div>
+
+              <div id="light-type-distance-options">
                 <div class="form-control-wrapper">
                   <label class="form-label" for="ctrl-lighting-azimuth">
                     Direction
@@ -325,9 +437,8 @@
                 </div>
               </div>
 
-              <div id="lighting-primitive-specular-options" style="display: none">
-                Specular! <input />
-              </div>
+              <div id="light-type-point-options">Point!</div>
+              <div id="light-type-spot-options">Spot!</div>
             </div>
           </div>
         </div>
