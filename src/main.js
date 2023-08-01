@@ -72,20 +72,23 @@ $(() => {
           const $currentTarget = $toggleVisibilityInput.find(`option[value=${selectedVal}]`);
           const $toggleTargets = $($currentTarget.data('toggle-visibility-and-enable'));
 
+          const id = $toggleVisibilityInput.attr('id');
+          if (lightingEffectsEnabled) {
+            if (id === 'ctrl-lighting-primitive-type') {
+              clearLightingEffects();
+              createLightingElement();
+              $('#lighting-controls .shared-lighting-controls')
+                .find('input, select:not(#' + id + ')')
+                .trigger('input');
+            } else if (id === 'ctrl-light-type') {
+              replaceLightElement();
+            }
+          }
+
           $allTargets.hide().find('input, select').attr('disabled', 'disabled');
           const $enabledInputs = $toggleTargets.show().find('input, select').removeAttr('disabled');
-
           $enabledInputs.each((_i, t) => updateTexture($(t), $outputDisplay));
-
-          const id = $toggleVisibilityInput.attr('id');
-          if (lightingEffectsEnabled && id === 'ctrl-lighting-primitive-type') {
-            clearLightingEffects();
-            createLightingElement();
-
-            $('#lighting-controls .shared-lighting-controls')
-              .find('input:not(:disabled), select:not(:disabled):not(#' + id + ')')
-              .trigger('input');
-          }
+          // $enabledInputs.trigger('input');
         });
       }
     }

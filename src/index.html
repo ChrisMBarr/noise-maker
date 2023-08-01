@@ -219,6 +219,7 @@
                       id="ctrl-lighting-primitive-type"
                       disabled
                       data-toggle-visibility
+                      data-force-reload-svg="true"
                     >
                       <option
                         value="feDiffuseLighting"
@@ -356,13 +357,19 @@
 
               <div class="form-control-wrapper shared-lighting-controls">
                 <label class="form-label" for="ctrl-light-type"> Light Type </label>
-                <select class="form-select" id="ctrl-light-type" disabled data-toggle-visibility>
+                <select
+                  class="form-select"
+                  id="ctrl-light-type"
+                  disabled
+                  data-toggle-visibility
+                  data-force-reload-svg="true"
+                >
                   <option
                     value="feDistantLight"
-                    data-toggle-visibility-and-enable="#light-type-distance-options"
+                    data-toggle-visibility-and-enable="#light-type-distant-options"
                     selected
                   >
-                    Distance
+                    Distant
                   </option>
                   <option
                     value="fePointLight"
@@ -379,9 +386,9 @@
                 </select>
               </div>
 
-              <div id="light-type-distance-options">
+              <div id="light-type-distant-options">
                 <div class="form-control-wrapper">
-                  <label class="form-label" for="ctrl-lighting-azimuth">
+                  <label class="form-label" for="ctrl-lighting-distant-azimuth">
                     Direction
                     <i
                       class="bi bi-question-circle-fill tip"
@@ -393,7 +400,7 @@
                       <input
                         type="range"
                         class="form-range"
-                        id="ctrl-lighting-azimuth"
+                        id="ctrl-lighting-distant-azimuth"
                         min="1"
                         max="360"
                         value="45"
@@ -409,7 +416,7 @@
                 </div>
 
                 <div class="form-control-wrapper">
-                  <label class="form-label" for="ctrl-lighting-elevation">
+                  <label class="form-label" for="ctrl-lighting-distant-elevation">
                     Elevation
                     <i
                       class="bi bi-question-circle-fill tip"
@@ -421,7 +428,7 @@
                       <input
                         type="range"
                         class="form-range"
-                        id="ctrl-lighting-elevation"
+                        id="ctrl-lighting-distant-elevation"
                         min="1"
                         max="270"
                         value="60"
@@ -437,7 +444,72 @@
                 </div>
               </div>
 
-              <div id="light-type-point-options">Point!</div>
+              <div id="light-type-point-options">
+                <div class="form-control-wrapper">
+                  <label class="form-label" for="ctrl-lighting-point-x"> X </label>
+                  <div class="row">
+                    <div class="col-sm-9">
+                      <input
+                        type="range"
+                        class="form-range"
+                        id="ctrl-lighting-point-x"
+                        min="0"
+                        max="1000"
+                        value="100"
+                        step="0.1"
+                        disabled
+                        data-target="#noise-filter fePointLight"
+                        data-target-attr="x"
+                        data-force-reload-svg="true"
+                      />
+                    </div>
+                    <output class="col-sm-3"></output>
+                  </div>
+                </div>
+                <div class="form-control-wrapper">
+                  <label class="form-label" for="ctrl-lighting-point-y"> Y </label>
+                  <div class="row">
+                    <div class="col-sm-9">
+                      <input
+                        type="range"
+                        class="form-range"
+                        id="ctrl-lighting-point-y"
+                        min="0"
+                        max="1000"
+                        value="100"
+                        step="0.1"
+                        disabled
+                        data-target="#noise-filter fePointLight"
+                        data-target-attr="y"
+                        data-force-reload-svg="true"
+                      />
+                    </div>
+                    <output class="col-sm-3"></output>
+                  </div>
+                </div>
+                <div class="form-control-wrapper">
+                  <label class="form-label" for="ctrl-lighting-point-z"> Z </label>
+                  <div class="row">
+                    <div class="col-sm-9">
+                      <input
+                        type="range"
+                        class="form-range"
+                        id="ctrl-lighting-point-z"
+                        min="0"
+                        max="100"
+                        value="50"
+                        step="0.1"
+                        disabled
+                        data-target="#noise-filter fePointLight"
+                        data-target-attr="z"
+                        data-force-reload-svg="true"
+                      />
+                    </div>
+                    <output class="col-sm-3"></output>
+                  </div>
+                </div>
+              </div>
+
               <div id="light-type-spot-options">Spot!</div>
             </div>
           </div>

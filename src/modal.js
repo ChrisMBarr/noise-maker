@@ -59,9 +59,8 @@ $(() => {
       .join('\n');
 
     $ctrlCodeHtml.val(
-      `<svg xmlns="${svgNs}" class="hidden-svg">${prettyIndentHtml(
-        $svgFilter.get(0).outerHTML
-      )}</svg>`
+      `<svg xmlns="${svgNs}" class="hidden-svg">
+${prettyIndentHtml($svgFilter.get(0).outerHTML)}</svg>`
     );
 
     $ctrlCodeCss.val(`.bg-texture {
@@ -83,10 +82,15 @@ ${textureStylesStr}
     const tagLevels = {
       filter: 2,
       feTurbulence: 4,
+      feSpecularLighting: 4,
+      feDiffuseLighting: 4,
+      feDistantLight: 6,
+      fePointLight: 6,
+      feSpotLight: 6,
     };
 
     Object.keys(tagLevels).forEach((k) => {
-      const pattern = new RegExp(`\\s*(<\\/?${k})`, 'ig');
+      const pattern = new RegExp(`\n\\s*(<\\/?${k})`, 'ig');
       htmlStr = htmlStr.replace(pattern, `\n${' '.repeat(tagLevels[k])}$1`);
     });
 

@@ -38,13 +38,27 @@ function createLightingElement() {
   const $svgFilter = $('#noise-filter');
   const result = $svgFilter.find('feTurbulence').attr('result');
   const lightingPrimitiveType = $('#ctrl-lighting-primitive-type').val();
-  const lightType = $('#ctrl-light-type').val();
 
   const lightingPrimitiveEl = document.createElementNS(svgNs, lightingPrimitiveType);
   lightingPrimitiveEl.setAttributeNS(svgNs, 'in', result);
+  lightingPrimitiveEl.appendChild(document.createTextNode('\n'));
+  lightingPrimitiveEl.appendChild(getLightElement());
+  lightingPrimitiveEl.appendChild(document.createTextNode('\n'));
 
-  let lightEl = document.createElementNS(svgNs, lightType);
-  lightingPrimitiveEl.appendChild(lightEl);
+  $svgFilter.append('\n').append(lightingPrimitiveEl).append('\n');
+}
 
-  $svgFilter.append(lightingPrimitiveEl);
+function getLightElement() {
+  const lightType = $('#ctrl-light-type').val();
+  return document.createElementNS(svgNs, lightType);
+}
+
+function replaceLightElement() {
+  const $svgFilter = $('#noise-filter');
+  $svgFilter.find('feDistantLight, fePointLight, feSpotLight').remove();
+  $svgFilter
+    .find('feDiffuseLighting, feSpecularLighting')
+    .append('\n')
+    .append(getLightElement())
+    .append('\n');
 }
