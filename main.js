@@ -67,9 +67,9 @@ $(() => {
           .join(',');
         const $allTargets = $(allTargetsSelectorStr);
 
-        $toggleVisibilityInput.on('input', () => {
-          const selectedVal = $toggleVisibilityInput.val();
-          const $currentTarget = $toggleVisibilityInput.find(`option[value=${selectedVal}]`);
+        $toggleVisibilityInput.on('input', (ev) => {
+          console.log(ev.target.selectedIndex);
+          const $currentTarget = $toggleVisibilityInput.children().eq(ev.target.selectedIndex);
           const $toggleTargets = $($currentTarget.data('toggle-visibility-and-enable'));
 
           const id = $toggleVisibilityInput.attr('id');
@@ -88,7 +88,7 @@ $(() => {
           $allTargets.hide().find('input, select').attr('disabled', 'disabled');
           const $enabledInputs = $toggleTargets.show().find('input, select').removeAttr('disabled');
           $enabledInputs.each((_i, t) => updateTexture($(t), $outputDisplay));
-          // $enabledInputs.trigger('input');
+          $enabledInputs.trigger('input');
         });
       }
     }
@@ -136,7 +136,13 @@ function updateTexture($inputEl, $outputDisplay) {
         }
         $tgt.attr(tgtAttr, combinedBaseFreq);
       } else {
-        $tgt.attr(tgtAttr, val);
+        if (tgtAttr.includes(' ')) {
+          //multiple attributes to set with the same value
+          const attrObj = tgtAttr.split(' ').reduce((acc, curr) => ((acc[curr] = val), acc), {});
+          $tgt.attr(attrObj);
+        } else {
+          $tgt.attr(tgtAttr, val);
+        }
       }
     } else if (tgtFilterProp) {
       updateTextureFilter($tgt, tgtFilterProp, val, isDisabled);
