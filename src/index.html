@@ -379,9 +379,15 @@
                   </option>
                   <option
                     value="feSpotLight"
-                    data-toggle-visibility-and-enable="#light-type-spot-options"
+                    data-toggle-visibility-and-enable="#light-type-spot-overhead-options"
                   >
-                    Spot
+                    Spot (Overhead)
+                  </option>
+                  <option
+                    value="feSpotLight"
+                    data-toggle-visibility-and-enable="#light-type-spot-manual-options"
+                  >
+                    Spot (Manual)
                   </option>
                 </select>
               </div>
@@ -510,7 +516,109 @@
                 </div>
               </div>
 
-              <div id="light-type-spot-options">
+              <div id="light-type-spot-overhead-options">
+                <div class="form-control-wrapper">
+                  <label class="form-label" for="ctrl-lighting-spot-overhead-cone-angle">
+                    Cone Angle
+                    <i
+                      class="bi bi-question-circle-fill tip"
+                      title="The angle in degrees between the spot light axis (i.e. the axis between the light source and the point to which it is pointing at) and the spot light cone. So it defines a limiting cone which restricts the region where the light is projected. No light is projected outside the cone."
+                    ></i>
+                  </label>
+                  <div class="row">
+                    <div class="col-sm-9">
+                      <input
+                        type="range"
+                        class="form-range"
+                        id="ctrl-lighting-spot-overhead-cone-angle"
+                        min="1"
+                        max="90"
+                        value="45"
+                        step="0.1"
+                        disabled
+                        data-target="#noise-filter feSpotLight"
+                        data-target-attr="limitingConeAngle"
+                        data-force-reload-svg="true"
+                      />
+                    </div>
+                    <output class="col-sm-3"></output>
+                  </div>
+                </div>
+                <div class="form-control-wrapper">
+                  <label class="form-label" for="ctrl-lighting-spot-overhead-x"> X </label>
+                  <div class="row">
+                    <div class="col-sm-9">
+                      <input
+                        type="range"
+                        class="form-range"
+                        id="ctrl-lighting-spot-overhead-x"
+                        min="0"
+                        max="1000"
+                        value="100"
+                        step="0.1"
+                        disabled
+                        data-target="#noise-filter feSpotLight"
+                        data-target-attr="x pointsAtX"
+                        data-force-reload-svg="true"
+                      />
+                    </div>
+                    <output class="col-sm-3"></output>
+                  </div>
+                </div>
+                <div class="form-control-wrapper">
+                  <label class="form-label" for="ctrl-lighting-spot-overhead-y"> Y </label>
+                  <div class="row">
+                    <div class="col-sm-9">
+                      <input
+                        type="range"
+                        class="form-range"
+                        id="ctrl-lighting-spot-overhead-y"
+                        min="0"
+                        max="1000"
+                        value="100"
+                        step="0.1"
+                        disabled
+                        data-target="#noise-filter feSpotLight"
+                        data-target-attr="y pointsAtY"
+                        data-force-reload-svg="true"
+                      />
+                    </div>
+                    <output class="col-sm-3"></output>
+                  </div>
+                </div>
+                <div class="form-control-wrapper">
+                  <label class="form-label" for="ctrl-lighting-spot-overhead-z"> Z </label>
+                  <div class="row">
+                    <div class="col-sm-9">
+                      <input
+                        type="range"
+                        class="form-range"
+                        id="ctrl-lighting-spot-overhead-z"
+                        min="0"
+                        max="100"
+                        value="50"
+                        step="0.1"
+                        disabled
+                        data-target="#noise-filter feSpotLight"
+                        data-target-attr="z"
+                        data-force-reload-svg="true"
+                      />
+                    </div>
+                    <output class="col-sm-3"></output>
+                  </div>
+                </div>
+
+                <input
+                  type="hidden"
+                  id="ctrl-lighting-spot-pointsat-overhead-z"
+                  value="0"
+                  disabled
+                  data-target="#noise-filter feSpotLight"
+                  data-target-attr="pointsAtZ"
+                />
+              </div>
+
+              <div id="light-type-spot-manual-options">
                 <div class="form-control-wrapper">
                   <label class="form-label" for="ctrl-lighting-spot-cone-angle">
                     Cone Angle
@@ -526,7 +634,7 @@
                         class="form-range"
                         id="ctrl-lighting-spot-cone-angle"
                         min="1"
-                        max="360"
+                        max="90"
                         value="45"
                         step="0.1"
                         disabled
@@ -613,7 +721,7 @@
                         id="ctrl-lighting-spot-pointsat-x"
                         min="0"
                         max="1000"
-                        value="100"
+                        value="150"
                         step="0.1"
                         disabled
                         data-target="#noise-filter feSpotLight"
@@ -634,7 +742,7 @@
                         id="ctrl-lighting-spot-pointsat-y"
                         min="0"
                         max="1000"
-                        value="100"
+                        value="150"
                         step="0.1"
                         disabled
                         data-target="#noise-filter feSpotLight"
