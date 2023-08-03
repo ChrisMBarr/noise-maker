@@ -6,4 +6,4 @@ https://finitelooper.github.io/noise-maker/
 
 TODO:
 
-- Add "handles" for modifying X/Y light positions
+- Add "handles" in the UI for modifying X/Y light positions
