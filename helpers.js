@@ -1,18 +1,46 @@
+let forceReloadDebounce = null;
 function forceReloadSvg() {
-  //Re-select every time since it's being replaced and we lose the reference
-  const $svg = $('#demo-output svg');
+  clearTimeout(forceReloadDebounce);
+  forceReloadDebounce = setTimeout(() => {
+    //Re-select every time since it's being replaced and we lose the reference
+    const $svg = $('#demo-output svg');
 
-  //remove any styles it has
-  if ($svg.css('transform')) {
-    $svg.css('transform', '');
-  }
+    //remove any styles it has
+    if ($svg.css('transform')) {
+      $svg.css('transform', '');
+    }
 
-  //clone the element and replace it
-  var $clone = $svg.clone();
-  $svg.replaceWith($clone);
+    //clone the element and replace it
+    var $clone = $svg.clone();
+    $svg.replaceWith($clone);
 
-  //force it into a new GPU rendering layer
-  $clone.css('transform', 'translateZ(0)');
+    //force it into a new GPU rendering layer
+    $clone.css('transform', 'translateZ(0)');
+  }, 50);
+}
+
+let lightingMaxDebounce = null;
+function updateLightingMaxValues() {
+  console.log('updateLightingMaxValues');
+  clearTimeout(lightingMaxDebounce);
+  lightingMaxDebounce = setTimeout(() => {
+    const $svg = $('#demo-output svg');
+    let maxX = $svg.width();
+    let maxY = $svg.height();
+
+    console.log(maxX, maxY);
+
+    $(
+      '#ctrl-lighting-point-x, #ctrl-lighting-spot-overhead-x, #ctrl-lighting-spot-manual-x, #ctrl-lighting-spot-manual-pointsat-x'
+    )
+      .attr('max', maxX)
+      .trigger(inputEventName);
+    $(
+      '#ctrl-lighting-point-y, #ctrl-lighting-spot-overhead-y, #ctrl-lighting-spot-manual-y, #ctrl-lighting-spot-manual-pointsat-y'
+    )
+      .attr('max', maxY)
+      .trigger(inputEventName);
+  }, 50);
 }
 
 function updateTextureFilter($tgt, tgtFilterProp, val, isDisabled) {

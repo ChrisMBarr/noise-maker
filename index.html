@@ -172,22 +172,18 @@
 
         <div class="card m-3 mb-0">
           <div class="card-body">
-            <h5 class="card-title">Lighting</h5>
+            <h5 class="card-title mb-0">
+              <input
+                type="checkbox"
+                class="form-check-input"
+                id="ctrl-enable-lighting"
+                data-toggle-visibility="#lighting-controls, #light-color"
+                data-enable="#lighting-controls .shared-lighting-controls input, #lighting-controls .shared-lighting-controls select"
+              />
+              <label for="ctrl-enable-lighting">Lighting</label>
+            </h5>
 
-            <div class="form-control-wrapper">
-              <div class="form-check mb-0">
-                <input
-                  type="checkbox"
-                  class="form-check-input"
-                  id="ctrl-enable-lighting"
-                  data-toggle-visibility="#lighting-controls, #light-color"
-                  data-enable="#lighting-controls .shared-lighting-controls input, #lighting-controls .shared-lighting-controls select"
-                />
-                <label class="form-check-label" for="ctrl-enable-lighting"> Enable </label>
-              </div>
-            </div>
-
-            <div id="lighting-controls">
+            <div id="lighting-controls" class="mt-3">
               <div class="row">
                 <div class="col">
                   <div class="form-control-wrapper" id="light-color">
@@ -620,7 +616,7 @@
 
               <div id="light-type-spot-manual-options">
                 <div class="form-control-wrapper">
-                  <label class="form-label" for="ctrl-lighting-spot-cone-angle">
+                  <label class="form-label" for="ctrl-lighting-spot-manual-cone-angle">
                     Cone Angle
                     <i
                       class="bi bi-question-circle-fill tip"
@@ -632,7 +628,7 @@
                       <input
                         type="range"
                         class="form-range"
-                        id="ctrl-lighting-spot-cone-angle"
+                        id="ctrl-lighting-spot-manual-cone-angle"
                         min="1"
                         max="90"
                         value="45"
@@ -647,13 +643,13 @@
                   </div>
                 </div>
                 <div class="form-control-wrapper">
-                  <label class="form-label" for="ctrl-lighting-spot-x"> X </label>
+                  <label class="form-label" for="ctrl-lighting-spot-manual-x"> X </label>
                   <div class="row">
                     <div class="col-sm-9">
                       <input
                         type="range"
                         class="form-range"
-                        id="ctrl-lighting-spot-x"
+                        id="ctrl-lighting-spot-manual-x"
                         min="0"
                         max="1000"
                         value="100"
@@ -668,13 +664,13 @@
                   </div>
                 </div>
                 <div class="form-control-wrapper">
-                  <label class="form-label" for="ctrl-lighting-spot-y"> Y </label>
+                  <label class="form-label" for="ctrl-lighting-spot-manual-y"> Y </label>
                   <div class="row">
                     <div class="col-sm-9">
                       <input
                         type="range"
                         class="form-range"
-                        id="ctrl-lighting-spot-y"
+                        id="ctrl-lighting-spot-manual-y"
                         min="0"
                         max="1000"
                         value="100"
@@ -689,13 +685,13 @@
                   </div>
                 </div>
                 <div class="form-control-wrapper">
-                  <label class="form-label" for="ctrl-lighting-spot-z"> Z </label>
+                  <label class="form-label" for="ctrl-lighting-spot-manual-z"> Z </label>
                   <div class="row">
                     <div class="col-sm-9">
                       <input
                         type="range"
                         class="form-range"
-                        id="ctrl-lighting-spot-z"
+                        id="ctrl-lighting-spot-manual-z"
                         min="0"
                         max="100"
                         value="50"
@@ -710,7 +706,7 @@
                   </div>
                 </div>
                 <div class="form-control-wrapper">
-                  <label class="form-label" for="ctrl-lighting-spot-pointsat-x">
+                  <label class="form-label" for="ctrl-lighting-spot-manual-pointsat-x">
                     Points At X
                   </label>
                   <div class="row">
@@ -718,7 +714,7 @@
                       <input
                         type="range"
                         class="form-range"
-                        id="ctrl-lighting-spot-pointsat-x"
+                        id="ctrl-lighting-spot-manual-pointsat-x"
                         min="0"
                         max="1000"
                         value="150"
@@ -733,13 +729,15 @@
                   </div>
                 </div>
                 <div class="form-control-wrapper">
-                  <label class="form-label" for="ctrl-lighting-spot-pointsat-y">Points At Y</label>
+                  <label class="form-label" for="ctrl-lighting-spot-manual-pointsat-y"
+                    >Points At Y</label
+                  >
                   <div class="row">
                     <div class="col-sm-9">
                       <input
                         type="range"
                         class="form-range"
-                        id="ctrl-lighting-spot-pointsat-y"
+                        id="ctrl-lighting-spot-manual-pointsat-y"
                         min="0"
                         max="1000"
                         value="150"
@@ -754,13 +752,15 @@
                   </div>
                 </div>
                 <div class="form-control-wrapper">
-                  <label class="form-label" for="ctrl-lighting-spot-pointsat-z">Points At Z</label>
+                  <label class="form-label" for="ctrl-lighting-spot-manual-pointsat-z"
+                    >Points At Z</label
+                  >
                   <div class="row">
                     <div class="col-sm-9">
                       <input
                         type="range"
                         class="form-range"
-                        id="ctrl-lighting-spot-pointsat-z"
+                        id="ctrl-lighting-spot-manual-pointsat-z"
                         min="0"
                         max="100"
                         value="50"
@@ -919,6 +919,62 @@
           </div>
         </div>
 
+        <div class="card m-3 mb-0">
+          <div class="card-body">
+            <h5 class="card-title mb-0">
+              <input
+                type="checkbox"
+                class="form-check-input"
+                id="ctrl-enable-custom-size"
+                data-toggle-visibility="#custom-size"
+                data-enable="#custom-size input"
+              />
+              <label for="ctrl-enable-custom-size"> Custom Size Preview</label>
+            </h5>
+
+            <div id="custom-size" class="row mt-3">
+              <div class="col">
+                <div class="form-control-wrapper mb-0">
+                  <label class="form-label" for="ctrl-custom-width"> Width </label>
+                  <div class="input-group">
+                    <input
+                      class="form-control"
+                      type="number"
+                      id="ctrl-custom-width"
+                      min="1"
+                      value="500"
+                      data-target="#demo-output svg"
+                      data-target-style-prop="width"
+                      data-target-filter-prop-suffix="px"
+                      data-force-reload-svg="true"
+                    />
+                    <span class="input-group-text">px</span>
+                  </div>
+                </div>
+              </div>
+              <div class="col">
+                <div class="form-control-wrapper mb-0">
+                  <label class="form-label" for="ctrl-custom-height"> Height </label>
+                  <div class="input-group">
+                    <input
+                      class="form-control"
+                      type="number"
+                      id="ctrl-custom-height"
+                      min="1"
+                      value="500"
+                      data-target="#demo-output svg"
+                      data-target-style-prop="height"
+                      data-target-filter-prop-suffix="px"
+                      data-force-reload-svg="true"
+                    />
+                    <span class="input-group-text">px</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div class="bg-white p-3 shadow position-sticky bottom-0">
           <button type="button" class="btn btn-primary w-100" id="btn-get-code">
             <i class="bi bi-code-slash"></i>
@@ -1000,7 +1056,7 @@
 
     <main class="w-100">
       <div id="demo-output" class="w-100 h-100">
-        <svg class="w-100 h-100">
+        <svg style="width: 100%; height: 100%">
           <filter id="noise-filter">
             <feTurbulence stitchTiles="stitch" result="noise"></feTurbulence>
           </filter>
