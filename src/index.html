@@ -172,22 +172,18 @@
 
         <div class="card m-3 mb-0">
           <div class="card-body">
-            <h5 class="card-title">Lighting</h5>
+            <h5 class="card-title mb-0">
+              <input
+                type="checkbox"
+                class="form-check-input"
+                id="ctrl-enable-lighting"
+                data-toggle-visibility="#lighting-controls, #light-color"
+                data-enable="#lighting-controls .shared-lighting-controls input, #lighting-controls .shared-lighting-controls select"
+              />
+              <label for="ctrl-enable-lighting">Lighting</label>
+            </h5>
 
-            <div class="form-control-wrapper">
-              <div class="form-check mb-0">
-                <input
-                  type="checkbox"
-                  class="form-check-input"
-                  id="ctrl-enable-lighting"
-                  data-toggle-visibility="#lighting-controls, #light-color"
-                  data-enable="#lighting-controls .shared-lighting-controls input, #lighting-controls .shared-lighting-controls select"
-                />
-                <label class="form-check-label" for="ctrl-enable-lighting"> Enable </label>
-              </div>
-            </div>
-
-            <div id="lighting-controls">
+            <div id="lighting-controls" class="mt-3">
               <div class="row">
                 <div class="col">
                   <div class="form-control-wrapper" id="light-color">
@@ -919,6 +915,58 @@
           </div>
         </div>
 
+        <div class="card m-3 mb-0">
+          <div class="card-body">
+            <h5 class="card-title mb-0">
+              <input
+                type="checkbox"
+                class="form-check-input"
+                id="ctrl-enable-custom-size"
+                data-toggle-visibility="#custom-size"
+                data-enable="#custom-size input"
+              />
+              <label for="ctrl-enable-custom-size"> Custom Size Preview</label>
+            </h5>
+
+            <div id="custom-size" class="row mt-3">
+              <div class="col">
+                <div class="form-control-wrapper mb-0">
+                  <label class="form-label" for="ctrl-custom-width"> Width </label>
+                  <div class="input-group">
+                    <input
+                      class="form-control"
+                      type="number"
+                      id="ctrl-custom-width"
+                      min="1"
+                      value="500"
+                      data-target="#demo-rect"
+                      data-target-attr="width"
+                    />
+                    <span class="input-group-text">px</span>
+                  </div>
+                </div>
+              </div>
+              <div class="col">
+                <div class="form-control-wrapper mb-0">
+                  <label class="form-label" for="ctrl-custom-height"> Height </label>
+                  <div class="input-group">
+                    <input
+                      class="form-control"
+                      type="number"
+                      id="ctrl-custom-height"
+                      min="1"
+                      value="500"
+                      data-target="#demo-rect"
+                      data-target-attr="height"
+                    />
+                    <span class="input-group-text">px</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div class="bg-white p-3 shadow position-sticky bottom-0">
           <button type="button" class="btn btn-primary w-100" id="btn-get-code">
             <i class="bi bi-code-slash"></i>
@@ -1006,6 +1054,7 @@
           </filter>
 
           <rect
+            id="demo-rect"
             x="0"
             y="0"
             width="100%"
