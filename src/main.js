@@ -1,10 +1,12 @@
 const svgNs = 'http://www.w3.org/2000/svg';
+let customSizeEnabled = false;
+let lightingEffectsEnabled = false;
+const inputEventName = 'input';
 const textureStyles = {
   filter: {},
 };
 
 $(() => {
-  let lightingEffectsEnabled = false;
   const $baseFrequencyX = $('#ctrl-base-frequency-x');
   const $baseFrequencyY = $('#ctrl-base-frequency-y');
 
@@ -22,7 +24,7 @@ $(() => {
       //Checkboxes to enable/disable other inputs
       if ($enableInput.length) {
         const $enableTargets = $($enableInput.data('enable'));
-        $enableInput.on('input', () => {
+        $enableInput.on(inputEventName, () => {
           const isChecked = $enableInput.is(':checked');
           $enableTargets.attr('disabled', !isChecked);
 
@@ -33,22 +35,26 @@ $(() => {
             } else {
               clearLightingEffects();
             }
-          } else if (!isChecked && $enableInput.attr('id') === 'ctrl-enable-custom-size') {
-            $('#demo-rect').attr({ height: '100%', width: '100%' });
+          } else if ($enableInput.attr('id') === 'ctrl-enable-custom-size') {
+            customSizeEnabled = isChecked;
+            updateLightingMaxValues();
+            if (!isChecked) {
+              $('#demo-output svg').css({ height: '100%', width: '100%' });
+            }
           }
 
           $enableTargets.each((_i, t) => updateTexture($(t), $outputDisplay));
-          $enableTargets.trigger('input');
+          $enableTargets.trigger(inputEventName);
         });
 
         //Initialize
-        $enableInput.trigger('input');
+        $enableInput.trigger(inputEventName);
       }
 
       if ($toggleVisibilityInput.length) {
         if ($toggleVisibilityInput.is(':checkbox')) {
           const $toggleTargets = $($toggleVisibilityInput.data('toggle-visibility'));
-          $toggleVisibilityInput.on('input', () => {
+          $toggleVisibilityInput.on(inputEventName, () => {
             $toggleTargets.toggle($toggleVisibilityInput.is(':checked'));
 
             if ($toggleVisibilityInput.attr('id') === 'ctrl-separate-frequencies') {
@@ -69,7 +75,7 @@ $(() => {
             .join(',');
           const $allTargets = $(allTargetsSelectorStr);
 
-          $toggleVisibilityInput.on('input', (ev) => {
+          $toggleVisibilityInput.on(inputEventName, (ev) => {
             const $currentTarget = $toggleVisibilityInput.children().eq(ev.target.selectedIndex);
             const $toggleTargets = $($currentTarget.data('toggle-visibility-and-enable'));
 
@@ -80,7 +86,7 @@ $(() => {
                 createLightingElement();
                 $('#lighting-controls .shared-lighting-controls')
                   .find('input, select:not(#' + id + ')')
-                  .trigger('input');
+                  .trigger(inputEventName);
               } else if (id === 'ctrl-light-type') {
                 replaceLightElement();
               }
@@ -92,21 +98,25 @@ $(() => {
               .find('input, select')
               .removeAttr('disabled');
             $enabledInputs.each((_i, t) => updateTexture($(t), $outputDisplay));
-            $enabledInputs.trigger('input');
+            $enabledInputs.trigger(inputEventName);
           });
         }
       }
 
       //Form inputs
       if ($input.length) {
-        $input.on('input', () => {
+        $input.on(inputEventName, () => {
           updateTexture($input, $outputDisplay);
         });
 
         //Initialize
-        $input.trigger('input');
+        $input.trigger(inputEventName);
       }
     });
+
+  //Initialize max values & update them on window resize
+  $(window).on('resize', updateLightingMaxValues);
+  updateLightingMaxValues();
 
   function updateTexture($inputEl, $outputDisplay) {
     const isDisabled = $inputEl.is(':disabled');
@@ -124,15 +134,17 @@ $(() => {
 
     if (tgtSelector) {
       const $tgt = $(tgtSelector);
+      const id = $inputEl.attr('id');
 
       if (!isDisabled && tgtStyleProp) {
         $tgt.css(tgtStyleProp, val);
         textureStyles[tgtStyleProp] = val;
+
+        if (id === 'ctrl-custom-height' || id === 'ctrl-custom-width') {
+          updateLightingMaxValues();
+        }
       } else if (!isDisabled && tgtAttr) {
-        if (
-          $inputEl.attr('id') === $baseFrequencyX.attr('id') ||
-          $inputEl.attr('id') === $baseFrequencyY.attr('id')
-        ) {
+        if (id === $baseFrequencyX.attr('id') || id === $baseFrequencyY.attr('id')) {
           let combinedBaseFreq = $baseFrequencyX.val();
           if (!$baseFrequencyY.is(':disabled')) {
             combinedBaseFreq += ` ${$baseFrequencyY.val()}`;
