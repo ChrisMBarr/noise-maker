@@ -21,14 +21,11 @@ function forceReloadSvg() {
 
 let lightingMaxDebounce = null;
 function updateLightingMaxValues() {
-  console.log('updateLightingMaxValues');
   clearTimeout(lightingMaxDebounce);
   lightingMaxDebounce = setTimeout(() => {
     const $svg = $('#demo-output svg');
     let maxX = $svg.width();
     let maxY = $svg.height();
-
-    console.log(maxX, maxY);
 
     $(
       '#ctrl-lighting-point-x, #ctrl-lighting-spot-overhead-x, #ctrl-lighting-spot-manual-x, #ctrl-lighting-spot-manual-pointsat-x'
