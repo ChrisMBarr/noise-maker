@@ -7,9 +7,10 @@ $(() => {
   $('#btn-get-code').on('click', openDialog);
 
   //All the 'copy' buttons
-  $('.btn-copy').on('click', (btn) => {
-    const tgtSelector = $(btn).data('target');
+  $('.btn-copy').on('click', (event) => {
+    const tgtSelector = $(event.target).data('target');
     if (tgtSelector) {
+      console.log($(tgtSelector).val());
       navigator.clipboard.writeText($(tgtSelector).val()).then(
         () => {},
         () => {
@@ -59,11 +60,23 @@ $(() => {
       .join('\n');
 
     $ctrlCodeHtml.val(
-      `<svg xmlns="${svgNs}" class="hidden-svg">
-${prettyIndentHtml($svgFilter.get(0).outerHTML)}</svg>`
+      `<svg xmlns="${svgNs}" class="hidden-svg">${prettyIndentHtml(
+        '\n' + $svgFilter.get(0).outerHTML
+      )}</svg>`
     );
 
     $ctrlCodeCss.val(`.bg-texture {
+  position: relative;
+}
+.bg-texture::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  z-index: -1;
+
 ${textureStylesStr}
 }
 .hidden-svg {
