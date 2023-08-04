@@ -53,7 +53,7 @@ dialog .form-control-sm {
 
 .form-control,
 .form-select,
-.form-check-input {
+.form-check-input:not(:checked) {
   background-color: var(--bs-card-cap-bg) !important;
 }
 
