@@ -1,5 +1,7 @@
 body {
   height: 100vh;
+
+  --bs-border-color-hover: #86b7fe;
 }
 
 #proj-link {
@@ -46,7 +48,18 @@ dialog .form-control-sm {
 }
 
 .form-control-wrapper output {
-  font-family: 'Courier New', Courier, monospace;
+  font-family: var(--bs-font-monospace);
+}
+
+.form-control:hover,
+.form-select:hover,
+.form-check-input:hover {
+  border-color: var(--bs-border-color-hover);
+}
+
+.form-range:hover::-webkit-slider-thumb,
+.form-range:hover::-moz-range-thumb {
+  box-shadow: 0 0 0 calc(var(--bs-border-width) * 2) var(--bs-border-color-hover);
 }
 
 .btn-copy {

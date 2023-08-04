@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-bs-theme="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -29,9 +29,12 @@
     <aside class="flex-shrink-0 overflow-auto">
       <div class="card m-3 mb-0">
         <div class="card-body">
-          <select class="form-select" id="ctrl-preset">
-            <option value="" selected>Presets</option>
-          </select>
+          <div class="form-control-wrapper mb-0">
+            <label class="form-label" for="ctrl-preset">Apply a Preset</label>
+            <select class="form-select" id="ctrl-preset">
+              <option value="" selected></option>
+            </select>
+          </div>
         </div>
       </div>
       <div id="svg-controls" class="d-flex flex-column">
@@ -56,7 +59,7 @@
                     id="ctrl-base-frequency-x"
                     min="0.001"
                     max="1"
-                    value="0.05"
+                    value="0.03"
                     step="0.001"
                     data-target="#noise-filter feTurbulence"
                     data-target-attr="baseFrequency"
@@ -83,7 +86,7 @@
                     id="ctrl-base-frequency-y"
                     min="0.001"
                     max="1"
-                    value="0.05"
+                    value="0.03"
                     step="0.001"
                     data-target="#noise-filter feTurbulence"
                     data-target-attr="baseFrequency"
@@ -125,7 +128,7 @@
                     id="ctrl-num-octaves"
                     min="1"
                     max="6"
-                    value="1"
+                    value="3"
                     step="1"
                     data-target="#noise-filter feTurbulence"
                     data-target-attr="numOctaves"
@@ -184,6 +187,7 @@
                 type="checkbox"
                 class="form-check-input"
                 id="ctrl-enable-lighting"
+                checked
                 data-toggle-visibility="#lighting-controls, #light-color"
                 data-enable="#lighting-controls .shared-lighting-controls input, #lighting-controls .shared-lighting-controls select"
               />
@@ -204,7 +208,7 @@
                     <input
                       type="color"
                       class="form-control form-control-color w-100"
-                      value="#f1efe2"
+                      value="#FFFFFF"
                       id="ctrl-lighting-lighting-color"
                       data-target="#noise-filter feDiffuseLighting, #noise-filter feSpecularLighting"
                       data-target-attr="lighting-color"
@@ -258,7 +262,7 @@
                       id="ctrl-lighting-surface-scale"
                       min="0.1"
                       max="10"
-                      value="1"
+                      value="3"
                       step="0.1"
                       disabled
                       data-target="#noise-filter feDiffuseLighting, #noise-filter feSpecularLighting"
@@ -412,7 +416,7 @@
                         id="ctrl-lighting-distant-azimuth"
                         min="1"
                         max="360"
-                        value="45"
+                        value="90"
                         step="1"
                         disabled
                         data-target="#noise-filter feDistantLight"
@@ -440,7 +444,7 @@
                         id="ctrl-lighting-distant-elevation"
                         min="1"
                         max="270"
-                        value="60"
+                        value="55"
                         step="1"
                         disabled
                         data-target="#noise-filter feDistantLight"
@@ -536,7 +540,7 @@
                         id="ctrl-lighting-spot-overhead-cone-angle"
                         min="1"
                         max="90"
-                        value="45"
+                        value="75"
                         step="0.1"
                         disabled
                         data-target="#noise-filter feSpotLight"
@@ -557,7 +561,7 @@
                         id="ctrl-lighting-spot-overhead-x"
                         min="0"
                         max="1000"
-                        value="100"
+                        value="180"
                         step="0.1"
                         disabled
                         data-target="#noise-filter feSpotLight"
@@ -578,7 +582,7 @@
                         id="ctrl-lighting-spot-overhead-y"
                         min="0"
                         max="1000"
-                        value="100"
+                        value="180"
                         step="0.1"
                         disabled
                         data-target="#noise-filter feSpotLight"
@@ -598,8 +602,8 @@
                         class="form-range"
                         id="ctrl-lighting-spot-overhead-z"
                         min="0"
-                        max="100"
-                        value="50"
+                        max="300"
+                        value="100"
                         step="0.1"
                         disabled
                         data-target="#noise-filter feSpotLight"
@@ -700,7 +704,7 @@
                         class="form-range"
                         id="ctrl-lighting-spot-manual-z"
                         min="0"
-                        max="100"
+                        max="300"
                         value="50"
                         step="0.1"
                         disabled
@@ -769,7 +773,7 @@
                         class="form-range"
                         id="ctrl-lighting-spot-manual-pointsat-z"
                         min="0"
-                        max="100"
+                        max="300"
                         value="50"
                         step="0.1"
                         disabled
@@ -798,7 +802,7 @@
                     type="color"
                     class="form-control form-control-color w-100"
                     id="ctrl-bg-color"
-                    value="#F5F5F5"
+                    value="#e9e4ef"
                     data-target="#demo-output"
                     data-target-style-prop="background-color"
                   />
@@ -933,7 +937,7 @@
           </div>
         </div>
 
-        <div class="card m-3 mb-0">
+        <div class="card m-3">
           <div class="card-body">
             <h5 class="card-title mb-0">
               <input
@@ -989,7 +993,7 @@
           </div>
         </div>
 
-        <div class="bg-white p-3 shadow position-sticky bottom-0">
+        <div class="bg-dark p-3 border-top border-secondary shadow-lg position-sticky bottom-0">
           <button type="button" class="btn btn-primary w-100" id="btn-get-code">
             <i class="bi bi-code-slash"></i>
             Get Code
