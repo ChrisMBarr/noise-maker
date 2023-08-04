@@ -12,7 +12,7 @@ $(() => {
 
   //Loop through all the controls and run an event any time one changes
   $('#svg-controls')
-    .find('.form-control-wrapper, .card-title')
+    .find('.form-control-wrapper, .card-header')
     .each((_i, ctrl) => {
       const $input = $(ctrl).find('select, input:not([data-enable]):not([data-toggle-visibility])');
       const $enableInput = $(ctrl).find('input[data-enable]');

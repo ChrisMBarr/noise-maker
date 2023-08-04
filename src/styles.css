@@ -51,6 +51,12 @@ dialog .form-control-sm {
   font-family: var(--bs-font-monospace);
 }
 
+.form-control,
+.form-select,
+.form-check-input {
+  background-color: var(--bs-card-cap-bg) !important;
+}
+
 .form-control:hover,
 .form-select:hover,
 .form-check-input:hover {
@@ -60,6 +66,18 @@ dialog .form-control-sm {
 .form-range:hover::-webkit-slider-thumb,
 .form-range:hover::-moz-range-thumb {
   box-shadow: 0 0 0 calc(var(--bs-border-width) * 2) var(--bs-border-color-hover);
+}
+
+.card > .card-header {
+  border-bottom-width: 0;
+}
+
+.card-header ~ .card-body {
+  border-top: var(--bs-card-border-width) solid var(--bs-card-border-color);
+}
+
+.card-header .form-check-input {
+  margin-top: 0.1em;
 }
 
 .btn-copy {
