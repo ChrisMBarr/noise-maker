@@ -28,12 +28,12 @@
 
     <aside class="flex-shrink-0 overflow-auto">
       <div class="card m-3 mb-0">
-        <h5 class="card-header">Presets</h5>
         <div class="card-body">
-          <div class="form-control-wrapper mb-0">
-            <select class="form-select" id="ctrl-preset">
-              <option value="" selected></option>
-            </select>
+          <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="btn-preset">
+              Presets
+            </button>
+            <ul class="dropdown-menu" id="ddl-preset"></ul>
           </div>
         </div>
       </div>
@@ -51,7 +51,7 @@
                 ></i>
               </label>
               <div class="row">
-                <div class="col-sm-9">
+                <div class="col-9">
                   <input
                     type="range"
                     class="form-range"
@@ -65,7 +65,7 @@
                     data-force-reload-svg="true"
                   />
                 </div>
-                <output class="col-sm-3"></output>
+                <output class="col-3"></output>
               </div>
             </div>
 
@@ -78,7 +78,7 @@
                 ></i>
               </label>
               <div class="row">
-                <div class="col-sm-9">
+                <div class="col-9">
                   <input
                     type="range"
                     class="form-range"
@@ -92,7 +92,7 @@
                     data-force-reload-svg="true"
                   />
                 </div>
-                <output class="col-sm-3"></output>
+                <output class="col-3"></output>
               </div>
             </div>
 
@@ -120,7 +120,7 @@
                 ></i>
               </label>
               <div class="row">
-                <div class="col-sm-9">
+                <div class="col-9">
                   <input
                     type="range"
                     class="form-range"
@@ -134,7 +134,7 @@
                     data-force-reload-svg="true"
                   />
                 </div>
-                <output class="col-sm-3"></output>
+                <output class="col-3"></output>
               </div>
             </div>
 
@@ -252,7 +252,7 @@
                 ></i>
               </label>
               <div class="row">
-                <div class="col-sm-9">
+                <div class="col-9">
                   <input
                     type="range"
                     class="form-range"
@@ -267,7 +267,7 @@
                     data-force-reload-svg="true"
                   />
                 </div>
-                <output class="col-sm-3"></output>
+                <output class="col-3"></output>
               </div>
             </div>
 
@@ -281,7 +281,7 @@
                   ></i>
                 </label>
                 <div class="row">
-                  <div class="col-sm-9">
+                  <div class="col-9">
                     <input
                       type="range"
                       class="form-range"
@@ -296,7 +296,7 @@
                       data-force-reload-svg="true"
                     />
                   </div>
-                  <output class="col-sm-3"></output>
+                  <output class="col-3"></output>
                 </div>
               </div>
             </div>
@@ -311,7 +311,7 @@
                   ></i>
                 </label>
                 <div class="row">
-                  <div class="col-sm-9">
+                  <div class="col-9">
                     <input
                       type="range"
                       class="form-range"
@@ -326,7 +326,7 @@
                       data-force-reload-svg="true"
                     />
                   </div>
-                  <output class="col-sm-3"></output>
+                  <output class="col-3"></output>
                 </div>
               </div>
 
@@ -339,7 +339,7 @@
                   ></i>
                 </label>
                 <div class="row">
-                  <div class="col-sm-9">
+                  <div class="col-9">
                     <input
                       type="range"
                       class="form-range"
@@ -354,7 +354,7 @@
                       data-force-reload-svg="true"
                     />
                   </div>
-                  <output class="col-sm-3"></output>
+                  <output class="col-3"></output>
                 </div>
               </div>
             </div>
@@ -406,7 +406,7 @@
                   ></i>
                 </label>
                 <div class="row">
-                  <div class="col-sm-9">
+                  <div class="col-9">
                     <input
                       type="range"
                       class="form-range"
@@ -421,7 +421,7 @@
                       data-force-reload-svg="true"
                     />
                   </div>
-                  <output class="col-sm-3"></output>
+                  <output class="col-3"></output>
                 </div>
               </div>
 
@@ -434,7 +434,7 @@
                   ></i>
                 </label>
                 <div class="row">
-                  <div class="col-sm-9">
+                  <div class="col-9">
                     <input
                       type="range"
                       class="form-range"
@@ -449,7 +449,7 @@
                       data-force-reload-svg="true"
                     />
                   </div>
-                  <output class="col-sm-3"></output>
+                  <output class="col-3"></output>
                 </div>
               </div>
             </div>
@@ -458,7 +458,7 @@
               <div class="form-control-wrapper">
                 <label class="form-label" for="ctrl-lighting-point-x"> X </label>
                 <div class="row">
-                  <div class="col-sm-9">
+                  <div class="col-9">
                     <input
                       type="range"
                       class="form-range"
@@ -473,13 +473,13 @@
                       data-force-reload-svg="true"
                     />
                   </div>
-                  <output class="col-sm-3"></output>
+                  <output class="col-3"></output>
                 </div>
               </div>
               <div class="form-control-wrapper">
                 <label class="form-label" for="ctrl-lighting-point-y"> Y </label>
                 <div class="row">
-                  <div class="col-sm-9">
+                  <div class="col-9">
                     <input
                       type="range"
                       class="form-range"
@@ -494,13 +494,13 @@
                       data-force-reload-svg="true"
                     />
                   </div>
-                  <output class="col-sm-3"></output>
+                  <output class="col-3"></output>
                 </div>
               </div>
               <div class="form-control-wrapper">
                 <label class="form-label" for="ctrl-lighting-point-z"> Z </label>
                 <div class="row">
-                  <div class="col-sm-9">
+                  <div class="col-9">
                     <input
                       type="range"
                       class="form-range"
@@ -515,7 +515,7 @@
                       data-force-reload-svg="true"
                     />
                   </div>
-                  <output class="col-sm-3"></output>
+                  <output class="col-3"></output>
                 </div>
               </div>
             </div>
@@ -530,7 +530,7 @@
                   ></i>
                 </label>
                 <div class="row">
-                  <div class="col-sm-9">
+                  <div class="col-9">
                     <input
                       type="range"
                       class="form-range"
@@ -545,13 +545,13 @@
                       data-force-reload-svg="true"
                     />
                   </div>
-                  <output class="col-sm-3"></output>
+                  <output class="col-3"></output>
                 </div>
               </div>
               <div class="form-control-wrapper">
                 <label class="form-label" for="ctrl-lighting-spot-overhead-x"> X </label>
                 <div class="row">
-                  <div class="col-sm-9">
+                  <div class="col-9">
                     <input
                       type="range"
                       class="form-range"
@@ -566,13 +566,13 @@
                       data-force-reload-svg="true"
                     />
                   </div>
-                  <output class="col-sm-3"></output>
+                  <output class="col-3"></output>
                 </div>
               </div>
               <div class="form-control-wrapper">
                 <label class="form-label" for="ctrl-lighting-spot-overhead-y"> Y </label>
                 <div class="row">
-                  <div class="col-sm-9">
+                  <div class="col-9">
                     <input
                       type="range"
                       class="form-range"
@@ -587,13 +587,13 @@
                       data-force-reload-svg="true"
                     />
                   </div>
-                  <output class="col-sm-3"></output>
+                  <output class="col-3"></output>
                 </div>
               </div>
               <div class="form-control-wrapper">
                 <label class="form-label" for="ctrl-lighting-spot-overhead-z"> Z </label>
                 <div class="row">
-                  <div class="col-sm-9">
+                  <div class="col-9">
                     <input
                       type="range"
                       class="form-range"
@@ -608,7 +608,7 @@
                       data-force-reload-svg="true"
                     />
                   </div>
-                  <output class="col-sm-3"></output>
+                  <output class="col-3"></output>
                 </div>
               </div>
 
@@ -632,7 +632,7 @@
                   ></i>
                 </label>
                 <div class="row">
-                  <div class="col-sm-9">
+                  <div class="col-9">
                     <input
                       type="range"
                       class="form-range"
@@ -647,13 +647,13 @@
                       data-force-reload-svg="true"
                     />
                   </div>
-                  <output class="col-sm-3"></output>
+                  <output class="col-3"></output>
                 </div>
               </div>
               <div class="form-control-wrapper">
                 <label class="form-label" for="ctrl-lighting-spot-manual-x"> X </label>
                 <div class="row">
-                  <div class="col-sm-9">
+                  <div class="col-9">
                     <input
                       type="range"
                       class="form-range"
@@ -668,13 +668,13 @@
                       data-force-reload-svg="true"
                     />
                   </div>
-                  <output class="col-sm-3"></output>
+                  <output class="col-3"></output>
                 </div>
               </div>
               <div class="form-control-wrapper">
                 <label class="form-label" for="ctrl-lighting-spot-manual-y"> Y </label>
                 <div class="row">
-                  <div class="col-sm-9">
+                  <div class="col-9">
                     <input
                       type="range"
                       class="form-range"
@@ -689,13 +689,13 @@
                       data-force-reload-svg="true"
                     />
                   </div>
-                  <output class="col-sm-3"></output>
+                  <output class="col-3"></output>
                 </div>
               </div>
               <div class="form-control-wrapper">
                 <label class="form-label" for="ctrl-lighting-spot-manual-z"> Z </label>
                 <div class="row">
-                  <div class="col-sm-9">
+                  <div class="col-9">
                     <input
                       type="range"
                       class="form-range"
@@ -710,7 +710,7 @@
                       data-force-reload-svg="true"
                     />
                   </div>
-                  <output class="col-sm-3"></output>
+                  <output class="col-3"></output>
                 </div>
               </div>
               <div class="form-control-wrapper">
@@ -718,7 +718,7 @@
                   Points At X
                 </label>
                 <div class="row">
-                  <div class="col-sm-9">
+                  <div class="col-9">
                     <input
                       type="range"
                       class="form-range"
@@ -733,7 +733,7 @@
                       data-force-reload-svg="true"
                     />
                   </div>
-                  <output class="col-sm-3"></output>
+                  <output class="col-3"></output>
                 </div>
               </div>
               <div class="form-control-wrapper">
@@ -741,7 +741,7 @@
                   >Points At Y</label
                 >
                 <div class="row">
-                  <div class="col-sm-9">
+                  <div class="col-9">
                     <input
                       type="range"
                       class="form-range"
@@ -756,7 +756,7 @@
                       data-force-reload-svg="true"
                     />
                   </div>
-                  <output class="col-sm-3"></output>
+                  <output class="col-3"></output>
                 </div>
               </div>
               <div class="form-control-wrapper">
@@ -764,7 +764,7 @@
                   >Points At Z</label
                 >
                 <div class="row">
-                  <div class="col-sm-9">
+                  <div class="col-9">
                     <input
                       type="range"
                       class="form-range"
@@ -779,7 +779,7 @@
                       data-force-reload-svg="true"
                     />
                   </div>
-                  <output class="col-sm-3"></output>
+                  <output class="col-3"></output>
                 </div>
               </div>
             </div>
@@ -852,7 +852,7 @@
                     />
                   </div>
                 </div>
-                <div class="col-sm-7">
+                <div class="col-7">
                   <input
                     type="range"
                     class="form-range"
@@ -865,7 +865,7 @@
                     data-target-filter-prop="saturate"
                   />
                 </div>
-                <output class="col-sm-3"></output>
+                <output class="col-3"></output>
               </div>
             </div>
 
@@ -882,7 +882,7 @@
                     />
                   </div>
                 </div>
-                <div class="col-sm-7">
+                <div class="col-7">
                   <input
                     type="range"
                     class="form-range"
@@ -895,7 +895,7 @@
                     data-target-filter-prop="brightness"
                   />
                 </div>
-                <output class="col-sm-3"></output>
+                <output class="col-3"></output>
               </div>
             </div>
 
@@ -912,7 +912,7 @@
                     />
                   </div>
                 </div>
-                <div class="col-sm-7">
+                <div class="col-7">
                   <input
                     type="range"
                     class="form-range"
@@ -926,7 +926,7 @@
                     data-target-filter-prop-suffix="px"
                   />
                 </div>
-                <output class="col-sm-3"></output>
+                <output class="col-3"></output>
               </div>
             </div>
           </div>

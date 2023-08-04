@@ -14,7 +14,8 @@ function serializeControls() {
     });
 }
 
-function applyPreset(arr) {
+function applyPreset(num) {
+  const arr = presets[num].settings;
   arr.forEach((obj) => {
     if (typeof obj.value === 'boolean') {
       $('#' + obj.id)
@@ -29,18 +30,15 @@ function applyPreset(arr) {
 }
 
 $(() => {
-  const $presetDdl = $('#ctrl-preset');
+  const $presetDdl = $('#ddl-preset');
 
-  const presetOptions = presets.map((p, i) => `<option value='${i}'>${p.name}</option>`).join('');
+  const presetOptions = presets
+    .map(
+      (p, i) =>
+        `<li><a class="dropdown-item" href="#" onclick="applyPreset(${i});">${p.name}</a></li>`
+    )
+    .join('');
   $(presetOptions).appendTo($presetDdl);
-
-  $presetDdl.on('change', (ev) => {
-    if (ev.target.value !== '') {
-      applyPreset(presets[ev.target.value].settings);
-      ev.target.value = '';
-      $presetDdl.blur();
-    }
-  });
 });
 
 const presets = [
