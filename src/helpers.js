@@ -97,14 +97,12 @@ $(() => {
   $(document).on('click', (ev) => {
     const $clicked = $(ev.target);
 
-    console.log($clicked);
-
     if (
-      $clicked.parents('.dropdown').length === 0 ||
+      $clicked.parents('.dropdown, .dropup').length === 0 ||
       $clicked.parents('.dropdown-menu').length === 1
     ) {
       // close the dropdown
-      $('.dropdown .show').removeClass('show');
+      $('.dropdown .show, .dropup .show').removeClass('show');
     }
   });
 });

@@ -19,7 +19,7 @@
   <body class="d-flex">
     <a
       id="proj-link"
-      class="icon-link bg-white p-2 shadow"
+      class="icon-link bg-body p-2 shadow"
       href="https://github.com/FiniteLooper/noise-maker"
     >
       <i class="bi bi-github"></i>
@@ -27,16 +27,6 @@
     </a>
 
     <aside class="flex-shrink-0 overflow-auto">
-      <div class="card m-3 mb-0">
-        <div class="card-body">
-          <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="btn-preset">
-              Presets
-            </button>
-            <ul class="dropdown-menu" id="ddl-preset"></ul>
-          </div>
-        </div>
-      </div>
       <div id="svg-controls" class="d-flex flex-column">
         <div class="card m-3 mb-0">
           <h5 class="card-header">Noise</h5>
@@ -987,8 +977,23 @@
           </div>
         </div>
 
-        <div class="bg-dark p-3 border-top border-secondary shadow-lg position-sticky bottom-0">
-          <button type="button" class="btn btn-primary w-100" id="btn-get-code">
+        <div
+          id="final-controls"
+          class="bg-body-secondary p-3 border-top border-secondary shadow-lg position-fixed bottom-0 d-flex justify-content-between"
+        >
+          <div class="dropup">
+            <button type="button" class="btn btn-secondary btn-sm dropdown-toggle" id="btn-preset">
+              <i class="bi bi-heart"></i>
+              Presets
+            </button>
+            <ul class="dropdown-menu" id="ddl-preset"></ul>
+          </div>
+
+          <button type="button" class="btn btn-secondary btn-sm" id="btn-randomize">
+            <i class="bi bi-shuffle"></i>
+            Randomize
+          </button>
+          <button type="button" class="btn btn-primary btn-sm" id="btn-get-code">
             <i class="bi bi-code-slash"></i>
             Get Code
           </button>

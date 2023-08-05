@@ -1,17 +1,16 @@
+let $controls;
+
 function serializeControls() {
   //used to log out the current values to the console to manually save as presets
-  return $('#svg-controls')
-    .find('input, select')
-    .toArray()
-    .map((el) => {
-      let value = el.value;
-      if (el.type === 'checkbox') {
-        value = el.checked;
-      } else if (el.valueAsNumber !== 'undefined' && !isNaN(el.valueAsNumber)) {
-        value = el.valueAsNumber;
-      }
-      return { id: el.id, value };
-    });
+  return $controls.toArray().map((el) => {
+    let value = el.value;
+    if (el.type === 'checkbox') {
+      value = el.checked;
+    } else if (el.valueAsNumber !== 'undefined' && !isNaN(el.valueAsNumber)) {
+      value = el.valueAsNumber;
+    }
+    return { id: el.id, value };
+  });
 }
 
 function applyPreset(num) {
@@ -29,9 +28,41 @@ function applyPreset(num) {
   });
 }
 
-$(() => {
-  const $presetDdl = $('#ddl-preset');
+function randomizeSelectOption(ddl) {
+  const items = ddl.getElementsByTagName('option');
+  const index = Math.floor(Math.random() * items.length);
+  ddl.selectedIndex = index;
+}
 
+function randomizeRangeOrNumberInput(rangeInput) {
+  //default values defined here: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/range#validation
+  let min = parseFloat(rangeInput.min);
+  if (isNaN(min)) min = 0;
+
+  let max = parseFloat(rangeInput.max);
+  if (isNaN(max)) max = 100;
+
+  let step = parseFloat(rangeInput.step);
+  if (isNaN(step)) step = 1;
+  const stepIsWholeNumber = !step.toString().includes('.');
+
+  const randomVal = Math.random() * (max - min) + min;
+
+  rangeInput.value = stepIsWholeNumber ? Math.round(randomVal) : randomVal;
+}
+
+function randomizeColorValue(colorInput) {
+  var letters = '0123456789ABCDEF';
+  var color = '#';
+  for (var i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  colorInput.value = color;
+}
+
+$(() => {
+  $controls = $('#svg-controls').find('input:not([type="hidden"]), select');
+  const $presetDdl = $('#ddl-preset');
   const presetOptions = presets
     .map(
       (p, i) =>
@@ -39,6 +70,23 @@ $(() => {
     )
     .join('');
   $(presetOptions).appendTo($presetDdl);
+
+  $('#btn-randomize').on('click', () => {
+    $controls
+      .filter(':not(#ctrl-enable-custom-size,#ctrl-custom-width,#ctrl-custom-height)')
+      .each((_i, el) => {
+        if (el.type === 'range' || el.type === 'number') {
+          randomizeRangeOrNumberInput(el);
+        } else if (el.type === 'color') {
+          randomizeColorValue(el);
+        } else if (el.type === 'checkbox') {
+          el.checked = Math.random() < 0.5;
+        } else if (el.type.startsWith('select')) {
+          randomizeSelectOption(el);
+        }
+      })
+      .trigger(inputEventName);
+  });
 });
 
 const presets = [
@@ -68,7 +116,6 @@ const presets = [
       { id: 'ctrl-lighting-spot-overhead-x', value: 180 },
       { id: 'ctrl-lighting-spot-overhead-y', value: 180 },
       { id: 'ctrl-lighting-spot-overhead-z', value: 100 },
-      { id: 'ctrl-lighting-spot-overhead-pointsat-z', value: '0' },
       { id: 'ctrl-lighting-spot-manual-cone-angle', value: 45 },
       { id: 'ctrl-lighting-spot-manual-x', value: 100 },
       { id: 'ctrl-lighting-spot-manual-y', value: 100 },
@@ -162,7 +209,6 @@ const presets = [
       { id: 'ctrl-lighting-spot-overhead-x', value: 100 },
       { id: 'ctrl-lighting-spot-overhead-y', value: 100 },
       { id: 'ctrl-lighting-spot-overhead-z', value: 50 },
-      { id: 'ctrl-lighting-spot-overhead-pointsat-z', value: '0' },
       { id: 'ctrl-lighting-spot-manual-cone-angle', value: 45 },
       { id: 'ctrl-lighting-spot-manual-x', value: 100 },
       { id: 'ctrl-lighting-spot-manual-y', value: 100 },
@@ -209,7 +255,6 @@ const presets = [
       { id: 'ctrl-lighting-spot-overhead-x', value: 100 },
       { id: 'ctrl-lighting-spot-overhead-y', value: 100 },
       { id: 'ctrl-lighting-spot-overhead-z', value: 50 },
-      { id: 'ctrl-lighting-spot-overhead-pointsat-z', value: '0' },
       { id: 'ctrl-lighting-spot-manual-cone-angle', value: 45 },
       { id: 'ctrl-lighting-spot-manual-x', value: 100 },
       { id: 'ctrl-lighting-spot-manual-y', value: 100 },
@@ -256,7 +301,6 @@ const presets = [
       { id: 'ctrl-lighting-spot-overhead-x', value: 100 },
       { id: 'ctrl-lighting-spot-overhead-y', value: 100 },
       { id: 'ctrl-lighting-spot-overhead-z', value: 50 },
-      { id: 'ctrl-lighting-spot-overhead-pointsat-z', value: '0' },
       { id: 'ctrl-lighting-spot-manual-cone-angle', value: 45 },
       { id: 'ctrl-lighting-spot-manual-x', value: 100 },
       { id: 'ctrl-lighting-spot-manual-y', value: 100 },
@@ -303,7 +347,6 @@ const presets = [
       { id: 'ctrl-lighting-spot-overhead-x', value: 100 },
       { id: 'ctrl-lighting-spot-overhead-y', value: 100 },
       { id: 'ctrl-lighting-spot-overhead-z', value: 50 },
-      { id: 'ctrl-lighting-spot-overhead-pointsat-z', value: '0' },
       { id: 'ctrl-lighting-spot-manual-cone-angle', value: 45 },
       { id: 'ctrl-lighting-spot-manual-x', value: 100 },
       { id: 'ctrl-lighting-spot-manual-y', value: 100 },
@@ -350,7 +393,6 @@ const presets = [
       { id: 'ctrl-lighting-spot-overhead-x', value: 100 },
       { id: 'ctrl-lighting-spot-overhead-y', value: 100 },
       { id: 'ctrl-lighting-spot-overhead-z', value: 50 },
-      { id: 'ctrl-lighting-spot-overhead-pointsat-z', value: '0' },
       { id: 'ctrl-lighting-spot-manual-cone-angle', value: 45 },
       { id: 'ctrl-lighting-spot-manual-x', value: 100 },
       { id: 'ctrl-lighting-spot-manual-y', value: 100 },
@@ -397,7 +439,6 @@ const presets = [
       { id: 'ctrl-lighting-spot-overhead-x', value: 100 },
       { id: 'ctrl-lighting-spot-overhead-y', value: 100 },
       { id: 'ctrl-lighting-spot-overhead-z', value: 50 },
-      { id: 'ctrl-lighting-spot-overhead-pointsat-z', value: '0' },
       { id: 'ctrl-lighting-spot-manual-cone-angle', value: 45 },
       { id: 'ctrl-lighting-spot-manual-x', value: 100 },
       { id: 'ctrl-lighting-spot-manual-y', value: 100 },
@@ -444,7 +485,6 @@ const presets = [
       { id: 'ctrl-lighting-spot-overhead-x', value: 100 },
       { id: 'ctrl-lighting-spot-overhead-y', value: 100 },
       { id: 'ctrl-lighting-spot-overhead-z', value: 50 },
-      { id: 'ctrl-lighting-spot-overhead-pointsat-z', value: '0' },
       { id: 'ctrl-lighting-spot-manual-cone-angle', value: 45 },
       { id: 'ctrl-lighting-spot-manual-x', value: 100 },
       { id: 'ctrl-lighting-spot-manual-y', value: 100 },
@@ -491,7 +531,6 @@ const presets = [
       { id: 'ctrl-lighting-spot-overhead-x', value: 100 },
       { id: 'ctrl-lighting-spot-overhead-y', value: 100 },
       { id: 'ctrl-lighting-spot-overhead-z', value: 50 },
-      { id: 'ctrl-lighting-spot-overhead-pointsat-z', value: '0' },
       { id: 'ctrl-lighting-spot-manual-cone-angle', value: 45 },
       { id: 'ctrl-lighting-spot-manual-x', value: 100 },
       { id: 'ctrl-lighting-spot-manual-y', value: 100 },
@@ -538,7 +577,6 @@ const presets = [
       { id: 'ctrl-lighting-spot-overhead-x', value: 100 },
       { id: 'ctrl-lighting-spot-overhead-y', value: 100 },
       { id: 'ctrl-lighting-spot-overhead-z', value: 50 },
-      { id: 'ctrl-lighting-spot-overhead-pointsat-z', value: '0' },
       { id: 'ctrl-lighting-spot-manual-cone-angle', value: 45 },
       { id: 'ctrl-lighting-spot-manual-x', value: 100 },
       { id: 'ctrl-lighting-spot-manual-y', value: 100 },
@@ -585,7 +623,6 @@ const presets = [
       { id: 'ctrl-lighting-spot-overhead-x', value: 100 },
       { id: 'ctrl-lighting-spot-overhead-y', value: 100 },
       { id: 'ctrl-lighting-spot-overhead-z', value: 50 },
-      { id: 'ctrl-lighting-spot-overhead-pointsat-z', value: '0' },
       { id: 'ctrl-lighting-spot-manual-cone-angle', value: 45 },
       { id: 'ctrl-lighting-spot-manual-x', value: 100 },
       { id: 'ctrl-lighting-spot-manual-y', value: 100 },
@@ -632,7 +669,6 @@ const presets = [
       { id: 'ctrl-lighting-spot-overhead-x', value: 100 },
       { id: 'ctrl-lighting-spot-overhead-y', value: 100 },
       { id: 'ctrl-lighting-spot-overhead-z', value: 50 },
-      { id: 'ctrl-lighting-spot-overhead-pointsat-z', value: '0' },
       { id: 'ctrl-lighting-spot-manual-cone-angle', value: 45 },
       { id: 'ctrl-lighting-spot-manual-x', value: 100 },
       { id: 'ctrl-lighting-spot-manual-y', value: 100 },
@@ -679,7 +715,6 @@ const presets = [
       { id: 'ctrl-lighting-spot-overhead-x', value: 100 },
       { id: 'ctrl-lighting-spot-overhead-y', value: 100 },
       { id: 'ctrl-lighting-spot-overhead-z', value: 50 },
-      { id: 'ctrl-lighting-spot-overhead-pointsat-z', value: '0' },
       { id: 'ctrl-lighting-spot-manual-cone-angle', value: 45 },
       { id: 'ctrl-lighting-spot-manual-x', value: 100 },
       { id: 'ctrl-lighting-spot-manual-y', value: 100 },
@@ -726,7 +761,6 @@ const presets = [
       { id: 'ctrl-lighting-spot-overhead-x', value: 100 },
       { id: 'ctrl-lighting-spot-overhead-y', value: 100 },
       { id: 'ctrl-lighting-spot-overhead-z', value: 50 },
-      { id: 'ctrl-lighting-spot-overhead-pointsat-z', value: '0' },
       { id: 'ctrl-lighting-spot-manual-cone-angle', value: 45 },
       { id: 'ctrl-lighting-spot-manual-x', value: 100 },
       { id: 'ctrl-lighting-spot-manual-y', value: 100 },
