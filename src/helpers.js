@@ -156,12 +156,11 @@ function updateHandlePosition(index, positionProperty, value) {
 $(() => {
   $('.dropdown-toggle').on('click', (ev) => {
     const $menu = $(ev.target).siblings('.dropdown-menu');
-    $(ev.target).add($menu).addClass('show');
+    $(ev.target).add($menu).toggleClass('show');
   });
 
   $(document).on('click', (ev) => {
     const $clicked = $(ev.target);
-
     if (
       $clicked.parents('.dropdown, .dropup').length === 0 ||
       $clicked.parents('.dropdown-menu').length === 1
