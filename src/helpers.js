@@ -80,7 +80,8 @@ function createLightingElement() {
 }
 
 function getLightElement() {
-  const lightType = $('#ctrl-light-type').val();
+  const selectedVal = $('#ctrl-light-type').val();
+  const lightType = $(`#ctrl-light-type option[value="${selectedVal}"]`).data('light-type');
   return document.createElementNS(svgNs, lightType);
 }
 

@@ -360,7 +360,8 @@
                 data-force-reload-svg="true"
               >
                 <option
-                  value="feDistantLight"
+                  value="distant"
+                  data-light-type="feDistantLight"
                   data-handles="[]"
                   data-toggle-visibility-and-enable="#light-type-distant-options"
                   selected
@@ -368,21 +369,24 @@
                   Distant
                 </option>
                 <option
-                  value="fePointLight"
+                  value="point"
+                  data-light-type="fePointLight"
                   data-handles='[{"left":"ctrl-lighting-point-x", "top":"ctrl-lighting-point-y"}]'
                   data-toggle-visibility-and-enable="#light-type-point-options"
                 >
                   Point
                 </option>
                 <option
-                  value="feSpotLight"
+                  value="spot-overhead"
+                  data-light-type="feSpotLight"
                   data-handles='[{"left":"ctrl-lighting-spot-overhead-x","top":"ctrl-lighting-spot-overhead-y"}]'
                   data-toggle-visibility-and-enable="#light-type-spot-overhead-options"
                 >
                   Spot (Overhead)
                 </option>
                 <option
-                  value="feSpotLight"
+                  value="spot-manual"
+                  data-light-type="feSpotLight"
                   data-handles='[{"left":"ctrl-lighting-spot-manual-x","top":"ctrl-lighting-spot-manual-y"},{"left":"ctrl-lighting-spot-manual-pointsat-x","top":"ctrl-lighting-spot-manual-pointsat-y"}]'
                   data-toggle-visibility-and-enable="#light-type-spot-manual-options"
                 >
