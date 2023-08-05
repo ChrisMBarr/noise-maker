@@ -19,7 +19,7 @@
   <body class="d-flex">
     <a
       id="proj-link"
-      class="icon-link bg-white p-2 shadow"
+      class="icon-link bg-body p-2 shadow"
       href="https://github.com/FiniteLooper/noise-maker"
     >
       <i class="bi bi-github"></i>
@@ -27,16 +27,6 @@
     </a>
 
     <aside class="flex-shrink-0 overflow-auto">
-      <div class="card m-3 mb-0">
-        <div class="card-body">
-          <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="btn-preset">
-              Presets
-            </button>
-            <ul class="dropdown-menu" id="ddl-preset"></ul>
-          </div>
-        </div>
-      </div>
       <div id="svg-controls" class="d-flex flex-column">
         <div class="card m-3 mb-0">
           <h5 class="card-header">Noise</h5>
@@ -87,6 +77,7 @@
                     max="1"
                     value="0.03"
                     step="0.001"
+                    disabled
                     data-target="#noise-filter feTurbulence"
                     data-target-attr="baseFrequency"
                     data-force-reload-svg="true"
@@ -369,26 +360,34 @@
                 data-force-reload-svg="true"
               >
                 <option
-                  value="feDistantLight"
+                  value="distant"
+                  data-light-type="feDistantLight"
+                  data-handles="[]"
                   data-toggle-visibility-and-enable="#light-type-distant-options"
                   selected
                 >
                   Distant
                 </option>
                 <option
-                  value="fePointLight"
+                  value="point"
+                  data-light-type="fePointLight"
+                  data-handles='[{"left":"ctrl-lighting-point-x", "top":"ctrl-lighting-point-y"}]'
                   data-toggle-visibility-and-enable="#light-type-point-options"
                 >
                   Point
                 </option>
                 <option
-                  value="feSpotLight"
+                  value="spot-overhead"
+                  data-light-type="feSpotLight"
+                  data-handles='[{"left":"ctrl-lighting-spot-overhead-x","top":"ctrl-lighting-spot-overhead-y"}]'
                   data-toggle-visibility-and-enable="#light-type-spot-overhead-options"
                 >
                   Spot (Overhead)
                 </option>
                 <option
-                  value="feSpotLight"
+                  value="spot-manual"
+                  data-light-type="feSpotLight"
+                  data-handles='[{"left":"ctrl-lighting-spot-manual-x","top":"ctrl-lighting-spot-manual-y"},{"left":"ctrl-lighting-spot-manual-pointsat-x","top":"ctrl-lighting-spot-manual-pointsat-y"}]'
                   data-toggle-visibility-and-enable="#light-type-spot-manual-options"
                 >
                   Spot (Manual)
@@ -470,6 +469,8 @@
                       disabled
                       data-target="#noise-filter fePointLight"
                       data-target-attr="x"
+                      data-handle-index="0"
+                      data-handle-position="left"
                       data-force-reload-svg="true"
                     />
                   </div>
@@ -491,6 +492,8 @@
                       disabled
                       data-target="#noise-filter fePointLight"
                       data-target-attr="y"
+                      data-handle-index="0"
+                      data-handle-position="top"
                       data-force-reload-svg="true"
                     />
                   </div>
@@ -563,6 +566,8 @@
                       disabled
                       data-target="#noise-filter feSpotLight"
                       data-target-attr="x pointsAtX"
+                      data-handle-index="0"
+                      data-handle-position="left"
                       data-force-reload-svg="true"
                     />
                   </div>
@@ -584,6 +589,8 @@
                       disabled
                       data-target="#noise-filter feSpotLight"
                       data-target-attr="y pointsAtY"
+                      data-handle-index="0"
+                      data-handle-position="top"
                       data-force-reload-svg="true"
                     />
                   </div>
@@ -665,6 +672,8 @@
                       disabled
                       data-target="#noise-filter feSpotLight"
                       data-target-attr="x"
+                      data-handle-index="0"
+                      data-handle-position="left"
                       data-force-reload-svg="true"
                     />
                   </div>
@@ -686,6 +695,8 @@
                       disabled
                       data-target="#noise-filter feSpotLight"
                       data-target-attr="y"
+                      data-handle-index="0"
+                      data-handle-position="top"
                       data-force-reload-svg="true"
                     />
                   </div>
@@ -730,6 +741,8 @@
                       disabled
                       data-target="#noise-filter feSpotLight"
                       data-target-attr="pointsAtX"
+                      data-handle-index="1"
+                      data-handle-position="left"
                       data-force-reload-svg="true"
                     />
                   </div>
@@ -753,6 +766,8 @@
                       disabled
                       data-target="#noise-filter feSpotLight"
                       data-target-attr="pointsAtY"
+                      data-handle-index="1"
+                      data-handle-position="top"
                       data-force-reload-svg="true"
                     />
                   </div>
@@ -987,8 +1002,23 @@
           </div>
         </div>
 
-        <div class="bg-dark p-3 border-top border-secondary shadow-lg position-sticky bottom-0">
-          <button type="button" class="btn btn-primary w-100" id="btn-get-code">
+        <div
+          id="final-controls"
+          class="bg-body-secondary p-3 border-top border-secondary shadow-lg position-fixed bottom-0 d-flex justify-content-between"
+        >
+          <div class="dropup">
+            <button type="button" class="btn btn-secondary btn-sm dropdown-toggle" id="btn-preset">
+              <i class="bi bi-heart"></i>
+              Presets
+            </button>
+            <ul class="dropdown-menu" id="ddl-preset"></ul>
+          </div>
+
+          <button type="button" class="btn btn-secondary btn-sm" id="btn-randomize">
+            <i class="bi bi-shuffle"></i>
+            Randomize
+          </button>
+          <button type="button" class="btn btn-primary btn-sm" id="btn-get-code">
             <i class="bi bi-code-slash"></i>
             Get Code
           </button>

@@ -14,7 +14,12 @@ body {
   z-index: 1;
 }
 
-aside {
+#svg-controls {
+  padding-bottom: 70px; /*Height of the bottom buttons*/
+}
+
+aside,
+#final-controls {
   width: 350px;
 }
 
@@ -23,6 +28,47 @@ aside {
   cursor: help;
 }
 
+#demo-output {
+  position: relative;
+  overflow: hidden;
+}
+
+#demo-output:hover .handle {
+  opacity: 1;
+}
+
+@keyframes add-handle {
+  from {
+    opacity: 1;
+  }
+}
+
+.handle {
+  --handle-size: 20px;
+  --handle-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+
+  position: absolute;
+  width: var(--handle-size);
+  height: var(--handle-size);
+  opacity: 0;
+  z-index: 10;
+  transform: translate(-50%, -50%);
+  cursor: grab;
+  box-shadow: var(--handle-shadow);
+
+  transition: opacity 300ms, box-shadow 300ms;
+  animation: add-handle 1000ms 1000ms backwards;
+}
+.handle:active {
+  cursor: grabbing;
+}
+.handle:focus {
+  box-shadow: var(--handle-shadow), 0 0 0 var(--bs-focus-ring-width) var(--bs-focus-ring-color);
+}
+
+/*===========================
+MODALS
+===========================*/
 .modal {
   --bs-modal-width: 600px !important;
 }
@@ -42,6 +88,9 @@ dialog .form-control-sm {
   font-size: calc(var(--bs-body-font-size) * 0.75);
 }
 
+/*===========================
+FORMS
+===========================*/
 .form-control-wrapper {
   margin-bottom: 1rem;
   position: relative;
@@ -68,6 +117,9 @@ dialog .form-control-sm {
   box-shadow: 0 0 0 calc(var(--bs-border-width) * 2) var(--bs-border-color-hover);
 }
 
+/*===========================
+CARDS
+===========================*/
 .card > .card-header {
   border-bottom-width: 0;
 }
@@ -80,10 +132,20 @@ dialog .form-control-sm {
   margin-top: 0.1em;
 }
 
+/*===========================
+BUTTONS
+===========================*/
 .btn-copy {
   position: absolute;
   right: var(--bs-border-width);
   top: calc(2rem + var(--bs-border-width)); /*line-height + form label bottom margin*/
   border-top-right-radius: 0 !important;
   border-top-left-radius: 0 !important;
+}
+
+.dropup .dropdown-menu.show {
+  position: absolute;
+  inset: auto auto 0px 0px;
+  margin: 0px;
+  transform: translate(0px, -40px);
 }
