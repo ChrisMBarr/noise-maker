@@ -1,3 +1,6 @@
+// @ts-check
+/// <reference path="main.js" />
+
 let $handles;
 
 let forceReloadDebounce = null;
@@ -69,8 +72,9 @@ function createLightingElement() {
   const $svgFilter = $('#noise-filter');
   const result = $svgFilter.find('feTurbulence').attr('result');
   const lightingPrimitiveType = $('#ctrl-lighting-primitive-type').val();
-
+  // @ts-ignore
   const lightingPrimitiveEl = document.createElementNS(svgNs, lightingPrimitiveType);
+  // @ts-ignore
   lightingPrimitiveEl.setAttributeNS(svgNs, 'in', result);
   lightingPrimitiveEl.appendChild(document.createTextNode('\n'));
   lightingPrimitiveEl.appendChild(getLightElement());

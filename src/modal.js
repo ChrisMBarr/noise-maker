@@ -1,3 +1,8 @@
+// @ts-check
+/// <reference path="../node_modules/@types/jquery/JQueryStatic.d.ts"/>
+/// <reference path="main.js" />
+/// <reference path="helpers.js" />
+
 $(() => {
   const $modal = $('#code-modal');
   const $modalDialog = $modal.find('dialog');
@@ -10,8 +15,7 @@ $(() => {
   $('.btn-copy').on('click', (event) => {
     const tgtSelector = $(event.target).data('target');
     if (tgtSelector) {
-      console.log($(tgtSelector).val());
-      navigator.clipboard.writeText($(tgtSelector).val()).then(
+      navigator.clipboard.writeText($(tgtSelector).get(0).value).then(
         () => {},
         () => {
           alert('could not copy text, please select and copy it manually!');
@@ -31,12 +35,12 @@ $(() => {
   function openDialog() {
     writeCodeToFields();
     $modal.show();
-    $modalDialog.get(0).showModal();
+    $modalDialog.get(0)?.showModal();
   }
 
   function closeDialog(ev, self) {
     if (ev.target == self) {
-      $modalDialog.get(0).close();
+      $modalDialog.get(0)?.close();
       $modal.hide();
     }
   }
@@ -61,7 +65,7 @@ $(() => {
 
     $ctrlCodeHtml.val(
       `<svg xmlns="${svgNs}" class="hidden-svg">${prettyIndentHtml(
-        '\n' + $svgFilter.get(0).outerHTML
+        '\n' + $svgFilter.get(0)?.outerHTML
       )}</svg>`
     );
 

@@ -1,3 +1,6 @@
+// @ts-check
+/// <reference path="main.js" />
+
 let $controls;
 const ctrlIdPrefix = 'ctrl-';
 function serializeControls() {
@@ -18,6 +21,7 @@ function serializeControls() {
 
 function applyPreset(num) {
   const arr = presets[num].settings;
+  // @ts-ignore
   arr.forEach((obj) => {
     if (typeof obj.value === 'boolean') {
       $('#' + ctrlIdPrefix + obj.id)
