@@ -360,6 +360,7 @@
               >
                 <option
                   value="feDistantLight"
+                  data-handles="[]"
                   data-toggle-visibility-and-enable="#light-type-distant-options"
                   selected
                 >
@@ -367,18 +368,21 @@
                 </option>
                 <option
                   value="fePointLight"
+                  data-handles='[{"left":"ctrl-lighting-point-x", "top":"ctrl-lighting-point-y"}]'
                   data-toggle-visibility-and-enable="#light-type-point-options"
                 >
                   Point
                 </option>
                 <option
                   value="feSpotLight"
+                  data-handles='[{"left":"ctrl-lighting-spot-overhead-x","top":"ctrl-lighting-spot-overhead-y"}]'
                   data-toggle-visibility-and-enable="#light-type-spot-overhead-options"
                 >
                   Spot (Overhead)
                 </option>
                 <option
                   value="feSpotLight"
+                  data-handles='[{"left":"ctrl-lighting-spot-manual-x","top":"ctrl-lighting-spot-manual-y"},{"left":"ctrl-lighting-spot-manual-pointsat-x","top":"ctrl-lighting-spot-manual-pointsat-y"}]'
                   data-toggle-visibility-and-enable="#light-type-spot-manual-options"
                 >
                   Spot (Manual)
@@ -460,6 +464,8 @@
                       disabled
                       data-target="#noise-filter fePointLight"
                       data-target-attr="x"
+                      data-handle-index="0"
+                      data-handle-position="left"
                       data-force-reload-svg="true"
                     />
                   </div>
@@ -481,6 +487,8 @@
                       disabled
                       data-target="#noise-filter fePointLight"
                       data-target-attr="y"
+                      data-handle-index="0"
+                      data-handle-position="top"
                       data-force-reload-svg="true"
                     />
                   </div>
@@ -553,6 +561,8 @@
                       disabled
                       data-target="#noise-filter feSpotLight"
                       data-target-attr="x pointsAtX"
+                      data-handle-index="0"
+                      data-handle-position="left"
                       data-force-reload-svg="true"
                     />
                   </div>
@@ -574,6 +584,8 @@
                       disabled
                       data-target="#noise-filter feSpotLight"
                       data-target-attr="y pointsAtY"
+                      data-handle-index="0"
+                      data-handle-position="top"
                       data-force-reload-svg="true"
                     />
                   </div>
@@ -655,6 +667,8 @@
                       disabled
                       data-target="#noise-filter feSpotLight"
                       data-target-attr="x"
+                      data-handle-index="0"
+                      data-handle-position="left"
                       data-force-reload-svg="true"
                     />
                   </div>
@@ -676,6 +690,8 @@
                       disabled
                       data-target="#noise-filter feSpotLight"
                       data-target-attr="y"
+                      data-handle-index="0"
+                      data-handle-position="top"
                       data-force-reload-svg="true"
                     />
                   </div>
@@ -720,6 +736,8 @@
                       disabled
                       data-target="#noise-filter feSpotLight"
                       data-target-attr="pointsAtX"
+                      data-handle-index="1"
+                      data-handle-position="left"
                       data-force-reload-svg="true"
                     />
                   </div>
@@ -743,6 +761,8 @@
                       disabled
                       data-target="#noise-filter feSpotLight"
                       data-target-attr="pointsAtY"
+                      data-handle-index="1"
+                      data-handle-position="top"
                       data-force-reload-svg="true"
                     />
                   </div>

@@ -10,7 +10,6 @@ Built with jQuery and Bootstrap. In hindsight I wish I had started this project 
 
 TODO:
 
-- Add "handles" in the UI for modifying X/Y light positions
 - Different shapes as container elements
 - Settings as shareable links with query string params
 - Rewrite in Angular?

@@ -1,9 +1,11 @@
+let $handles;
+
 let forceReloadDebounce = null;
 function forceReloadSvg() {
   clearTimeout(forceReloadDebounce);
   forceReloadDebounce = setTimeout(() => {
     //Re-select every time since it's being replaced and we lose the reference
-    const $svg = $('#demo-output svg');
+    const $svg = $demoOutput.children('svg');
 
     //remove any styles it has
     if ($svg.css('transform')) {
@@ -23,9 +25,13 @@ let lightingMaxDebounce = null;
 function updateLightingMaxValues() {
   clearTimeout(lightingMaxDebounce);
   lightingMaxDebounce = setTimeout(() => {
-    const $svg = $('#demo-output svg');
+    const $svg = $demoOutput.children('svg');
     let maxX = $svg.width();
     let maxY = $svg.height();
+
+    canvasSize.height = maxY;
+    canvasSize.width = maxX;
+    canvasSize.left = $svg.offset().left;
 
     $(
       '#ctrl-lighting-point-x, #ctrl-lighting-spot-overhead-x, #ctrl-lighting-spot-manual-x, #ctrl-lighting-spot-manual-pointsat-x'
@@ -86,6 +92,65 @@ function replaceLightElement() {
     .append('\n')
     .append(getLightElement())
     .append('\n');
+}
+
+function clearLightingHandles() {
+  isDraggingHandle = false;
+  $demoOutput.children('.handle').remove();
+  $handles = $demoOutput.children('.handle'); //should select nothing, which is what we want here
+}
+
+function createLightHandles(handleMappings) {
+  clearLightingHandles();
+
+  if (handleMappings.length > 0) {
+    handleMappings.forEach((data) => {
+      $('<div class="handle bg-light rounded-circle border border-secondary" tabindex="0"></div>')
+        .data('mapping', data)
+        .insertBefore($demoOutput.children('svg'));
+    });
+
+    $handles = $demoOutput.children('.handle');
+
+    let mapping;
+    let $dragHandle;
+    $demoOutput
+      .on('mousedown', (ev) => {
+        if (ev.target.classList.contains('handle')) {
+          isDraggingHandle = true;
+          $dragHandle = $(ev.target);
+          mapping = $dragHandle.data('mapping');
+        }
+      })
+      .on('mousemove', (ev) => {
+        if (isDraggingHandle) {
+          const x = Math.min(
+            Math.max(ev.originalEvent.clientX - canvasSize.left, 0),
+            canvasSize.width
+          );
+          const y = Math.min(Math.max(ev.originalEvent.clientY, 0), canvasSize.height);
+
+          $('#' + mapping.left)
+            .val(x)
+            .trigger(inputEventName);
+          $('#' + mapping.top)
+            .val(y)
+            .trigger(inputEventName);
+
+          $dragHandle.css({ left: x, top: y });
+        }
+      })
+      .on('mouseup', () => {
+        isDraggingHandle = false;
+        mapping = undefined;
+        $dragHandle = undefined;
+      });
+  }
+}
+
+function updateHandlePosition(index, positionProperty, value) {
+  // console.log($handles.eq(index), positionProperty, value);
+  $handles.eq(index).css(positionProperty, value + 'px');
 }
 
 $(() => {

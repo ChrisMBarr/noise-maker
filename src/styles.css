@@ -28,6 +28,44 @@ aside,
   cursor: help;
 }
 
+#demo-output {
+  position: relative;
+  overflow: hidden;
+}
+
+#demo-output:hover .handle {
+  opacity: 1;
+}
+
+@keyframes add-handle {
+  from {
+    opacity: 1;
+  }
+}
+
+.handle {
+  --handle-size: 20px;
+  --handle-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+
+  position: absolute;
+  width: var(--handle-size);
+  height: var(--handle-size);
+  opacity: 0;
+  z-index: 10;
+  transform: translate(-50%, -50%);
+  cursor: grab;
+  box-shadow: var(--handle-shadow);
+
+  transition: opacity 300ms, box-shadow 300ms;
+  animation: add-handle 1000ms 1000ms backwards;
+}
+.handle:active {
+  cursor: grabbing;
+}
+.handle:focus {
+  box-shadow: var(--handle-shadow), 0 0 0 var(--bs-focus-ring-width) var(--bs-focus-ring-color);
+}
+
 /*===========================
 MODALS
 ===========================*/

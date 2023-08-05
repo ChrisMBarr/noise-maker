@@ -1,12 +1,21 @@
 const svgNs = 'http://www.w3.org/2000/svg';
 let customSizeEnabled = false;
 let lightingEffectsEnabled = false;
+let isDraggingHandle = false;
+let $demoOutput;
+let canvasSize = {
+  left: 0,
+  width: 0,
+  height: 0,
+};
 const inputEventName = 'input';
 const textureStyles = {
   filter: {},
 };
 
 $(() => {
+  $demoOutput = $('#demo-output');
+  //Special controls we will need to treat differently
   const $baseFrequencyX = $('#ctrl-base-frequency-x');
   const $baseFrequencyY = $('#ctrl-base-frequency-y');
 
@@ -49,12 +58,13 @@ $(() => {
           createLightingElement();
         } else {
           clearLightingEffects();
+          clearLightingHandles();
         }
       } else if ($enableInput.attr('id') === 'ctrl-enable-custom-size') {
         customSizeEnabled = isChecked;
         updateLightingMaxValues();
         if (!isChecked) {
-          $('#demo-output svg').css({ height: '100%', width: '100%' });
+          $demoOutput.children('svg').css({ height: '100%', width: '100%' });
         }
       }
 
@@ -102,6 +112,8 @@ $(() => {
               .trigger(inputEventName);
           } else if (id === 'ctrl-light-type') {
             replaceLightElement();
+            const handleMappings = $currentTarget.data('handles');
+            createLightHandles(handleMappings);
           }
         }
 
@@ -123,8 +135,11 @@ $(() => {
   }
 
   //Initialize max values & update them on window resize
-  $(window).on('resize', updateLightingMaxValues);
-  updateLightingMaxValues();
+  $(window)
+    .on('resize', () => {
+      updateLightingMaxValues();
+    })
+    .trigger('resize');
 
   function updateTexture($inputEl, $outputDisplay) {
     const isDisabled = $inputEl.is(':disabled');
@@ -165,6 +180,15 @@ $(() => {
             $tgt.attr(attrObj);
           } else {
             $tgt.attr(tgtAttr, val);
+          }
+
+          //Handle dragging updates the input value, but we don't want that coming back through to update the handle position
+          if (!isDraggingHandle) {
+            const handleIndex = $inputEl.data('handle-index');
+            const handlePos = $inputEl.data('handle-position');
+            if (handleIndex !== undefined && handlePos !== undefined) {
+              updateHandlePosition(handleIndex, handlePos, val);
+            }
           }
         }
       } else if (tgtFilterProp) {
