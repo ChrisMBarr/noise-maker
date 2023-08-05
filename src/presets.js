@@ -3,7 +3,7 @@ const ctrlIdPrefix = 'ctrl-';
 function serializeControls() {
   //used to log out the current values to the console to manually save as presets
   return $controls
-    .filter(':not(:disabled)')
+    .filter(':not(:disabled):not(#ctrl-enable-custom-size)')
     .toArray()
     .map((el) => {
       let value = el.value;
@@ -108,7 +108,7 @@ const presets = [
       { id: 'lighting-primitive-type', value: 'feDiffuseLighting' },
       { id: 'lighting-surface-scale', value: 3 },
       { id: 'lighting-diffuse-constant', value: 1 },
-      { id: 'light-type', value: 'feDistantLight' },
+      { id: 'light-type', value: 'distant' },
       { id: 'lighting-distant-azimuth', value: 90 },
       { id: 'lighting-distant-elevation', value: 55 },
       { id: 'bg-color', value: '#e9e4ef' },
@@ -116,7 +116,6 @@ const presets = [
       { id: 'enable-saturation', value: false },
       { id: 'enable-brightness', value: false },
       { id: 'enable-blur', value: false },
-      { id: 'enable-custom-size', value: false },
     ],
   },
   { divider: true },
@@ -140,7 +139,6 @@ const presets = [
       { id: 'num-brightness', value: 4.1 },
       { id: 'enable-blur', value: true },
       { id: 'num-blur', value: 10 },
-      { id: 'enable-custom-size', value: false },
     ],
   },
   {
@@ -158,7 +156,7 @@ const presets = [
       { id: 'lighting-surface-scale', value: 9 },
       { id: 'lighting-specular-exponent', value: 19.2 },
       { id: 'lighting-specular-constant', value: 2.8 },
-      { id: 'light-type', value: 'feDistantLight' },
+      { id: 'light-type', value: 'distant' },
       { id: 'lighting-distant-azimuth', value: 45 },
       { id: 'lighting-distant-elevation', value: 60 },
       { id: 'bg-color', value: '#413a23' },
@@ -166,7 +164,6 @@ const presets = [
       { id: 'enable-saturation', value: false },
       { id: 'enable-brightness', value: false },
       { id: 'enable-blur', value: false },
-      { id: 'enable-custom-size', value: false },
     ],
   },
   {
@@ -188,7 +185,6 @@ const presets = [
       { id: 'enable-brightness', value: true },
       { id: 'num-brightness', value: 7.8 },
       { id: 'enable-blur', value: false },
-      { id: 'enable-custom-size', value: false },
     ],
   },
   {
@@ -214,7 +210,6 @@ const presets = [
       { id: 'enable-saturation', value: false },
       { id: 'enable-brightness', value: false },
       { id: 'enable-blur', value: false },
-      { id: 'enable-custom-size', value: false },
     ],
   },
   {
@@ -237,7 +232,6 @@ const presets = [
       { id: 'enable-brightness', value: true },
       { id: 'num-brightness', value: 2.7 },
       { id: 'enable-blur', value: false },
-      { id: 'enable-custom-size', value: false },
     ],
   },
   {
@@ -253,7 +247,7 @@ const presets = [
       { id: 'lighting-primitive-type', value: 'feDiffuseLighting' },
       { id: 'lighting-surface-scale', value: 0.4 },
       { id: 'lighting-diffuse-constant', value: 0.7 },
-      { id: 'light-type', value: 'feDistantLight' },
+      { id: 'light-type', value: 'distant' },
       { id: 'lighting-distant-azimuth', value: 90 },
       { id: 'lighting-distant-elevation', value: 62 },
       { id: 'bg-color', value: '#ffffff' },
@@ -261,7 +255,6 @@ const presets = [
       { id: 'enable-saturation', value: false },
       { id: 'enable-brightness', value: false },
       { id: 'enable-blur', value: false },
-      { id: 'enable-custom-size', value: false },
     ],
   },
   {
@@ -284,7 +277,6 @@ const presets = [
       { id: 'num-brightness', value: 3.3 },
       { id: 'enable-blur', value: true },
       { id: 'num-blur', value: 5.8 },
-      { id: 'enable-custom-size', value: false },
     ],
   },
   {
@@ -305,7 +297,6 @@ const presets = [
       { id: 'enable-brightness', value: true },
       { id: 'num-brightness', value: 4.3 },
       { id: 'enable-blur', value: false },
-      { id: 'enable-custom-size', value: false },
     ],
   },
   {
@@ -321,7 +312,7 @@ const presets = [
       { id: 'lighting-primitive-type', value: 'feDiffuseLighting' },
       { id: 'lighting-surface-scale', value: 0.3 },
       { id: 'lighting-diffuse-constant', value: 1.08 },
-      { id: 'light-type', value: 'feDistantLight' },
+      { id: 'light-type', value: 'distant' },
       { id: 'lighting-distant-azimuth', value: 180 },
       { id: 'lighting-distant-elevation', value: 65 },
       { id: 'bg-color', value: '#ffffff' },
@@ -330,7 +321,33 @@ const presets = [
       { id: 'num-saturation', value: 1 },
       { id: 'enable-brightness', value: false },
       { id: 'enable-blur', value: false },
-      { id: 'enable-custom-size', value: false },
+    ],
+  },
+  {
+    name: 'Radar',
+    settings: [
+      { id: 'base-frequency-x', value: 0.994 },
+      { id: 'separate-frequencies', value: false },
+      { id: 'num-octaves', value: 4 },
+      { id: 'noise-type', value: 'fractalNoise' },
+      { id: 'seed', value: 52 },
+      { id: 'enable-lighting', value: true },
+      { id: 'lighting-lighting-color', value: '#a1345d' },
+      { id: 'lighting-primitive-type', value: 'feSpecularLighting' },
+      { id: 'lighting-surface-scale', value: 6.6 },
+      { id: 'lighting-specular-exponent', value: 34.6 },
+      { id: 'lighting-specular-constant', value: 7.3 },
+      { id: 'light-type', value: 'spot-overhead' },
+      { id: 'lighting-spot-overhead-cone-angle', value: 60.2 },
+      { id: 'lighting-spot-overhead-x', value: 355 },
+      { id: 'lighting-spot-overhead-y', value: 356 },
+      { id: 'lighting-spot-overhead-z', value: 122.5 },
+      { id: 'bg-color', value: '#0c5a93' },
+      { id: 'blend-mode', value: 'difference' },
+      { id: 'enable-saturation', value: false },
+      { id: 'enable-brightness', value: true },
+      { id: 'num-brightness', value: 0.6 },
+      { id: 'enable-blur', value: false },
     ],
   },
   {
@@ -355,7 +372,6 @@ const presets = [
       { id: 'enable-saturation', value: false },
       { id: 'enable-brightness', value: false },
       { id: 'enable-blur', value: false },
-      { id: 'enable-custom-size', value: false },
     ],
   },
   {
@@ -381,7 +397,32 @@ const presets = [
       { id: 'enable-saturation', value: false },
       { id: 'enable-brightness', value: false },
       { id: 'enable-blur', value: false },
-      { id: 'enable-custom-size', value: false },
+    ],
+  },
+  {
+    name: 'Sun Spots',
+    settings: [
+      { id: 'base-frequency-x', value: 0.079 },
+      { id: 'base-frequency-y', value: 0.702 },
+      { id: 'separate-frequencies', value: true },
+      { id: 'num-octaves', value: 2 },
+      { id: 'noise-type', value: 'fractalNoise' },
+      { id: 'seed', value: 35 },
+      { id: 'enable-lighting', value: true },
+      { id: 'lighting-lighting-color', value: '#cdc51f' },
+      { id: 'lighting-primitive-type', value: 'feSpecularLighting' },
+      { id: 'lighting-surface-scale', value: 5.4 },
+      { id: 'lighting-specular-exponent', value: 11.8 },
+      { id: 'lighting-specular-constant', value: 2.2 },
+      { id: 'light-type', value: 'distant' },
+      { id: 'lighting-distant-azimuth', value: 157 },
+      { id: 'lighting-distant-elevation', value: 67 },
+      { id: 'bg-color', value: '#bf3304' },
+      { id: 'blend-mode', value: 'screen' },
+      { id: 'enable-saturation', value: false },
+      { id: 'enable-brightness', value: false },
+      { id: 'enable-blur', value: true },
+      { id: 'num-blur', value: 5.3 },
     ],
   },
   {
@@ -397,7 +438,7 @@ const presets = [
       { id: 'lighting-primitive-type', value: 'feDiffuseLighting' },
       { id: 'lighting-surface-scale', value: 0.7 },
       { id: 'lighting-diffuse-constant', value: 1.09 },
-      { id: 'light-type', value: 'feDistantLight' },
+      { id: 'light-type', value: 'distant' },
       { id: 'lighting-distant-azimuth', value: 45 },
       { id: 'lighting-distant-elevation', value: 60 },
       { id: 'bg-color', value: '#ffffff' },
@@ -405,7 +446,6 @@ const presets = [
       { id: 'enable-saturation', value: false },
       { id: 'enable-brightness', value: false },
       { id: 'enable-blur', value: false },
-      { id: 'enable-custom-size', value: false },
     ],
   },
   {
@@ -423,7 +463,7 @@ const presets = [
       { id: 'lighting-surface-scale', value: 9.1 },
       { id: 'lighting-specular-exponent', value: 5.6 },
       { id: 'lighting-specular-constant', value: 1.6 },
-      { id: 'light-type', value: 'feDistantLight' },
+      { id: 'light-type', value: 'distant' },
       { id: 'lighting-distant-azimuth', value: 86 },
       { id: 'lighting-distant-elevation', value: 62 },
       { id: 'bg-color', value: '#0080c0' },
@@ -431,7 +471,6 @@ const presets = [
       { id: 'enable-saturation', value: false },
       { id: 'enable-brightness', value: false },
       { id: 'enable-blur', value: false },
-      { id: 'enable-custom-size', value: false },
     ],
   },
   {
@@ -448,7 +487,7 @@ const presets = [
       { id: 'lighting-surface-scale', value: 10 },
       { id: 'lighting-specular-exponent', value: 7.8 },
       { id: 'lighting-specular-constant', value: 1.9 },
-      { id: 'light-type', value: 'feDistantLight' },
+      { id: 'light-type', value: 'distant' },
       { id: 'lighting-distant-azimuth', value: 45 },
       { id: 'lighting-distant-elevation', value: 60 },
       { id: 'bg-color', value: '#f5f5f5' },
@@ -456,7 +495,6 @@ const presets = [
       { id: 'enable-saturation', value: false },
       { id: 'enable-brightness', value: false },
       { id: 'enable-blur', value: false },
-      { id: 'enable-custom-size', value: false },
     ],
   },
   {
@@ -474,7 +512,7 @@ const presets = [
       { id: 'lighting-surface-scale', value: 7.7 },
       { id: 'lighting-specular-exponent', value: 35.9 },
       { id: 'lighting-specular-constant', value: 1.3 },
-      { id: 'light-type', value: 'feDistantLight' },
+      { id: 'light-type', value: 'distant' },
       { id: 'lighting-distant-azimuth', value: 45 },
       { id: 'lighting-distant-elevation', value: 60 },
       { id: 'bg-color', value: '#af994e' },
@@ -483,7 +521,6 @@ const presets = [
       { id: 'num-saturation', value: 1.6 },
       { id: 'enable-brightness', value: false },
       { id: 'enable-blur', value: false },
-      { id: 'enable-custom-size', value: false },
     ],
   },
 ];
