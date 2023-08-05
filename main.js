@@ -1,3 +1,9 @@
+// @ts-check
+/// <reference path="../node_modules/@types/jquery/JQueryStatic.d.ts"/>
+/// <reference path="helpers.js" />
+/// <reference path="presets.js" />
+/// <reference path="modal.js" />
+
 const svgNs = 'http://www.w3.org/2000/svg';
 let customSizeEnabled = false;
 let lightingEffectsEnabled = false;
@@ -46,11 +52,20 @@ $(() => {
       }
     });
 
+  /**
+   *
+   * @param {JQuery<HTMLElement>} $enableInput
+   * @param {JQuery<HTMLOutputElement>} $outputDisplay
+   */
   function initEnableInputs($enableInput, $outputDisplay) {
     const $enableTargets = $($enableInput.data('enable'));
     $enableInput.on(inputEventName, () => {
       const isChecked = $enableInput.is(':checked');
-      $enableTargets.attr('disabled', !isChecked);
+      if (isChecked) {
+        $enableTargets.removeAttr('disabled');
+      } else {
+        $enableTargets.attr('disabled', 'disabled');
+      }
 
       if ($enableInput.attr('id') === 'ctrl-enable-lighting') {
         lightingEffectsEnabled = isChecked;
@@ -76,6 +91,11 @@ $(() => {
     $enableInput.trigger(inputEventName);
   }
 
+  /**
+   *
+   * @param {JQuery<HTMLElement>} $toggleVisibilityInput
+   * @param {JQuery<HTMLOutputElement>} $outputDisplay
+   */
   function initToggleVisibilityInputs($toggleVisibilityInput, $outputDisplay) {
     if ($toggleVisibilityInput.is(':checkbox')) {
       const $toggleTargets = $($toggleVisibilityInput.data('toggle-visibility'));
@@ -99,7 +119,9 @@ $(() => {
       const $allTargets = $(allTargetsSelectorStr);
 
       $toggleVisibilityInput.on(inputEventName, (ev) => {
-        const $currentTarget = $toggleVisibilityInput.children().eq(ev.target.selectedIndex);
+        const el = ev.target;
+        // @ts-ignore
+        const $currentTarget = $toggleVisibilityInput.children().eq(el.selectedIndex);
         const $toggleTargets = $($currentTarget.data('toggle-visibility-and-enable'));
 
         const id = $toggleVisibilityInput.attr('id');
@@ -125,6 +147,11 @@ $(() => {
     }
   }
 
+  /**
+   *
+   * @param {JQuery<HTMLElement>} $input
+   * @param {JQuery<HTMLOutputElement>} $outputDisplay
+   */
   function initFormInputs($input, $outputDisplay) {
     $input.on(inputEventName, () => {
       updateTexture($input, $outputDisplay);
@@ -141,6 +168,11 @@ $(() => {
     })
     .trigger('resize');
 
+  /**
+   *
+   * @param {JQuery<HTMLElement>} $inputEl
+   * @param {JQuery<HTMLOutputElement>} $outputDisplay
+   */
   function updateTexture($inputEl, $outputDisplay) {
     const isDisabled = $inputEl.is(':disabled');
     const suffix = $inputEl.data('target-filter-prop-suffix');
@@ -172,6 +204,7 @@ $(() => {
           if (!$baseFrequencyY.is(':disabled')) {
             combinedBaseFreq += ` ${$baseFrequencyY.val()}`;
           }
+          // @ts-ignore
           $tgt.attr(tgtAttr, combinedBaseFreq);
         } else {
           if (tgtAttr.includes(' ')) {
