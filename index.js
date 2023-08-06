@@ -93,35 +93,48 @@ function createLightHandles(handleMappings) {
         let mapping;
         let $dragHandle;
         $demoOutput
-            .on('mousedown', (ev) => {
+            .on('mousedown touchstart', (ev) => {
             if (ev.target.classList.contains('handle')) {
                 isDraggingHandle = true;
                 $dragHandle = $(ev.target);
                 mapping = $dragHandle.data('mapping');
             }
         })
-            .on('mousemove', (ev) => {
+            .on('mousemove touchmove', (ev) => {
             if (isDraggingHandle) {
-                const x = Math.min(Math.max(ev.originalEvent.clientX - canvasSize.left, 0), canvasSize.width);
-                const y = Math.min(Math.max(ev.originalEvent.clientY, 0), canvasSize.height);
-                $('#' + mapping.left)
+                const clientX = ev.touches ? ev.touches[0].clientX : ev.clientX;
+                const clientY = ev.touches ? ev.touches[0].clientY : ev.clientY;
+                const x = Math.min(Math.max(clientX - canvasSize.left, 0), canvasSize.width);
+                const y = Math.min(Math.max(clientY, 0), canvasSize.height);
+                const ctrlLeft = $('#' + mapping.left)
                     .val(x)
-                    .trigger(inputEventName);
-                $('#' + mapping.top)
+                    .trigger(inputEventName)
+                    .get(0);
+                const ctrlTop = $('#' + mapping.top)
                     .val(y)
-                    .trigger(inputEventName);
+                    .trigger(inputEventName)
+                    .get(0);
+                scrollElementIntoView(ctrlLeft);
+                scrollElementIntoView(ctrlTop);
                 $dragHandle.css({ left: x, top: y });
             }
         })
-            .on('mouseup', () => {
+            .on('mouseup touchend', () => {
             isDraggingHandle = false;
             mapping = undefined;
             $dragHandle = undefined;
         });
     }
 }
+function scrollElementIntoView(el) {
+    const rect = el.getBoundingClientRect();
+    // Only completely visible elements return true
+    const isVisible = rect.top >= 0 && rect.bottom <= window.innerHeight;
+    if (!isVisible) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+}
 function updateHandlePosition(index, positionProperty, value) {
-    // console.log($handles.eq(index), positionProperty, value);
     $handles.eq(index).css(positionProperty, value + 'px');
 }
 $(() => {
@@ -177,6 +190,10 @@ $(() => {
         if ($input.length) {
             initFormInputs($input, $outputDisplay);
         }
+    });
+    //Mobile screen toggle button
+    $('#btn-toggle-controls').on('click', () => {
+        $('body').toggleClass('controls-open');
     });
     function initEnableInputs($enableInput, $outputDisplay) {
         const $enableTargets = $($enableInput.data('enable'));

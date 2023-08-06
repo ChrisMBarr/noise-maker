@@ -2,15 +2,46 @@ body {
   height: 100vh;
 
   --bs-border-color-hover: #86b7fe;
+  --controls-width: 350px;
+  --transition-duration: 300ms;
 }
 
-#svg-controls {
-  padding-bottom: 92px; /*Height of the bottom buttons*/
+#btn-toggle-controls {
+  left: 0;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-top-right-radius: 0;
+  transition: left var(--transition-duration);
+}
+.controls-open #btn-toggle-controls {
+  left: var(--controls-width);
+}
+
+#btn-toggle-controls .open-icon {
+  display: none;
+}
+.controls-open #btn-toggle-controls .open-icon {
+  display: inline;
+}
+.controls-open #btn-toggle-controls .closed-icon {
+  display: none;
 }
 
 aside,
 #final-controls {
-  width: 350px;
+  width: var(--controls-width);
+}
+
+aside {
+  position: fixed;
+  left: 0;
+  transform: translateX(-100%);
+
+  transition: transform var(--transition-duration);
+}
+
+.controls-open aside {
+  transform: translateX(0);
 }
 
 .tip {
@@ -18,12 +49,16 @@ aside,
   cursor: help;
 }
 
+/*===========================
+SVG Output & Handles
+===========================*/
 #demo-output {
   position: relative;
   overflow: hidden;
 }
 
-#demo-output:hover .handle {
+#demo-output:hover .handle,
+#demo-output:focus .handle {
   opacity: 1;
 }
 
@@ -46,7 +81,7 @@ aside,
   cursor: grab;
   box-shadow: var(--handle-shadow);
 
-  transition: opacity 300ms, box-shadow 300ms;
+  transition: opacity var(--transition-duration), box-shadow var(--transition-duration);
   animation: add-handle 1000ms 1000ms backwards;
 }
 .handle:active {
@@ -138,4 +173,28 @@ BUTTONS
   inset: auto auto 0px 0px;
   margin: 0px;
   transform: translate(0px, -40px);
+}
+
+/*===========================
+Larger Screen Overrides
+===========================*/
+
+/*Screen must be above the SM width AND at least 500px tall*/
+@media screen and (min-height: 500px) and (min-width: 768px) {
+  #svg-controls {
+    padding-bottom: 92px; /*Height of the bottom buttons*/
+  }
+  #final-controls {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+  }
+}
+
+/*Screen is only wider than the SM breakpoint*/
+@media screen and (min-width: 768px) {
+  aside {
+    position: relative;
+    transform: none !important;
+  }
 }

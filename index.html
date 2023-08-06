@@ -2,7 +2,7 @@
 <html lang="en" data-bs-theme="dark">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no" />
     <link rel="stylesheet" href="styles.css" />
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
@@ -17,7 +17,17 @@
     <title>Noise Maker</title>
   </head>
   <body class="d-flex">
-    <aside class="flex-shrink-0 overflow-auto">
+    <button
+      type="button"
+      class="d-md-none btn btn-dark btn-lg position-fixed top-0 shadow z-1"
+      id="btn-toggle-controls"
+      aria-label="toggle controls"
+    >
+      <i class="bi bi-chevron-double-left open-icon"></i>
+      <i class="bi bi-chevron-double-right closed-icon"></i>
+    </button>
+
+    <aside class="flex-shrink-0 overflow-auto bg-body h-100 shadow z-1">
       <div id="svg-controls" class="d-flex flex-column">
         <div class="card m-3 mb-0">
           <h5 class="card-header">Noise</h5>
@@ -995,7 +1005,7 @@
 
         <div
           id="final-controls"
-          class="bg-body-secondary p-3 pb-2 border-top border-secondary shadow-lg position-fixed bottom-0 d-flex flex-column gap-2"
+          class="bg-body-secondary p-3 pb-2 border-top border-secondary shadow-lg d-flex flex-column gap-2"
         >
           <div class="d-flex justify-content-between">
             <div class="dropup">
@@ -1099,8 +1109,8 @@
       </div>
     </aside>
 
-    <main class="w-100">
-      <div id="demo-output" class="w-100 h-100">
+    <main class="w-100 overflow-hidden">
+      <div id="demo-output" class="w-100 h-100" tabindex="0">
         <svg style="width: 100%; height: 100%">
           <filter id="noise-filter">
             <feTurbulence stitchTiles="stitch" result="noise"></feTurbulence>
