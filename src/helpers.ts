@@ -135,12 +135,18 @@ function createLightHandles(handleMappings: ILightHandleMapping[]) {
           const x = Math.min(Math.max(clientX - canvasSize.left, 0), canvasSize.width);
           const y = Math.min(Math.max(clientY, 0), canvasSize.height);
 
-          $('#' + mapping!.left)
+          const ctrlLeft = $('#' + mapping!.left)
             .val(x)
-            .trigger(inputEventName);
-          $('#' + mapping!.top)
+            .trigger(inputEventName)
+            .get(0)!;
+
+          const ctrlTop = $('#' + mapping!.top)
             .val(y)
-            .trigger(inputEventName);
+            .trigger(inputEventName)
+            .get(0)!;
+
+          scrollElementIntoView(ctrlLeft);
+          scrollElementIntoView(ctrlTop);
 
           $dragHandle!.css({ left: x, top: y });
         }
@@ -153,8 +159,17 @@ function createLightHandles(handleMappings: ILightHandleMapping[]) {
   }
 }
 
+function scrollElementIntoView(el: HTMLElement) {
+  const rect = el.getBoundingClientRect();
+  // Only completely visible elements return true
+  const isVisible = rect.top >= 0 && rect.bottom <= window.innerHeight;
+
+  if (!isVisible) {
+    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+}
+
 function updateHandlePosition(index: number, positionProperty: string, value: number) {
-  // console.log($handles.eq(index), positionProperty, value);
   $handles.eq(index).css(positionProperty, value + 'px');
 }
 
