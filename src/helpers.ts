@@ -120,20 +120,20 @@ function createLightHandles(handleMappings: ILightHandleMapping[]) {
     let mapping: ILightHandleMapping | undefined;
     let $dragHandle: JQuery<HTMLElement> | undefined;
     $demoOutput
-      .on('mousedown', (ev) => {
+      .on('mousedown touchstart', (ev) => {
         if (ev.target.classList.contains('handle')) {
           isDraggingHandle = true;
           $dragHandle = $(ev.target);
           mapping = $dragHandle.data('mapping');
         }
       })
-      .on('mousemove', (ev) => {
+      .on('mousemove touchmove', (ev) => {
         if (isDraggingHandle) {
-          const x = Math.min(
-            Math.max(ev.originalEvent!.clientX - canvasSize.left, 0),
-            canvasSize.width
-          );
-          const y = Math.min(Math.max(ev.originalEvent!.clientY, 0), canvasSize.height);
+          const clientX = ev.touches ? ev.touches[0].clientX : ev.clientX!;
+          const clientY = ev.touches ? ev.touches[0].clientY : ev.clientY!;
+
+          const x = Math.min(Math.max(clientX - canvasSize.left, 0), canvasSize.width);
+          const y = Math.min(Math.max(clientY, 0), canvasSize.height);
 
           $('#' + mapping!.left)
             .val(x)
@@ -145,7 +145,7 @@ function createLightHandles(handleMappings: ILightHandleMapping[]) {
           $dragHandle!.css({ left: x, top: y });
         }
       })
-      .on('mouseup', () => {
+      .on('mouseup touchend', () => {
         isDraggingHandle = false;
         mapping = undefined;
         $dragHandle = undefined;

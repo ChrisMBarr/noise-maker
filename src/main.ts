@@ -48,6 +48,11 @@ $(() => {
       }
     });
 
+  //Mobile screen toggle button
+  $('#btn-toggle-controls').on('click', () => {
+    $('body').toggleClass('controls-open');
+  });
+
   function initEnableInputs(
     $enableInput: JQuery<HTMLInputElement>,
     $outputDisplay: JQuery<HTMLOutputElement>

@@ -10,6 +10,7 @@ Built with jQuery and Bootstrap. In hindsight I wish I had started this project 
 
 TODO:
 
-- Different shapes as container elements
+- dragging a handle will scroll sliders into view
 - Settings as shareable links with query string params
-- Rewrite in Angular?
+- Different backgrounds (solid, gradient, images)
+- Different shapes as container elements
