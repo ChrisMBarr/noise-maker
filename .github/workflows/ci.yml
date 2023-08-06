@@ -23,7 +23,12 @@ jobs:
       - name: Checkout ⏬
         uses: actions/checkout@v3
 
+      - name: 🔧 Install & Build
+        run: |
+          npm ci
+          npm run build
+
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: src/
+          folder: app/

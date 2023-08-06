@@ -1,9 +1,6 @@
-// @ts-check
-/// <reference path="main.js" />
+let $handles: JQuery<HTMLElement>;
 
-let $handles;
-
-let forceReloadDebounce = null;
+let forceReloadDebounce: number | undefined;
 function forceReloadSvg() {
   clearTimeout(forceReloadDebounce);
   forceReloadDebounce = setTimeout(() => {
@@ -24,17 +21,17 @@ function forceReloadSvg() {
   }, 50);
 }
 
-let lightingMaxDebounce = null;
+let lightingMaxDebounce: number | undefined;
 function updateLightingMaxValues() {
   clearTimeout(lightingMaxDebounce);
   lightingMaxDebounce = setTimeout(() => {
     const $svg = $demoOutput.children('svg');
-    let maxX = $svg.width();
-    let maxY = $svg.height();
+    let maxX = $svg.width()!;
+    let maxY = $svg.height()!;
 
     canvasSize.height = maxY;
     canvasSize.width = maxX;
-    canvasSize.left = $svg.offset().left;
+    canvasSize.left = $svg.offset()!.left;
 
     $(
       '#ctrl-lighting-point-x, #ctrl-lighting-spot-overhead-x, #ctrl-lighting-spot-manual-x, #ctrl-lighting-spot-manual-pointsat-x'
@@ -49,12 +46,17 @@ function updateLightingMaxValues() {
   }, 50);
 }
 
-function updateTextureFilter($tgt, tgtFilterProp, val, isDisabled) {
+function updateTextureFilter(
+  $tgt: JQuery<HTMLElement>,
+  tgtFilterProp: string,
+  val: string | number,
+  isDisabled: boolean
+) {
   textureStyles.filter[tgtFilterProp] = isDisabled ? null : val;
   $tgt.css('filter', getPropsAsCssString(textureStyles.filter));
 }
 
-function getPropsAsCssString(obj) {
+function getPropsAsCssString(obj: IIndexableObject) {
   return Object.keys(obj)
     .map((key) => {
       const val = obj[key];
@@ -70,11 +72,9 @@ function clearLightingEffects() {
 
 function createLightingElement() {
   const $svgFilter = $('#noise-filter');
-  const result = $svgFilter.find('feTurbulence').attr('result');
-  const lightingPrimitiveType = $('#ctrl-lighting-primitive-type').val();
-  // @ts-ignore
+  const result = $svgFilter.find('feTurbulence').attr('result')!;
+  const lightingPrimitiveType = $('#ctrl-lighting-primitive-type').val()!.toString();
   const lightingPrimitiveEl = document.createElementNS(svgNs, lightingPrimitiveType);
-  // @ts-ignore
   lightingPrimitiveEl.setAttributeNS(svgNs, 'in', result);
   lightingPrimitiveEl.appendChild(document.createTextNode('\n'));
   lightingPrimitiveEl.appendChild(getLightElement());
@@ -105,7 +105,7 @@ function clearLightingHandles() {
   $handles = $demoOutput.children('.handle'); //should select nothing, which is what we want here
 }
 
-function createLightHandles(handleMappings) {
+function createLightHandles(handleMappings: ILightHandleMapping[]) {
   clearLightingHandles();
 
   if (handleMappings.length > 0) {
@@ -117,8 +117,8 @@ function createLightHandles(handleMappings) {
 
     $handles = $demoOutput.children('.handle');
 
-    let mapping;
-    let $dragHandle;
+    let mapping: ILightHandleMapping | undefined;
+    let $dragHandle: JQuery<HTMLElement> | undefined;
     $demoOutput
       .on('mousedown', (ev) => {
         if (ev.target.classList.contains('handle')) {
@@ -130,19 +130,19 @@ function createLightHandles(handleMappings) {
       .on('mousemove', (ev) => {
         if (isDraggingHandle) {
           const x = Math.min(
-            Math.max(ev.originalEvent.clientX - canvasSize.left, 0),
+            Math.max(ev.originalEvent!.clientX - canvasSize.left, 0),
             canvasSize.width
           );
-          const y = Math.min(Math.max(ev.originalEvent.clientY, 0), canvasSize.height);
+          const y = Math.min(Math.max(ev.originalEvent!.clientY, 0), canvasSize.height);
 
-          $('#' + mapping.left)
+          $('#' + mapping!.left)
             .val(x)
             .trigger(inputEventName);
-          $('#' + mapping.top)
+          $('#' + mapping!.top)
             .val(y)
             .trigger(inputEventName);
 
-          $dragHandle.css({ left: x, top: y });
+          $dragHandle!.css({ left: x, top: y });
         }
       })
       .on('mouseup', () => {
@@ -153,7 +153,7 @@ function createLightHandles(handleMappings) {
   }
 }
 
-function updateHandlePosition(index, positionProperty, value) {
+function updateHandlePosition(index: number, positionProperty: string, value: number) {
   // console.log($handles.eq(index), positionProperty, value);
   $handles.eq(index).css(positionProperty, value + 'px');
 }

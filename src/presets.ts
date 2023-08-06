@@ -1,27 +1,27 @@
-// @ts-check
-/// <reference path="main.js" />
-
-let $controls;
+let $controls: JQuery<HTMLInputElement | HTMLSelectElement>;
 const ctrlIdPrefix = 'ctrl-';
+
 function serializeControls() {
   //used to log out the current values to the console to manually save as presets
   return $controls
     .filter(':not(:disabled):not(#ctrl-enable-custom-size)')
     .toArray()
     .map((el) => {
-      let value = el.value;
+      let value: IPresetValue = el.value;
+      const numVal = (el as HTMLInputElement).valueAsNumber;
       if (el.type === 'checkbox') {
-        value = el.checked;
-      } else if (el.valueAsNumber !== 'undefined' && !isNaN(el.valueAsNumber)) {
-        value = el.valueAsNumber;
+        value = (el as HTMLInputElement).checked;
+      } else if (typeof numVal !== 'undefined' && !isNaN(numVal)) {
+        value = numVal;
       }
       return { id: el.id.replace(ctrlIdPrefix, ''), value };
     });
 }
 
-function applyPreset(num) {
-  const arr = presets[num].settings;
-  // @ts-ignore
+function applyPreset(num: number) {
+  //dividers can't be selected so we can force the type here
+  const selectedPreset = presets[num] as IPreset;
+  const arr: IPresetSetting[] = selectedPreset.settings;
   arr.forEach((obj) => {
     if (typeof obj.value === 'boolean') {
       $('#' + ctrlIdPrefix + obj.id)
@@ -35,13 +35,13 @@ function applyPreset(num) {
   });
 }
 
-function randomizeSelectOption(ddl) {
+function randomizeSelectOption(ddl: HTMLSelectElement) {
   const items = ddl.getElementsByTagName('option');
   const index = Math.floor(Math.random() * items.length);
   ddl.selectedIndex = index;
 }
 
-function randomizeRangeOrNumberInput(rangeInput) {
+function randomizeRangeOrNumberInput(rangeInput: HTMLInputElement) {
   //default values defined here: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/range#validation
   let min = parseFloat(rangeInput.min);
   if (isNaN(min)) min = 0;
@@ -55,10 +55,10 @@ function randomizeRangeOrNumberInput(rangeInput) {
 
   const randomVal = Math.random() * (max - min) + min;
 
-  rangeInput.value = stepIsWholeNumber ? Math.round(randomVal) : randomVal;
+  rangeInput.value = (stepIsWholeNumber ? Math.round(randomVal) : randomVal).toString();
 }
 
-function randomizeColorValue(colorInput) {
+function randomizeColorValue(colorInput: HTMLInputElement) {
   var letters = '0123456789ABCDEF';
   var color = '#';
   for (var i = 0; i < 6; i++) {
@@ -68,13 +68,17 @@ function randomizeColorValue(colorInput) {
 }
 
 $(() => {
-  $controls = $('#svg-controls').find('input:not([type="hidden"]), select');
+  $controls = $('#svg-controls').find('input:not([type="hidden"]), select') as JQuery<
+    HTMLInputElement | HTMLSelectElement
+  >;
   const $presetDdl = $('#ddl-preset');
   const presetOptions = presets
     .map((p, i) => {
-      const itemContent = p.divider
+      const itemContent = Object.hasOwn(p, 'divider')
         ? `<hr class="dropdown-divider">`
-        : `<a class="dropdown-item" href="#" onclick="applyPreset(${i});">${p.name}</a>`;
+        : `<a class="dropdown-item" href="#" onclick="applyPreset(${i});">${
+            (p as IPreset).name
+          }</a>`;
       return `<li>${itemContent}</li>`;
     })
     .join('');
@@ -85,20 +89,20 @@ $(() => {
       .filter(':not(#ctrl-enable-custom-size,#ctrl-custom-width,#ctrl-custom-height)')
       .each((_i, el) => {
         if (el.type === 'range' || el.type === 'number') {
-          randomizeRangeOrNumberInput(el);
+          randomizeRangeOrNumberInput(el as HTMLInputElement);
         } else if (el.type === 'color') {
-          randomizeColorValue(el);
+          randomizeColorValue(el as HTMLInputElement);
         } else if (el.type === 'checkbox') {
-          el.checked = Math.random() < 0.5;
+          (el as HTMLInputElement).checked = Math.random() < 0.5;
         } else if (el.type.startsWith('select')) {
-          randomizeSelectOption(el);
+          randomizeSelectOption(el as HTMLSelectElement);
         }
       })
       .trigger(inputEventName);
   });
 });
 
-const presets = [
+const presets: (IPreset | IPresetDivider)[] = [
   {
     name: 'Default',
     settings: [

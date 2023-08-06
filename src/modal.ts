@@ -1,8 +1,3 @@
-// @ts-check
-/// <reference path="../node_modules/@types/jquery/JQueryStatic.d.ts"/>
-/// <reference path="main.js" />
-/// <reference path="helpers.js" />
-
 $(() => {
   const $modal = $('#code-modal');
   const $modalDialog = $modal.find('dialog');
@@ -38,7 +33,7 @@ $(() => {
     $modalDialog.get(0)?.showModal();
   }
 
-  function closeDialog(ev, self) {
+  function closeDialog(ev: JQuery.ClickEvent, self: HTMLElement) {
     if (ev.target == self) {
       $modalDialog.get(0)?.close();
       $modal.hide();
@@ -95,8 +90,8 @@ ${textureStylesStr}
 }`);
   }
 
-  function prettyIndentHtml(htmlStr) {
-    const tagLevels = {
+  function prettyIndentHtml(htmlStr: string) {
+    const tagLevels: { [key: string]: number } = {
       filter: 2,
       feTurbulence: 4,
       feSpecularLighting: 4,
