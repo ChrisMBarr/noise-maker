@@ -1,9 +1,11 @@
+$controls-width: 350px;
+$transition-duration: 300ms;
+$handle-size: 20px;
+$handle-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+
 body {
   height: 100vh;
-
   --bs-border-color-hover: #86b7fe;
-  --controls-width: 350px;
-  --transition-duration: 300ms;
 }
 
 #btn-toggle-controls {
@@ -31,7 +33,7 @@ body {
 
 aside,
 #final-controls {
-  width: var(--controls-width);
+  width: $controls-width;
 }
 
 aside {
@@ -71,26 +73,23 @@ SVG Output & Handles
 }
 
 .handle {
-  --handle-size: 20px;
-  --handle-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-
   position: absolute;
-  width: var(--handle-size);
-  height: var(--handle-size);
+  width: $handle-size;
+  height: $handle-size;
   opacity: 0;
   z-index: 10;
   transform: translate(-50%, -50%);
   cursor: grab;
-  box-shadow: var(--handle-shadow);
+  box-shadow: $handle-shadow;
 
-  transition: opacity var(--transition-duration), box-shadow var(--transition-duration);
+  transition: opacity $transition-duration, box-shadow $transition-duration;
   animation: add-handle 1000ms 1000ms backwards;
 
   &:active {
     cursor: grabbing;
   }
   &:focus {
-    box-shadow: var(--handle-shadow), 0 0 0 var(--bs-focus-ring-width) var(--bs-focus-ring-color);
+    box-shadow: $handle-shadow, 0 0 0 var(--bs-focus-ring-width) var(--bs-focus-ring-color);
   }
 }
 

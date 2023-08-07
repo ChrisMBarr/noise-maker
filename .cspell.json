@@ -2,7 +2,15 @@
   "version": "0.2",
   "$schema": "https://raw.githubusercontent.com/streetsidesoftware/cspell/master/cspell.schema.json",
   "language": "en",
-  "words": ["pointsat", "dropup"],
+  "words": [
+    "dropup",
+    "Perlin",
+    "pointsat"
+  ],
   "flagWords": [],
-  "ignorePaths": ["node_modules/**", "package-lock.json", "package.json"]
+  "ignorePaths": [
+    "node_modules/**",
+    "package-lock.json",
+    "package.json"
+  ]
 }

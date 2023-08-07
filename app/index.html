@@ -12,7 +12,7 @@
     />
     <link
       rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.min.css"
     />
     <title>Noise Maker</title>
   </head>
@@ -30,7 +30,13 @@
     <aside class="flex-shrink-0 overflow-auto bg-body h-100 shadow z-1">
       <div id="svg-controls" class="d-flex flex-column">
         <div class="card m-3 mb-0">
-          <h5 class="card-header">Noise</h5>
+          <h5 class="card-header">
+            Noise
+            <i
+              class="bi bi-question-circle-fill tip"
+              title="Semi-random Perlin noise based on just a few settings"
+            ></i>
+          </h5>
           <div class="card-body">
             <div class="form-control-wrapper">
               <label class="form-label" for="ctrl-base-frequency-x"
@@ -132,7 +138,7 @@
 
             <div class="row">
               <div class="col-8">
-                <div class="form-control-wrapper mb-0">
+                <div class="form-control-wrapper">
                   <label class="form-label" for="ctrl-noise-type">Noise Type</label>
                   <select
                     class="form-select"
@@ -147,7 +153,7 @@
                 </div>
               </div>
               <div class="col-4">
-                <div class="form-control-wrapper mb-0">
+                <div class="form-control-wrapper">
                   <label class="form-label" for="ctrl-seed">
                     Seed
                     <i
@@ -168,6 +174,26 @@
                 </div>
               </div>
             </div>
+
+            <div class="form-control-wrapper mb-0">
+              <label class="form-label" for="ctrl-noise-type"
+                >Tile Stitching
+                <i
+                  class="bi bi-question-circle-fill tip"
+                  title="defines how the Perlin Noise tiles behave at the borders. Choose 'Stitch' in most cases."
+                ></i>
+              </label>
+              <select
+                class="form-select"
+                id="ctrl-noise-type"
+                data-target="#noise-filter feTurbulence"
+                data-target-attr="stitchTiles"
+                data-force-reload-svg="true"
+              >
+                <option value="stitch" selected>Stitch</option>
+                <option value="noStitch">None</option>
+              </select>
+            </div>
           </div>
         </div>
 
@@ -182,6 +208,10 @@
               data-enable="#lighting-controls .shared-lighting-controls input, #lighting-controls .shared-lighting-controls select"
             />
             <label for="ctrl-enable-lighting">Lighting</label>
+            <i
+              class="bi bi-question-circle-fill tip"
+              title="Treat the generated noise as a bump-map for 3D lighting effects"
+            ></i>
           </h5>
           <div class="card-body" id="lighting-controls">
             <div class="row">
@@ -825,7 +855,7 @@
                     Blend Mode
                     <i
                       class="bi bi-question-circle-fill tip"
-                      title="How the noise should blend with the background color"
+              title="How the generated noise interacts with the background"
                     ></i>
                   </label>
                   <select
@@ -958,6 +988,10 @@
               data-enable="#custom-size input"
             />
             <label for="ctrl-enable-custom-size"> Custom Size Preview</label>
+            <i
+              class="bi bi-question-circle-fill tip"
+              title="See how your pattern looks when constrained to a specific size"
+            ></i>
           </h5>
           <div class="card-body" id="custom-size">
             <div class="row mt-3">
@@ -1113,7 +1147,7 @@
       <div id="demo-output" class="w-100 h-100" tabindex="0">
         <svg style="width: 100%; height: 100%">
           <filter id="noise-filter">
-            <feTurbulence stitchTiles="stitch" result="noise"></feTurbulence>
+            <feTurbulence result="noise"></feTurbulence>
           </filter>
 
           <rect
