@@ -877,7 +877,13 @@
             </div>
 
             <div class="form-control-wrapper">
-              <label class="form-label" for="ctrl-saturation"> Saturation </label>
+              <label class="form-label" for="ctrl-saturation">
+                Saturation
+                <i
+                  class="bi bi-question-circle-fill tip"
+                  title="1 is the default level of saturation"
+                ></i>
+              </label>
               <div class="row">
                 <div class="col-9">
                   <input
@@ -897,7 +903,13 @@
             </div>
 
             <div class="form-control-wrapper">
-              <label class="form-label" for="ctrl-brightness"> Brightness </label>
+              <label class="form-label" for="ctrl-brightness">
+                Brightness
+                <i
+                  class="bi bi-question-circle-fill tip"
+                  title="1 is the default level of brightness"
+                ></i>
+              </label>
               <div class="row">
                 <div class="col-9">
                   <input
@@ -930,7 +942,7 @@
                     step="0.1"
                     data-target="#demo-output svg"
                     data-target-filter-prop="blur"
-                    data-target-filter-prop-suffix="px"
+                    data-target-value-suffix="px"
                   />
                 </div>
                 <output class="col-3"></output>
@@ -985,7 +997,7 @@
                       value="500"
                       data-target="#demo-output svg"
                       data-target-style-prop="width"
-                      data-target-filter-prop-suffix="px"
+                      data-target-value-suffix="px"
                       data-force-reload-svg="true"
                     />
                     <span class="input-group-text">px</span>
@@ -1004,7 +1016,7 @@
                       value="500"
                       data-target="#demo-output svg"
                       data-target-style-prop="height"
-                      data-target-filter-prop-suffix="px"
+                      data-target-value-suffix="px"
                       data-force-reload-svg="true"
                     />
                     <span class="input-group-text">px</span>

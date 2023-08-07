@@ -51,7 +51,17 @@ $(() => {
       .map((k) => {
         const val = textureStyles[k];
         if (k === 'filter') {
-          const filterValues = getPropsAsCssString(val);
+          const skipDefaultFilters: IIndexableObject = {};
+          Object.keys(val).forEach((k) => {
+            if (
+              (k === 'saturate' && val[k] !== '1') ||
+              (k === 'brightness' && val[k] !== '1') ||
+              (k === 'blur' && val[k] !== '0px')
+            ) {
+              skipDefaultFilters[k] = val[k];
+            }
+          });
+          const filterValues = getPropsAsCssString(skipDefaultFilters);
           return `  filter: url(#${$svgFilter.attr('id')}) ${filterValues};`;
         }
         return `  ${k}: ${val};`;

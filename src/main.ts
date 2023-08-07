@@ -170,7 +170,7 @@ $(() => {
     $outputDisplay: JQuery<HTMLOutputElement>
   ) {
     const isDisabled = $inputEl.is(':disabled');
-    const suffix = $inputEl.data('target-filter-prop-suffix');
+    const suffix = $inputEl.data('target-value-suffix');
     const val = suffix ? $inputEl.val() + suffix : $inputEl.val();
 
     if ($outputDisplay.length) {
