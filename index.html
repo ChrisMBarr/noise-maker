@@ -12,7 +12,7 @@
     />
     <link
       rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.min.css"
     />
     <title>Noise Maker</title>
   </head>
@@ -30,7 +30,13 @@
     <aside class="flex-shrink-0 overflow-auto bg-body h-100 shadow z-1">
       <div id="svg-controls" class="d-flex flex-column">
         <div class="card m-3 mb-0">
-          <h5 class="card-header">Noise</h5>
+          <h5 class="card-header">
+            Noise
+            <i
+              class="bi bi-question-circle-fill tip"
+              title="Semi-random Perlin noise based on just a few settings"
+            ></i>
+          </h5>
           <div class="card-body">
             <div class="form-control-wrapper">
               <label class="form-label" for="ctrl-base-frequency-x"
@@ -53,6 +59,7 @@
                     step="0.001"
                     data-target="#noise-filter feTurbulence"
                     data-target-attr="baseFrequency"
+                    data-target-value-formatter="{{#ctrl-base-frequency-x}} {{#ctrl-base-frequency-y}}"
                     data-force-reload-svg="true"
                   />
                 </div>
@@ -81,6 +88,7 @@
                     disabled
                     data-target="#noise-filter feTurbulence"
                     data-target-attr="baseFrequency"
+                    data-target-value-formatter="{{#ctrl-base-frequency-x}} {{#ctrl-base-frequency-y}}"
                     data-force-reload-svg="true"
                   />
                 </div>
@@ -132,10 +140,10 @@
 
             <div class="row">
               <div class="col-8">
-                <div class="form-control-wrapper mb-0">
+                <div class="form-control-wrapper">
                   <label class="form-label" for="ctrl-noise-type">Noise Type</label>
                   <select
-                    class="form-select"
+                    class="form-select form-select-sm"
                     id="ctrl-noise-type"
                     data-target="#noise-filter feTurbulence"
                     data-target-attr="type"
@@ -147,7 +155,7 @@
                 </div>
               </div>
               <div class="col-4">
-                <div class="form-control-wrapper mb-0">
+                <div class="form-control-wrapper">
                   <label class="form-label" for="ctrl-seed">
                     Seed
                     <i
@@ -156,7 +164,7 @@
                     ></i>
                   </label>
                   <input
-                    class="form-control"
+                    class="form-control form-control-sm"
                     type="number"
                     id="ctrl-seed"
                     min="0"
@@ -168,6 +176,26 @@
                 </div>
               </div>
             </div>
+
+            <div class="form-control-wrapper mb-0">
+              <label class="form-label" for="ctrl-noise-type"
+                >Tile Stitching
+                <i
+                  class="bi bi-question-circle-fill tip"
+                  title="defines how the Perlin Noise tiles behave at the borders. Choose 'Stitch' in most cases."
+                ></i>
+              </label>
+              <select
+                class="form-select form-select-sm"
+                id="ctrl-noise-type"
+                data-target="#noise-filter feTurbulence"
+                data-target-attr="stitchTiles"
+                data-force-reload-svg="true"
+              >
+                <option value="stitch" selected>Stitch</option>
+                <option value="noStitch">None</option>
+              </select>
+            </div>
           </div>
         </div>
 
@@ -178,10 +206,14 @@
               class="form-check-input"
               id="ctrl-enable-lighting"
               checked
-              data-toggle-visibility="#lighting-controls, #light-color"
+              data-toggle-visibility="#lighting-controls"
               data-enable="#lighting-controls .shared-lighting-controls input, #lighting-controls .shared-lighting-controls select"
             />
             <label for="ctrl-enable-lighting">Lighting</label>
+            <i
+              class="bi bi-question-circle-fill tip"
+              title="Treat the generated noise as a bump-map for 3D lighting effects"
+            ></i>
           </h5>
           <div class="card-body" id="lighting-controls">
             <div class="row">
@@ -196,7 +228,7 @@
                   </label>
                   <input
                     type="color"
-                    class="form-control form-control-color w-100"
+                    class="form-control form-control-sm form-control-color w-100"
                     value="#FFFFFF"
                     id="ctrl-lighting-lighting-color"
                     data-target="#noise-filter feDiffuseLighting, #noise-filter feSpecularLighting"
@@ -211,7 +243,7 @@
                     Primitive Type
                   </label>
                   <select
-                    class="form-select"
+                    class="form-select form-select-sm"
                     id="ctrl-lighting-primitive-type"
                     disabled
                     data-toggle-visibility
@@ -354,7 +386,7 @@
             <div class="form-control-wrapper shared-lighting-controls">
               <label class="form-label" for="ctrl-light-type"> Light Type </label>
               <select
-                class="form-select"
+                class="form-select form-select-sm"
                 id="ctrl-light-type"
                 disabled
                 data-toggle-visibility
@@ -803,72 +835,59 @@
         </div>
 
         <div class="card m-3 mb-0">
-          <h5 class="card-header">Effects</h5>
-          <div class="card-body">
-            <div class="row">
-              <div class="col">
-                <div class="form-control-wrapper">
-                  <label class="form-label" for="ctrl-bg-color">BG Color</label>
-                  <input
-                    type="color"
-                    class="form-control form-control-color w-100"
-                    id="ctrl-bg-color"
-                    value="#e9e4ef"
-                    data-target="#demo-output"
-                    data-target-style-prop="background-color"
-                  />
-                </div>
-              </div>
-              <div class="col">
-                <div class="form-control-wrapper">
-                  <label class="form-label" for="ctrl-blend-mode">
-                    Blend Mode
-                    <i
-                      class="bi bi-question-circle-fill tip"
-                      title="How the noise should blend with the background color"
-                    ></i>
-                  </label>
-                  <select
-                    class="form-select"
-                    id="ctrl-blend-mode"
-                    data-target="#demo-output svg"
-                    data-target-style-prop="mix-blend-mode"
-                  >
-                    <option selected>normal</option>
-                    <option>multiply</option>
-                    <option>screen</option>
-                    <option>overlay</option>
-                    <option>darken</option>
-                    <option>lighten</option>
-                    <option>color-dodge</option>
-                    <option>color-burn</option>
-                    <option>hard-light</option>
-                    <option>soft-light</option>
-                    <option>difference</option>
-                    <option>exclusion</option>
-                    <option>hue</option>
-                    <option>saturation</option>
-                    <option>color</option>
-                    <option>luminosity</option>
-                  </select>
-                </div>
-              </div>
+          <h5 class="card-header">
+            <input
+              type="checkbox"
+              class="form-check-input"
+              id="ctrl-enable-effects"
+              data-toggle-visibility="#effects-controls"
+              data-enable="#effects-controls input, #effects-controls select"
+            />
+            <label for="ctrl-enable-effects">Effects</label>
+            <i
+              class="bi bi-question-circle-fill tip"
+              title="How the generated noise interacts with the background"
+            ></i>
+          </h5>
+          <div class="card-body" id="effects-controls">
+            <div class="form-control-wrapper">
+              <label class="form-label" for="ctrl-blend-mode"> Blend Mode </label>
+              <select
+                class="form-select form-select-sm"
+                id="ctrl-blend-mode"
+                data-target="#demo-output svg"
+                data-target-style-prop="mix-blend-mode"
+                data-target-style-value-when-disabled="normal"
+              >
+                <option selected>normal</option>
+                <option>multiply</option>
+                <option>screen</option>
+                <option>overlay</option>
+                <option>darken</option>
+                <option>lighten</option>
+                <option>color-dodge</option>
+                <option>color-burn</option>
+                <option>hard-light</option>
+                <option>soft-light</option>
+                <option>difference</option>
+                <option>exclusion</option>
+                <option>hue</option>
+                <option>saturation</option>
+                <option>color</option>
+                <option>luminosity</option>
+              </select>
             </div>
 
             <div class="form-control-wrapper">
-              <label class="form-label" for="ctrl-saturation"> Saturation </label>
+              <label class="form-label" for="ctrl-saturation">
+                Saturation
+                <i
+                  class="bi bi-question-circle-fill tip"
+                  title="1 is the default level of saturation"
+                ></i>
+              </label>
               <div class="row">
-                <div class="col-2">
-                  <div class="form-check mb-0">
-                    <input
-                      type="checkbox"
-                      class="form-check-input"
-                      id="ctrl-enable-saturation"
-                      data-enable="#ctrl-num-saturation"
-                    />
-                  </div>
-                </div>
-                <div class="col-7">
+                <div class="col-9">
                   <input
                     type="range"
                     class="form-range"
@@ -886,19 +905,15 @@
             </div>
 
             <div class="form-control-wrapper">
-              <label class="form-label" for="ctrl-brightness"> Brightness </label>
+              <label class="form-label" for="ctrl-brightness">
+                Brightness
+                <i
+                  class="bi bi-question-circle-fill tip"
+                  title="1 is the default level of brightness"
+                ></i>
+              </label>
               <div class="row">
-                <div class="col-2">
-                  <div class="form-check mb-0">
-                    <input
-                      type="checkbox"
-                      class="form-check-input"
-                      id="ctrl-enable-brightness"
-                      data-enable="#ctrl-num-brightness"
-                    />
-                  </div>
-                </div>
-                <div class="col-7">
+                <div class="col-9">
                   <input
                     type="range"
                     class="form-range"
@@ -918,32 +933,126 @@
             <div class="form-control-wrapper">
               <label class="form-label" for="ctrl-blur"> Blur </label>
               <div class="row">
-                <div class="col-2">
-                  <div class="form-check mb-0">
-                    <input
-                      type="checkbox"
-                      class="form-check-input"
-                      id="ctrl-enable-blur"
-                      data-enable="#ctrl-num-blur"
-                    />
-                  </div>
-                </div>
-                <div class="col-7">
+                <div class="col-9">
                   <input
                     type="range"
                     class="form-range"
                     id="ctrl-num-blur"
                     min="0"
                     max="10"
-                    value="1"
+                    value="0"
                     step="0.1"
                     data-target="#demo-output svg"
                     data-target-filter-prop="blur"
-                    data-target-filter-prop-suffix="px"
+                    data-target-value-suffix="px"
                   />
                 </div>
                 <output class="col-3"></output>
               </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card m-3 mb-0">
+          <h5 class="card-header">Background</h5>
+          <div class="card-body">
+            <div class="form-control-wrapper">
+              <label class="form-label" for="ctrl-background-type"> Background Type </label>
+              <select
+                class="form-select form-select-sm"
+                id="ctrl-background-type"
+                data-toggle-visibility
+              >
+                <option
+                  value="solid-color"
+                  data-toggle-visibility-and-enable="#background-type-solid-color"
+                  selected
+                >
+                  Solid Color
+                </option>
+                <option
+                  value="linear-gradient"
+                  data-toggle-visibility-and-enable="#background-type-linear-gradient"
+                >
+                  Linear Gradient
+                </option>
+              </select>
+            </div>
+
+            <div class="form-control-wrapper" id="background-type-solid-color">
+              <label class="form-label" for="ctrl-bg-color">Color</label>
+              <input
+                type="color"
+                class="form-control form-control-sm form-control-color w-100"
+                id="ctrl-bg-color"
+                value="#e9e4ef"
+                data-target="#demo-output"
+                data-target-style-prop="background"
+              />
+            </div>
+
+            <div id="background-type-linear-gradient">
+              <div class="form-control-wrapper">
+                <div class="row">
+                  <div class="col">
+                    <label class="form-label" for="ctrl-gradient-color1">Color 1</label>
+                    <input
+                      type="color"
+                      class="form-control form-control-sm form-control-color w-100"
+                      id="ctrl-gradient-color1"
+                      value="#e66465"
+                      data-target="#demo-output"
+                      data-target-style-prop="background"
+                      data-target-value-formatter="linear-gradient({{#ctrl-linear-gradient-angle}}, {{#ctrl-gradient-color1}}, {{#ctrl-gradient-color2}})"
+                    />
+                  </div>
+                  <div class="col">
+                    <label class="form-label" for="ctrl-gradient-color2">Color 2</label>
+                    <input
+                      type="color"
+                      class="form-control form-control-sm form-control-color w-100"
+                      id="ctrl-gradient-color2"
+                      value="#9198e5"
+                      data-target="#demo-output"
+                      data-target-style-prop="background"
+                      data-target-value-formatter="linear-gradient({{#ctrl-linear-gradient-angle}}, {{#ctrl-gradient-color1}}, {{#ctrl-gradient-color2}})"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-control-wrapper">
+                <label class="form-label" for="ctrl-linear-gradient-angle">Angle</label>
+                <div class="row">
+                  <div class="col-8">
+                    <input
+                      type="range"
+                      class="form-range"
+                      id="ctrl-linear-gradient-angle"
+                      min="1"
+                      max="360"
+                      value="45"
+                      step="0.1"
+                      disabled
+                      data-target="#demo-output"
+                      data-target-style-prop="background"
+                      data-target-value-suffix="deg"
+                      data-target-value-formatter="linear-gradient({{#ctrl-linear-gradient-angle}}, {{#ctrl-gradient-color1}}, {{#ctrl-gradient-color2}})"
+                    />
+                  </div>
+                  <output class="col-4"></output>
+                </div>
+              </div>
+
+              <p class="form-text mb-0">
+                Linear gradients have more options than this, but that's not the goal of this tool.
+                If you need to customize your gradient more, after you get the code for this you can
+                <a
+                  href="https://developer.mozilla.org/en-US/docs/Web/CSS/gradient/linear-gradient"
+                  target="_blank"
+                  >read more about them here</a
+                >
+              </p>
             </div>
           </div>
         </div>
@@ -958,22 +1067,26 @@
               data-enable="#custom-size input"
             />
             <label for="ctrl-enable-custom-size"> Custom Size Preview</label>
+            <i
+              class="bi bi-question-circle-fill tip"
+              title="See how your pattern looks when constrained to a specific size"
+            ></i>
           </h5>
           <div class="card-body" id="custom-size">
             <div class="row mt-3">
               <div class="col">
                 <div class="form-control-wrapper mb-0">
                   <label class="form-label" for="ctrl-custom-width"> Width </label>
-                  <div class="input-group">
+                  <div class="input-group input-group-sm">
                     <input
-                      class="form-control"
+                      class="form-control text-end"
                       type="number"
                       id="ctrl-custom-width"
                       min="1"
                       value="500"
                       data-target="#demo-output svg"
                       data-target-style-prop="width"
-                      data-target-filter-prop-suffix="px"
+                      data-target-value-suffix="px"
                       data-force-reload-svg="true"
                     />
                     <span class="input-group-text">px</span>
@@ -983,16 +1096,16 @@
               <div class="col">
                 <div class="form-control-wrapper mb-0">
                   <label class="form-label" for="ctrl-custom-height"> Height </label>
-                  <div class="input-group">
+                  <div class="input-group input-group-sm">
                     <input
-                      class="form-control"
+                      class="form-control text-end"
                       type="number"
                       id="ctrl-custom-height"
                       min="1"
                       value="500"
                       data-target="#demo-output svg"
                       data-target-style-prop="height"
-                      data-target-filter-prop-suffix="px"
+                      data-target-value-suffix="px"
                       data-force-reload-svg="true"
                     />
                     <span class="input-group-text">px</span>
@@ -1113,7 +1226,7 @@
       <div id="demo-output" class="w-100 h-100" tabindex="0">
         <svg style="width: 100%; height: 100%">
           <filter id="noise-filter">
-            <feTurbulence stitchTiles="stitch" result="noise"></feTurbulence>
+            <feTurbulence result="noise"></feTurbulence>
           </filter>
 
           <rect
