@@ -51,6 +51,11 @@ aside {
 .tip {
   color: var(--bs-info);
   cursor: help;
+  opacity: 0.75;
+
+  &:hover {
+    opacity: 1;
+  }
 }
 
 /*===========================
@@ -119,8 +124,12 @@ dialog {
 FORMS
 ===========================*/
 .form-control-wrapper {
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
   position: relative;
+
+  .form-label {
+    margin-bottom: 0.25rem;
+  }
 
   output {
     font-family: var(--bs-font-monospace);
