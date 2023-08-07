@@ -171,10 +171,14 @@ $(() => {
   ) {
     const isDisabled = $inputEl.is(':disabled');
     const suffix = $inputEl.data('target-value-suffix');
-    const val = suffix ? $inputEl.val() + suffix : $inputEl.val();
+    let val = suffix ? $inputEl.val() + suffix : $inputEl.val();
 
     if ($outputDisplay.length) {
       $outputDisplay.text(isDisabled ? '' : val);
+    }
+
+    if ($inputEl.data('target-value-formatter')) {
+      val = getFormattedValue($inputEl);
     }
 
     const tgtSelector = $inputEl.data('target') as string | undefined;

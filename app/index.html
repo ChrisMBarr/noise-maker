@@ -955,6 +955,29 @@
           <h5 class="card-header">Background</h5>
           <div class="card-body">
             <div class="form-control-wrapper">
+              <label class="form-label" for="ctrl-background-type"> Background Type </label>
+              <select
+                class="form-select form-select-sm"
+                id="ctrl-background-type"
+                data-toggle-visibility
+              >
+                <option
+                  value="solid-color"
+                  data-toggle-visibility-and-enable="#background-type-solid-color"
+                  selected
+                >
+                  Solid Color
+                </option>
+                <option
+                  value="linear-gradient"
+                  data-toggle-visibility-and-enable="#background-type-linear-gradient"
+                >
+                  Linear Gradient
+                </option>
+              </select>
+            </div>
+
+            <div class="form-control-wrapper" id="background-type-solid-color">
               <label class="form-label" for="ctrl-bg-color">Color</label>
               <input
                 type="color"
@@ -962,8 +985,72 @@
                 id="ctrl-bg-color"
                 value="#e9e4ef"
                 data-target="#demo-output"
-                data-target-style-prop="background-color"
+                data-target-style-prop="background"
               />
+            </div>
+
+            <div id="background-type-linear-gradient">
+              <div class="form-control-wrapper">
+                <div class="row">
+                  <div class="col">
+                    <label class="form-label" for="ctrl-gradient-color1">Color 1</label>
+                    <input
+                      type="color"
+                      class="form-control form-control-sm form-control-color w-100"
+                      id="ctrl-gradient-color1"
+                      value="#e66465"
+                      data-target="#demo-output"
+                      data-target-style-prop="background"
+                      data-target-value-formatter="linear-gradient({{#ctrl-linear-gradient-angle}}, {{#ctrl-gradient-color1}}, {{#ctrl-gradient-color2}})"
+                    />
+                  </div>
+                  <div class="col">
+                    <label class="form-label" for="ctrl-gradient-color2">Color 2</label>
+                    <input
+                      type="color"
+                      class="form-control form-control-sm form-control-color w-100"
+                      id="ctrl-gradient-color2"
+                      value="#9198e5"
+                      data-target="#demo-output"
+                      data-target-style-prop="background"
+                      data-target-value-formatter="linear-gradient({{#ctrl-linear-gradient-angle}}, {{#ctrl-gradient-color1}}, {{#ctrl-gradient-color2}})"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-control-wrapper">
+                <label class="form-label" for="ctrl-linear-gradient-angle">Angle</label>
+                <div class="row">
+                  <div class="col-8">
+                    <input
+                      type="range"
+                      class="form-range"
+                      id="ctrl-linear-gradient-angle"
+                      min="1"
+                      max="360"
+                      value="45"
+                      step="0.1"
+                      disabled
+                      data-target="#demo-output"
+                      data-target-style-prop="background"
+                      data-target-value-suffix="deg"
+                      data-target-value-formatter="linear-gradient({{#ctrl-linear-gradient-angle}}, {{#ctrl-gradient-color1}}, {{#ctrl-gradient-color2}})"
+                    />
+                  </div>
+                  <output class="col-4"></output>
+                </div>
+              </div>
+
+              <p class="form-text mb-0">
+                Linear gradients have more options than this, but that's not the goal of this tool.
+                If you need to customize your gradient more, after you get the code for this you can
+                <a
+                  href="https://developer.mozilla.org/en-US/docs/Web/CSS/gradient/linear-gradient"
+                  target="_blank"
+                  >read more about them here</a
+                >
+              </p>
             </div>
           </div>
         </div>

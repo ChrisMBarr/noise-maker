@@ -66,6 +66,23 @@ function getPropsAsCssString(obj: IIndexableObject) {
     .join(' ');
 }
 
+function getFormattedValue($el: JQuery<HTMLInputElement>) {
+  let formatterStr = $el.data('target-value-formatter') as string;
+  const selectorMatches = formatterStr.matchAll(/{{(.+?)}}/g);
+
+  for (const match of selectorMatches) {
+    const token = match[0];
+    const cssSelector = match[1];
+    const $tokenizedEl = $(cssSelector);
+    const suffix = $tokenizedEl.data('target-value-suffix');
+    let value = $tokenizedEl.val() as string;
+    if (suffix) value += suffix;
+    formatterStr = formatterStr.replace(token, value);
+  }
+
+  return formatterStr;
+}
+
 function clearLightingEffects() {
   $('#noise-filter').find('feDiffuseLighting, feSpecularLighting').remove();
 }
