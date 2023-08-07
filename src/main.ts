@@ -82,7 +82,7 @@ $(() => {
         }
       }
 
-      $enableTargets.each((_i, t) => updateTexture($(t), $outputDisplay));
+      $enableTargets.trigger(inputEventName);
     });
 
     //Initialize
