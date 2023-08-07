@@ -1,6 +1,7 @@
 {
   "name": "noise-maker",
   "version": "1.0.0",
+  "type": "module",
   "description": "Makes noise based SVG patterns/textures",
   "homepage": "https://github.com/FiniteLooper/noise-maker#readme",
   "repository": {
@@ -10,8 +11,7 @@
   "bugs": {
     "url": "https://github.com/FiniteLooper/noise-maker/issues"
   },
-  "keywords": [
-  ],
+  "keywords": [],
   "files": [
     "!**/*.json",
     "LICENSE",
@@ -23,13 +23,16 @@
   },
   "license": "MIT",
   "scripts": {
-    "build": "tsc",
-    "watch":"tsc -w"
-  },
-  "dependencies": {
+    "build": "npm run build:ts && npm run build:sass",
+    "build:sass": "node sass-build.js",
+    "build:ts": "tsc && esbuild app/index.js --minify --allow-overwrite --outfile=app/index.js",
+    "watch:sass": "sass -w src:app",
+    "watch:ts": "tsc -w"
   },
   "devDependencies": {
     "@types/jquery": "^3.5.16",
-    "typescript":"^5.1.6"
+    "esbuild": "^0.18.19",
+    "sass": "^1.64.2",
+    "typescript": "^5.1.6"
   }
 }

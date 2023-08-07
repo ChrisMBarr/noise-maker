@@ -12,19 +12,21 @@ body {
   border-bottom-left-radius: 0;
   border-top-right-radius: 0;
   transition: left var(--transition-duration);
-}
-.controls-open #btn-toggle-controls {
-  left: var(--controls-width);
-}
 
-#btn-toggle-controls .open-icon {
-  display: none;
-}
-.controls-open #btn-toggle-controls .open-icon {
-  display: inline;
-}
-.controls-open #btn-toggle-controls .closed-icon {
-  display: none;
+  .open-icon {
+    display: none;
+  }
+
+  .controls-open & {
+    left: var(--controls-width);
+
+    .open-icon {
+      display: inline;
+    }
+    .closed-icon {
+      display: none;
+    }
+  }
 }
 
 aside,
@@ -38,10 +40,10 @@ aside {
   transform: translateX(-100%);
 
   transition: transform var(--transition-duration);
-}
 
-.controls-open aside {
-  transform: translateX(0);
+  .controls-open & {
+    transform: translateX(0);
+  }
 }
 
 .tip {
@@ -55,11 +57,11 @@ SVG Output & Handles
 #demo-output {
   position: relative;
   overflow: hidden;
-}
 
-#demo-output:hover .handle,
-#demo-output:focus .handle {
-  opacity: 1;
+  &:hover .handle,
+  &:focus .handle {
+    opacity: 1;
+  }
 }
 
 @keyframes add-handle {
@@ -83,12 +85,13 @@ SVG Output & Handles
 
   transition: opacity var(--transition-duration), box-shadow var(--transition-duration);
   animation: add-handle 1000ms 1000ms backwards;
-}
-.handle:active {
-  cursor: grabbing;
-}
-.handle:focus {
-  box-shadow: var(--handle-shadow), 0 0 0 var(--bs-focus-ring-width) var(--bs-focus-ring-color);
+
+  &:active {
+    cursor: grabbing;
+  }
+  &:focus {
+    box-shadow: var(--handle-shadow), 0 0 0 var(--bs-focus-ring-width) var(--bs-focus-ring-color);
+  }
 }
 
 /*===========================
@@ -102,15 +105,15 @@ dialog {
   padding: 0;
   border: none;
   background-color: transparent;
-}
 
-dialog::backdrop {
-  background-color: #000;
-  opacity: 0.5;
-}
+  &::backdrop {
+    background-color: #000;
+    opacity: 0.5;
+  }
 
-dialog .form-control-sm {
-  font-size: calc(var(--bs-body-font-size) * 0.75);
+  .form-control-sm {
+    font-size: calc(var(--bs-body-font-size) * 0.75);
+  }
 }
 
 /*===========================
@@ -119,10 +122,10 @@ FORMS
 .form-control-wrapper {
   margin-bottom: 1rem;
   position: relative;
-}
 
-.form-control-wrapper output {
-  font-family: var(--bs-font-monospace);
+  output {
+    font-family: var(--bs-font-monospace);
+  }
 }
 
 .form-control,
@@ -145,16 +148,19 @@ FORMS
 /*===========================
 CARDS
 ===========================*/
-.card > .card-header {
-  border-bottom-width: 0;
-}
 
-.card-header ~ .card-body {
-  border-top: var(--bs-card-border-width) solid var(--bs-card-border-color);
-}
+.card-header {
+  .card > & {
+    border-bottom-width: 0;
+  }
 
-.card-header .form-check-input {
-  margin-top: 0.1em;
+  ~ .card-body {
+    border-top: var(--bs-card-border-width) solid var(--bs-card-border-color);
+  }
+
+  .form-check-input {
+    margin-top: 0.1em;
+  }
 }
 
 /*===========================

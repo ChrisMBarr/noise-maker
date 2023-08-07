@@ -14,3 +14,5 @@ node_modules/
 
 # Generated code
 app/*.js
+app/*.css
+app/*.css.map
