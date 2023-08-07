@@ -83,7 +83,6 @@ $(() => {
       }
 
       $enableTargets.each((_i, t) => updateTexture($(t), $outputDisplay));
-      $enableTargets.trigger(inputEventName);
     });
 
     //Initialize
@@ -187,12 +186,20 @@ $(() => {
       const $tgt = $(tgtSelector);
       const id = $inputEl.attr('id');
 
-      if (!isDisabled && tgtStyleProp) {
-        $tgt.css(tgtStyleProp, val);
-        textureStyles[tgtStyleProp] = val;
+      if (tgtStyleProp) {
+        const disabledVal = $inputEl.data('target-style-value-when-disabled');
 
-        if (id === 'ctrl-custom-height' || id === 'ctrl-custom-width') {
-          updateLightingMaxValues();
+        if (isDisabled && disabledVal) {
+          $tgt.css(tgtStyleProp, disabledVal);
+          textureStyles[tgtStyleProp] = disabledVal;
+        }
+
+        if (!isDisabled) {
+          $tgt.css(tgtStyleProp, val);
+          textureStyles[tgtStyleProp] = val;
+          if (id === 'ctrl-custom-height' || id === 'ctrl-custom-width') {
+            updateLightingMaxValues();
+          }
         }
       } else if (!isDisabled && tgtAttr) {
         if (id === $baseFrequencyX.attr('id') || id === $baseFrequencyY.attr('id')) {

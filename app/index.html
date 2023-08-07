@@ -204,7 +204,7 @@
               class="form-check-input"
               id="ctrl-enable-lighting"
               checked
-              data-toggle-visibility="#lighting-controls, #light-color"
+              data-toggle-visibility="#lighting-controls"
               data-enable="#lighting-controls .shared-lighting-controls input, #lighting-controls .shared-lighting-controls select"
             />
             <label for="ctrl-enable-lighting">Lighting</label>
@@ -833,72 +833,53 @@
         </div>
 
         <div class="card m-3 mb-0">
-          <h5 class="card-header">Effects</h5>
-          <div class="card-body">
-            <div class="row">
-              <div class="col">
-                <div class="form-control-wrapper">
-                  <label class="form-label" for="ctrl-bg-color">BG Color</label>
-                  <input
-                    type="color"
-                    class="form-control form-control-color w-100"
-                    id="ctrl-bg-color"
-                    value="#e9e4ef"
-                    data-target="#demo-output"
-                    data-target-style-prop="background-color"
-                  />
-                </div>
-              </div>
-              <div class="col">
-                <div class="form-control-wrapper">
-                  <label class="form-label" for="ctrl-blend-mode">
-                    Blend Mode
-                    <i
-                      class="bi bi-question-circle-fill tip"
+          <h5 class="card-header">
+            <input
+              type="checkbox"
+              class="form-check-input"
+              id="ctrl-enable-effects"
+              data-toggle-visibility="#effects-controls"
+              data-enable="#effects-controls input, #effects-controls select"
+            />
+            <label for="ctrl-enable-effects">Effects</label>
+            <i
+              class="bi bi-question-circle-fill tip"
               title="How the generated noise interacts with the background"
-                    ></i>
-                  </label>
-                  <select
-                    class="form-select"
-                    id="ctrl-blend-mode"
-                    data-target="#demo-output svg"
-                    data-target-style-prop="mix-blend-mode"
-                  >
-                    <option selected>normal</option>
-                    <option>multiply</option>
-                    <option>screen</option>
-                    <option>overlay</option>
-                    <option>darken</option>
-                    <option>lighten</option>
-                    <option>color-dodge</option>
-                    <option>color-burn</option>
-                    <option>hard-light</option>
-                    <option>soft-light</option>
-                    <option>difference</option>
-                    <option>exclusion</option>
-                    <option>hue</option>
-                    <option>saturation</option>
-                    <option>color</option>
-                    <option>luminosity</option>
-                  </select>
-                </div>
-              </div>
+            ></i>
+          </h5>
+          <div class="card-body" id="effects-controls">
+            <div class="form-control-wrapper">
+              <label class="form-label" for="ctrl-blend-mode"> Blend Mode </label>
+              <select
+                class="form-select"
+                id="ctrl-blend-mode"
+                data-target="#demo-output svg"
+                data-target-style-prop="mix-blend-mode"
+                data-target-style-value-when-disabled="normal"
+              >
+                <option selected>normal</option>
+                <option>multiply</option>
+                <option>screen</option>
+                <option>overlay</option>
+                <option>darken</option>
+                <option>lighten</option>
+                <option>color-dodge</option>
+                <option>color-burn</option>
+                <option>hard-light</option>
+                <option>soft-light</option>
+                <option>difference</option>
+                <option>exclusion</option>
+                <option>hue</option>
+                <option>saturation</option>
+                <option>color</option>
+                <option>luminosity</option>
+              </select>
             </div>
 
             <div class="form-control-wrapper">
               <label class="form-label" for="ctrl-saturation"> Saturation </label>
               <div class="row">
-                <div class="col-2">
-                  <div class="form-check mb-0">
-                    <input
-                      type="checkbox"
-                      class="form-check-input"
-                      id="ctrl-enable-saturation"
-                      data-enable="#ctrl-num-saturation"
-                    />
-                  </div>
-                </div>
-                <div class="col-7">
+                <div class="col-9">
                   <input
                     type="range"
                     class="form-range"
@@ -918,17 +899,7 @@
             <div class="form-control-wrapper">
               <label class="form-label" for="ctrl-brightness"> Brightness </label>
               <div class="row">
-                <div class="col-2">
-                  <div class="form-check mb-0">
-                    <input
-                      type="checkbox"
-                      class="form-check-input"
-                      id="ctrl-enable-brightness"
-                      data-enable="#ctrl-num-brightness"
-                    />
-                  </div>
-                </div>
-                <div class="col-7">
+                <div class="col-9">
                   <input
                     type="range"
                     class="form-range"
@@ -948,24 +919,14 @@
             <div class="form-control-wrapper">
               <label class="form-label" for="ctrl-blur"> Blur </label>
               <div class="row">
-                <div class="col-2">
-                  <div class="form-check mb-0">
-                    <input
-                      type="checkbox"
-                      class="form-check-input"
-                      id="ctrl-enable-blur"
-                      data-enable="#ctrl-num-blur"
-                    />
-                  </div>
-                </div>
-                <div class="col-7">
+                <div class="col-9">
                   <input
                     type="range"
                     class="form-range"
                     id="ctrl-num-blur"
                     min="0"
                     max="10"
-                    value="1"
+                    value="0"
                     step="0.1"
                     data-target="#demo-output svg"
                     data-target-filter-prop="blur"
@@ -974,6 +935,23 @@
                 </div>
                 <output class="col-3"></output>
               </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card m-3 mb-0">
+          <h5 class="card-header">Background</h5>
+          <div class="card-body">
+            <div class="form-control-wrapper">
+              <label class="form-label" for="ctrl-bg-color">Color</label>
+              <input
+                type="color"
+                class="form-control form-control-color w-100"
+                id="ctrl-bg-color"
+                value="#e9e4ef"
+                data-target="#demo-output"
+                data-target-style-prop="background-color"
+              />
             </div>
           </div>
         </div>
