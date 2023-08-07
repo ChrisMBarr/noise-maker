@@ -74,9 +74,12 @@ function getFormattedValue($el: JQuery<HTMLInputElement>) {
     const token = match[0];
     const cssSelector = match[1];
     const $tokenizedEl = $(cssSelector);
-    const suffix = $tokenizedEl.data('target-value-suffix');
-    let value = $tokenizedEl.val() as string;
-    if (suffix) value += suffix;
+    let value = '';
+    if ($tokenizedEl.is(':not(:disabled)')) {
+      const suffix = $tokenizedEl.data('target-value-suffix');
+      value = $tokenizedEl.val() as string;
+      if (suffix) value += suffix;
+    }
     formatterStr = formatterStr.replace(token, value);
   }
 

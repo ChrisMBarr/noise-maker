@@ -17,7 +17,6 @@ $(() => {
   $demoOutput = $('#demo-output');
   //Special controls we will need to treat differently
   const $baseFrequencyX = $('#ctrl-base-frequency-x') as JQuery<HTMLInputElement>;
-  const $baseFrequencyY = $('#ctrl-base-frequency-y') as JQuery<HTMLInputElement>;
 
   //Loop through all the controls and run an event any time one changes
   $('#svg-controls')
@@ -206,31 +205,22 @@ $(() => {
           }
         }
       } else if (!isDisabled && tgtAttr) {
-        if (id === $baseFrequencyX.attr('id') || id === $baseFrequencyY.attr('id')) {
-          let combinedBaseFreq = $baseFrequencyX.val();
-          if (!$baseFrequencyY.is(':disabled')) {
-            combinedBaseFreq += ` ${$baseFrequencyY.val()}`;
-          }
-          // @ts-ignore
-          $tgt.attr(tgtAttr, combinedBaseFreq);
+        if (tgtAttr.includes(' ')) {
+          //multiple attributes to set with the same value
+          const attrObj = tgtAttr
+            .split(' ')
+            .reduce((acc, curr) => ((acc[curr] = val), acc), {} as IIndexableObject);
+          $tgt.attr(attrObj);
         } else {
-          if (tgtAttr.includes(' ')) {
-            //multiple attributes to set with the same value
-            const attrObj = tgtAttr
-              .split(' ')
-              .reduce((acc, curr) => ((acc[curr] = val), acc), {} as IIndexableObject);
-            $tgt.attr(attrObj);
-          } else {
-            $tgt.attr(tgtAttr, val);
-          }
+          $tgt.attr(tgtAttr, val);
+        }
 
-          //Handle dragging updates the input value, but we don't want that coming back through to update the handle position
-          if (!isDraggingHandle) {
-            const handleIndex = $inputEl.data('handle-index');
-            const handlePos = $inputEl.data('handle-position');
-            if (handleIndex !== undefined && handlePos !== undefined) {
-              updateHandlePosition(handleIndex, handlePos, val);
-            }
+        //Handle dragging updates the input value, but we don't want that coming back through to update the handle position
+        if (!isDraggingHandle) {
+          const handleIndex = $inputEl.data('handle-index');
+          const handlePos = $inputEl.data('handle-position');
+          if (handleIndex !== undefined && handlePos !== undefined) {
+            updateHandlePosition(handleIndex, handlePos, val);
           }
         }
       } else if (tgtFilterProp) {
