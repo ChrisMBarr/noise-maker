@@ -30,6 +30,7 @@
     "watch:ts": "tsc -w"
   },
   "devDependencies": {
+    "@types/bootstrap": "^5.2.6",
     "@types/jquery": "^3.5.16",
     "esbuild": "^0.18.19",
     "sass": "^1.64.2",

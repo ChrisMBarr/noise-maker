@@ -18,6 +18,11 @@ $(() => {
   //Special controls we will need to treat differently
   const $baseFrequencyX = $('#ctrl-base-frequency-x') as JQuery<HTMLInputElement>;
 
+  //Enable tooltips
+  $('[data-bs-toggle="tooltip"]').each((_i, el) => {
+    new bootstrap.Tooltip(el);
+  });
+
   //Loop through all the controls and run an event any time one changes
   $('#svg-controls')
     .find('.form-control-wrapper, .card-header')
