@@ -123,6 +123,9 @@ function clearLightingHandles() {
   isDraggingHandle = false;
   $demoOutput.children('.handle').remove();
   $handles = $demoOutput.children('.handle'); //should select nothing, which is what we want here
+
+  //Remove event listeners
+  $demoOutput.off('mousedown touchstart mousemove touchmove mouseup touchend');
 }
 
 function createLightHandles(handleMappings: ILightHandleMapping[]) {
@@ -141,6 +144,7 @@ function createLightHandles(handleMappings: ILightHandleMapping[]) {
     let $dragHandle: JQuery<HTMLElement> | undefined;
     $demoOutput
       .on('mousedown touchstart', (ev) => {
+        $('body').removeClass('controls-open'); //close the sidebar
         if (ev.target.classList.contains('handle')) {
           isDraggingHandle = true;
           $dragHandle = $(ev.target);

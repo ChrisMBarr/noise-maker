@@ -64,6 +64,7 @@ SVG Output & Handles
 #demo-output {
   position: relative;
   overflow: hidden;
+  touch-action: none;
 
   &:hover .handle,
   &:focus .handle {
