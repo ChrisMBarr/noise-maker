@@ -69,7 +69,9 @@ $(() => {
   //----------------------------------------------------
   //Initialize max values & update them on window resize
   $(window)
-    .on('resize', () => updateLightingMaxValues)
+    .on('resize orientationchange', () => {
+      updateLightingMaxValues();
+    })
     .trigger('resize');
 
   //----------------------------------------------------
@@ -82,7 +84,7 @@ $(() => {
         itemContent = `<li><hr class="dropdown-divider"></li>`;
       } else {
         const preset = p as IPreset;
-        itemContent += `<a class="dropdown-item" href="#" onclick="applyPreset(${i}, this);">`;
+        itemContent += `<a class="dropdown-item" href="#" onclick="applyPreset(${i});">`;
 
         if (preset.icon) {
           itemContent += `<i class="bi bi-${preset.icon}"></i> `;

@@ -58,9 +58,9 @@ aside {
   }
 }
 
-/*===========================
-SVG Output & Handles
-===========================*/
+//===========================
+//SVG Output & Handles
+//===========================
 #demo-output {
   position: relative;
   overflow: hidden;
@@ -99,9 +99,9 @@ SVG Output & Handles
   }
 }
 
-/*===========================
-FORMS
-===========================*/
+//===========================
+//FORMS
+//===========================
 .form-control-wrapper {
   margin-bottom: 0.5rem;
   position: relative;
@@ -132,9 +132,9 @@ FORMS
   box-shadow: 0 0 0 calc(var(--bs-border-width) * 2) var(--bs-border-color-hover);
 }
 
-/*===========================
-CARDS
-===========================*/
+//===========================
+//CARDS
+//===========================
 
 .card-header {
   .card > & {
@@ -150,9 +150,9 @@ CARDS
   border-top: var(--bs-card-border-width) solid var(--bs-card-border-color);
 }
 
-/*===========================
-BUTTONS
-===========================*/
+//===========================
+//BUTTONS
+//===========================
 .btn-copy {
   position: absolute;
   right: var(--bs-border-width);
@@ -162,14 +162,33 @@ BUTTONS
   border-bottom-right-radius: 0 !important;
 }
 
-/*===========================
-Larger Screen Overrides
-===========================*/
+//===========================
+//Media Query Overrides
+//===========================
 
-/*Screen must be above the SM width AND at least 500px tall*/
+//Small touch screen devices should rotate to landscape
+@media (hover: none) and (orientation: portrait) and (max-width: calc($controls-width + 50px)) {
+  aside::before {
+    display: block;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+
+    content: 'Rotate your device!';
+    padding: 1rem;
+    margin: 1rem 1rem 0 1rem;
+    background: var(--bs-warning-bg-subtle);
+    color: var(--bs-warning-text-emphasis);
+    border: var(--bs-border-width) var(--bs-border-style) var(--bs-warning-border-subtle);
+    border-radius: var(--bs-border-radius-lg);
+    box-shadow: var(--bs-box-shadow);
+  }
+}
+
+//Screen must be above the SM width AND at least 500px tall
 @media screen and (min-height: 500px) and (min-width: 768px) {
   #svg-controls {
-    padding-bottom: 92px; /*Height of the bottom buttons*/
+    padding-bottom: 92px; //Height of the bottom buttons
   }
   #final-controls {
     position: fixed;
@@ -178,7 +197,7 @@ Larger Screen Overrides
   }
 }
 
-/*Screen is only wider than the SM breakpoint*/
+//Screen is only wider than the SM breakpoint
 @media screen and (min-width: 768px) {
   aside {
     position: relative;
