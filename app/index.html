@@ -998,6 +998,9 @@
                   >
                     Linear Gradient
                   </option>
+                  <option value="img" data-toggle-visibility-and-enable="#bg-type-img">
+                    Image
+                  </option>
                 </select>
               </div>
 
@@ -1076,6 +1079,29 @@
                     >read more about them here</a
                   >
                 </p>
+              </div>
+
+              <div id="bg-type-img">
+                <div class="form-control-wrapper">
+                  <label class="form-label" for="ctrl-bg-img-id">Image ID</label>
+                  <input
+                    type="number"
+                    class="form-control form-control-sm"
+                    id="ctrl-bg-img-id"
+                    value="106"
+                    min="0"
+                    max="1084"
+                    data-target="#demo-output"
+                    data-target-style-prop="background"
+                    data-target-value-formatter="url('https://picsum.photos/id/{{#ctrl-bg-img-id}}/5000') center / cover no-repeat"
+                  />
+                  <span class="form-text mb-0"
+                    >Images come from
+                    <a href="https://picsum.photos/" target="_blank">picsum.photos</a>, you can see
+                    all images and their ID's
+                    <a href="https://picsum.photos/images" target="_blank">on this page</a></span
+                  >
+                </div>
               </div>
             </div>
           </div>
