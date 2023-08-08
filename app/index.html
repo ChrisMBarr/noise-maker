@@ -223,628 +223,630 @@
                 data-bs-title="Treat the generated noise as a bump-map for 3D lighting effects"
               ></i>
             </h5>
-            <div class="card-body" id="lighting-controls">
-              <div class="row">
-                <div class="col">
-                  <div class="form-control-wrapper shared-lighting-controls" id="light-color">
-                    <label class="form-label" for="ctrl-lighting-lighting-color">
-                      Light Color
+            <div id="lighting-controls">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col">
+                    <div class="form-control-wrapper shared-lighting-controls" id="light-color">
+                      <label class="form-label" for="ctrl-lighting-lighting-color">
+                        Light Color
+                        <i
+                          class="bi bi-question-circle-fill tip"
+                          data-bs-toggle="tooltip"
+                          data-bs-title="The color of the light source"
+                        ></i>
+                      </label>
+                      <input
+                        type="color"
+                        class="form-control form-control-sm form-control-color w-100"
+                        value="#FFFFFF"
+                        id="ctrl-lighting-lighting-color"
+                        data-target="#noise-filter feDiffuseLighting, #noise-filter feSpecularLighting"
+                        data-target-attr="lighting-color"
+                        data-force-reload-svg="true"
+                      />
+                    </div>
+                  </div>
+                  <div class="col">
+                    <div class="form-control-wrapper shared-lighting-controls">
+                      <label class="form-label" for="ctrl-lighting-primitive-type">
+                        Primitive Type
+                      </label>
+                      <select
+                        class="form-select form-select-sm"
+                        id="ctrl-lighting-primitive-type"
+                        disabled
+                        data-toggle-visibility
+                        data-force-reload-svg="true"
+                      >
+                        <option
+                          value="feDiffuseLighting"
+                          data-toggle-visibility-and-enable="#lighting-primitive-diffuse-options"
+                          selected
+                        >
+                          Diffuse
+                        </option>
+                        <option
+                          value="feSpecularLighting"
+                          data-toggle-visibility-and-enable="#lighting-primitive-specular-options"
+                        >
+                          Specular
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-control-wrapper shared-lighting-controls">
+                  <label class="form-label" for="ctrl-lighting-surface-scale">
+                    Surface Scale
+                    <i
+                      class="bi bi-question-circle-fill tip"
+                      data-bs-toggle="tooltip"
+                      data-bs-title="The depth of the shadow or lighting effect on the texture"
+                    ></i>
+                  </label>
+                  <div class="row">
+                    <div class="col-9">
+                      <input
+                        type="range"
+                        class="form-range"
+                        id="ctrl-lighting-surface-scale"
+                        min="0.1"
+                        max="10"
+                        value="3"
+                        step="0.1"
+                        disabled
+                        data-target="#noise-filter feDiffuseLighting, #noise-filter feSpecularLighting"
+                        data-target-attr="surfaceScale"
+                        data-force-reload-svg="true"
+                      />
+                    </div>
+                    <output class="col-3"></output>
+                  </div>
+                </div>
+
+                <div id="lighting-primitive-diffuse-options">
+                  <div class="form-control-wrapper">
+                    <label class="form-label" for="ctrl-lighting-diffuse-constant">
+                      Diffuse Constant
                       <i
                         class="bi bi-question-circle-fill tip"
                         data-bs-toggle="tooltip"
-                        data-bs-title="The color of the light source"
+                        data-bs-title="It's used to determine the final RGB value of a given pixel. The brighter the light color, the smaller this number should be."
                       ></i>
                     </label>
-                    <input
-                      type="color"
-                      class="form-control form-control-sm form-control-color w-100"
-                      value="#FFFFFF"
-                      id="ctrl-lighting-lighting-color"
-                      data-target="#noise-filter feDiffuseLighting, #noise-filter feSpecularLighting"
-                      data-target-attr="lighting-color"
-                      data-force-reload-svg="true"
-                    />
+                    <div class="row">
+                      <div class="col-9">
+                        <input
+                          type="range"
+                          class="form-range"
+                          id="ctrl-lighting-diffuse-constant"
+                          min="0.1"
+                          max="10"
+                          value="1"
+                          step="0.01"
+                          disabled
+                          data-target="#noise-filter feDiffuseLighting"
+                          data-target-attr="diffuseConstant"
+                          data-force-reload-svg="true"
+                        />
+                      </div>
+                      <output class="col-3"></output>
+                    </div>
                   </div>
                 </div>
-                <div class="col">
-                  <div class="form-control-wrapper shared-lighting-controls">
-                    <label class="form-label" for="ctrl-lighting-primitive-type">
-                      Primitive Type
+
+                <div id="lighting-primitive-specular-options">
+                  <div class="form-control-wrapper">
+                    <label class="form-label" for="ctrl-lighting-specular-exponent">
+                      Specular Exponent
+                      <i
+                        class="bi bi-question-circle-fill tip"
+                        data-bs-toggle="tooltip"
+                        data-bs-title="The focus for the light source. The bigger the value the brighter the light."
+                      ></i>
                     </label>
-                    <select
-                      class="form-select form-select-sm"
-                      id="ctrl-lighting-primitive-type"
-                      disabled
-                      data-toggle-visibility
-                      data-force-reload-svg="true"
+                    <div class="row">
+                      <div class="col-9">
+                        <input
+                          type="range"
+                          class="form-range"
+                          id="ctrl-lighting-specular-exponent"
+                          min="1"
+                          max="50"
+                          value="1"
+                          step="0.1"
+                          disabled
+                          data-target="#noise-filter feSpecularLighting"
+                          data-target-attr="specularExponent"
+                          data-force-reload-svg="true"
+                        />
+                      </div>
+                      <output class="col-3"></output>
+                    </div>
+                  </div>
+
+                  <div class="form-control-wrapper">
+                    <label class="form-label" for="ctrl-lighting-specular-constant">
+                      Specular Constant
+                      <i
+                        class="bi bi-question-circle-fill tip"
+                        data-bs-toggle="tooltip"
+                        data-bs-title="The ratio of reflection of the specular lighting. The bigger the value the stronger the reflection."
+                      ></i>
+                    </label>
+                    <div class="row">
+                      <div class="col-9">
+                        <input
+                          type="range"
+                          class="form-range"
+                          id="ctrl-lighting-specular-constant"
+                          min="0.1"
+                          max="10"
+                          value="1"
+                          step="0.1"
+                          disabled
+                          data-target="#noise-filter feSpecularLighting"
+                          data-target-attr="specularConstant"
+                          data-force-reload-svg="true"
+                        />
+                      </div>
+                      <output class="col-3"></output>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-control-wrapper shared-lighting-controls">
+                  <label class="form-label" for="ctrl-light-type"> Light Type </label>
+                  <select
+                    class="form-select form-select-sm"
+                    id="ctrl-light-type"
+                    disabled
+                    data-toggle-visibility
+                    data-force-reload-svg="true"
+                  >
+                    <option
+                      value="distant"
+                      data-light-type="feDistantLight"
+                      data-handles="[]"
+                      data-toggle-visibility-and-enable="#light-type-distant-options"
+                      selected
                     >
-                      <option
-                        value="feDiffuseLighting"
-                        data-toggle-visibility-and-enable="#lighting-primitive-diffuse-options"
-                        selected
-                      >
-                        Diffuse
-                      </option>
-                      <option
-                        value="feSpecularLighting"
-                        data-toggle-visibility-and-enable="#lighting-primitive-specular-options"
-                      >
-                        Specular
-                      </option>
-                    </select>
-                  </div>
+                      Distant
+                    </option>
+                    <option
+                      value="point"
+                      data-light-type="fePointLight"
+                      data-handles='[{"left":"ctrl-lighting-point-x", "top":"ctrl-lighting-point-y"}]'
+                      data-toggle-visibility-and-enable="#light-type-point-options"
+                    >
+                      Point
+                    </option>
+                    <option
+                      value="spot-overhead"
+                      data-light-type="feSpotLight"
+                      data-handles='[{"left":"ctrl-lighting-spot-overhead-x","top":"ctrl-lighting-spot-overhead-y"}]'
+                      data-toggle-visibility-and-enable="#light-type-spot-overhead-options"
+                    >
+                      Spot (Overhead)
+                    </option>
+                    <option
+                      value="spot-manual"
+                      data-light-type="feSpotLight"
+                      data-handles='[{"left":"ctrl-lighting-spot-manual-x","top":"ctrl-lighting-spot-manual-y"},{"left":"ctrl-lighting-spot-manual-pointsat-x","top":"ctrl-lighting-spot-manual-pointsat-y"}]'
+                      data-toggle-visibility-and-enable="#light-type-spot-manual-options"
+                    >
+                      Spot (Manual)
+                    </option>
+                  </select>
                 </div>
-              </div>
 
-              <div class="form-control-wrapper shared-lighting-controls">
-                <label class="form-label" for="ctrl-lighting-surface-scale">
-                  Surface Scale
-                  <i
-                    class="bi bi-question-circle-fill tip"
-                    data-bs-toggle="tooltip"
-                    data-bs-title="The depth of the shadow or lighting effect on the texture"
-                  ></i>
-                </label>
-                <div class="row">
-                  <div class="col-9">
-                    <input
-                      type="range"
-                      class="form-range"
-                      id="ctrl-lighting-surface-scale"
-                      min="0.1"
-                      max="10"
-                      value="3"
-                      step="0.1"
-                      disabled
-                      data-target="#noise-filter feDiffuseLighting, #noise-filter feSpecularLighting"
-                      data-target-attr="surfaceScale"
-                      data-force-reload-svg="true"
-                    />
-                  </div>
-                  <output class="col-3"></output>
-                </div>
-              </div>
-
-              <div id="lighting-primitive-diffuse-options">
-                <div class="form-control-wrapper">
-                  <label class="form-label" for="ctrl-lighting-diffuse-constant">
-                    Diffuse Constant
-                    <i
-                      class="bi bi-question-circle-fill tip"
-                      data-bs-toggle="tooltip"
-                      data-bs-title="It's used to determine the final RGB value of a given pixel. The brighter the light color, the smaller this number should be."
-                    ></i>
-                  </label>
-                  <div class="row">
-                    <div class="col-9">
-                      <input
-                        type="range"
-                        class="form-range"
-                        id="ctrl-lighting-diffuse-constant"
-                        min="0.1"
-                        max="10"
-                        value="1"
-                        step="0.01"
-                        disabled
-                        data-target="#noise-filter feDiffuseLighting"
-                        data-target-attr="diffuseConstant"
-                        data-force-reload-svg="true"
-                      />
+                <div id="light-type-distant-options">
+                  <div class="form-control-wrapper">
+                    <label class="form-label" for="ctrl-lighting-distant-azimuth">
+                      Direction
+                      <i
+                        class="bi bi-question-circle-fill tip"
+                        data-bs-toggle="tooltip"
+                        data-bs-title="The azimuth or direction the light source comes from, in degrees."
+                      ></i>
+                    </label>
+                    <div class="row">
+                      <div class="col-9">
+                        <input
+                          type="range"
+                          class="form-range"
+                          id="ctrl-lighting-distant-azimuth"
+                          min="1"
+                          max="360"
+                          value="90"
+                          step="1"
+                          disabled
+                          data-target="#noise-filter feDistantLight"
+                          data-target-attr="azimuth"
+                          data-force-reload-svg="true"
+                        />
+                      </div>
+                      <output class="col-3"></output>
                     </div>
-                    <output class="col-3"></output>
                   </div>
-                </div>
-              </div>
 
-              <div id="lighting-primitive-specular-options">
-                <div class="form-control-wrapper">
-                  <label class="form-label" for="ctrl-lighting-specular-exponent">
-                    Specular Exponent
-                    <i
-                      class="bi bi-question-circle-fill tip"
-                      data-bs-toggle="tooltip"
-                      data-bs-title="The focus for the light source. The bigger the value the brighter the light."
-                    ></i>
-                  </label>
-                  <div class="row">
-                    <div class="col-9">
-                      <input
-                        type="range"
-                        class="form-range"
-                        id="ctrl-lighting-specular-exponent"
-                        min="1"
-                        max="50"
-                        value="1"
-                        step="0.1"
-                        disabled
-                        data-target="#noise-filter feSpecularLighting"
-                        data-target-attr="specularExponent"
-                        data-force-reload-svg="true"
-                      />
+                  <div class="form-control-wrapper">
+                    <label class="form-label" for="ctrl-lighting-distant-elevation">
+                      Elevation
+                      <i
+                        class="bi bi-question-circle-fill tip"
+                        data-bs-toggle="tooltip"
+                        data-bs-title="The height of the light source"
+                      ></i>
+                    </label>
+                    <div class="row">
+                      <div class="col-9">
+                        <input
+                          type="range"
+                          class="form-range"
+                          id="ctrl-lighting-distant-elevation"
+                          min="1"
+                          max="270"
+                          value="55"
+                          step="1"
+                          disabled
+                          data-target="#noise-filter feDistantLight"
+                          data-target-attr="elevation"
+                          data-force-reload-svg="true"
+                        />
+                      </div>
+                      <output class="col-3"></output>
                     </div>
-                    <output class="col-3"></output>
                   </div>
                 </div>
 
-                <div class="form-control-wrapper">
-                  <label class="form-label" for="ctrl-lighting-specular-constant">
-                    Specular Constant
-                    <i
-                      class="bi bi-question-circle-fill tip"
-                      data-bs-toggle="tooltip"
-                      data-bs-title="The ratio of reflection of the specular lighting. The bigger the value the stronger the reflection."
-                    ></i>
-                  </label>
-                  <div class="row">
-                    <div class="col-9">
-                      <input
-                        type="range"
-                        class="form-range"
-                        id="ctrl-lighting-specular-constant"
-                        min="0.1"
-                        max="10"
-                        value="1"
-                        step="0.1"
-                        disabled
-                        data-target="#noise-filter feSpecularLighting"
-                        data-target-attr="specularConstant"
-                        data-force-reload-svg="true"
-                      />
+                <div id="light-type-point-options">
+                  <div class="form-control-wrapper">
+                    <label class="form-label" for="ctrl-lighting-point-x"> X </label>
+                    <div class="row">
+                      <div class="col-9">
+                        <input
+                          type="range"
+                          class="form-range"
+                          id="ctrl-lighting-point-x"
+                          min="0"
+                          max="1000"
+                          value="100"
+                          step="0.1"
+                          disabled
+                          data-target="#noise-filter fePointLight"
+                          data-target-attr="x"
+                          data-handle-index="0"
+                          data-handle-position="left"
+                          data-force-reload-svg="true"
+                        />
+                      </div>
+                      <output class="col-3"></output>
                     </div>
-                    <output class="col-3"></output>
                   </div>
-                </div>
-              </div>
-
-              <div class="form-control-wrapper shared-lighting-controls">
-                <label class="form-label" for="ctrl-light-type"> Light Type </label>
-                <select
-                  class="form-select form-select-sm"
-                  id="ctrl-light-type"
-                  disabled
-                  data-toggle-visibility
-                  data-force-reload-svg="true"
-                >
-                  <option
-                    value="distant"
-                    data-light-type="feDistantLight"
-                    data-handles="[]"
-                    data-toggle-visibility-and-enable="#light-type-distant-options"
-                    selected
-                  >
-                    Distant
-                  </option>
-                  <option
-                    value="point"
-                    data-light-type="fePointLight"
-                    data-handles='[{"left":"ctrl-lighting-point-x", "top":"ctrl-lighting-point-y"}]'
-                    data-toggle-visibility-and-enable="#light-type-point-options"
-                  >
-                    Point
-                  </option>
-                  <option
-                    value="spot-overhead"
-                    data-light-type="feSpotLight"
-                    data-handles='[{"left":"ctrl-lighting-spot-overhead-x","top":"ctrl-lighting-spot-overhead-y"}]'
-                    data-toggle-visibility-and-enable="#light-type-spot-overhead-options"
-                  >
-                    Spot (Overhead)
-                  </option>
-                  <option
-                    value="spot-manual"
-                    data-light-type="feSpotLight"
-                    data-handles='[{"left":"ctrl-lighting-spot-manual-x","top":"ctrl-lighting-spot-manual-y"},{"left":"ctrl-lighting-spot-manual-pointsat-x","top":"ctrl-lighting-spot-manual-pointsat-y"}]'
-                    data-toggle-visibility-and-enable="#light-type-spot-manual-options"
-                  >
-                    Spot (Manual)
-                  </option>
-                </select>
-              </div>
-
-              <div id="light-type-distant-options">
-                <div class="form-control-wrapper">
-                  <label class="form-label" for="ctrl-lighting-distant-azimuth">
-                    Direction
-                    <i
-                      class="bi bi-question-circle-fill tip"
-                      data-bs-toggle="tooltip"
-                      data-bs-title="The azimuth or direction the light source comes from, in degrees."
-                    ></i>
-                  </label>
-                  <div class="row">
-                    <div class="col-9">
-                      <input
-                        type="range"
-                        class="form-range"
-                        id="ctrl-lighting-distant-azimuth"
-                        min="1"
-                        max="360"
-                        value="90"
-                        step="1"
-                        disabled
-                        data-target="#noise-filter feDistantLight"
-                        data-target-attr="azimuth"
-                        data-force-reload-svg="true"
-                      />
+                  <div class="form-control-wrapper">
+                    <label class="form-label" for="ctrl-lighting-point-y"> Y </label>
+                    <div class="row">
+                      <div class="col-9">
+                        <input
+                          type="range"
+                          class="form-range"
+                          id="ctrl-lighting-point-y"
+                          min="0"
+                          max="1000"
+                          value="100"
+                          step="0.1"
+                          disabled
+                          data-target="#noise-filter fePointLight"
+                          data-target-attr="y"
+                          data-handle-index="0"
+                          data-handle-position="top"
+                          data-force-reload-svg="true"
+                        />
+                      </div>
+                      <output class="col-3"></output>
                     </div>
-                    <output class="col-3"></output>
+                  </div>
+                  <div class="form-control-wrapper">
+                    <label class="form-label" for="ctrl-lighting-point-z"> Z </label>
+                    <div class="row">
+                      <div class="col-9">
+                        <input
+                          type="range"
+                          class="form-range"
+                          id="ctrl-lighting-point-z"
+                          min="0"
+                          max="100"
+                          value="50"
+                          step="0.1"
+                          disabled
+                          data-target="#noise-filter fePointLight"
+                          data-target-attr="z"
+                          data-force-reload-svg="true"
+                        />
+                      </div>
+                      <output class="col-3"></output>
+                    </div>
                   </div>
                 </div>
 
-                <div class="form-control-wrapper">
-                  <label class="form-label" for="ctrl-lighting-distant-elevation">
-                    Elevation
-                    <i
-                      class="bi bi-question-circle-fill tip"
-                      data-bs-toggle="tooltip"
-                      data-bs-title="The height of the light source"
-                    ></i>
-                  </label>
-                  <div class="row">
-                    <div class="col-9">
-                      <input
-                        type="range"
-                        class="form-range"
-                        id="ctrl-lighting-distant-elevation"
-                        min="1"
-                        max="270"
-                        value="55"
-                        step="1"
-                        disabled
-                        data-target="#noise-filter feDistantLight"
-                        data-target-attr="elevation"
-                        data-force-reload-svg="true"
-                      />
+                <div id="light-type-spot-overhead-options">
+                  <div class="form-control-wrapper">
+                    <label class="form-label" for="ctrl-lighting-spot-overhead-cone-angle">
+                      Cone Angle
+                      <i
+                        class="bi bi-question-circle-fill tip"
+                        data-bs-toggle="tooltip"
+                        data-bs-title="The angle in degrees between the spot light axis (i.e. the axis between the light source and the point to which it is pointing at) and the spot light cone. So it defines a limiting cone which restricts the region where the light is projected. No light is projected outside the cone."
+                      ></i>
+                    </label>
+                    <div class="row">
+                      <div class="col-9">
+                        <input
+                          type="range"
+                          class="form-range"
+                          id="ctrl-lighting-spot-overhead-cone-angle"
+                          min="1"
+                          max="90"
+                          value="75"
+                          step="0.1"
+                          disabled
+                          data-target="#noise-filter feSpotLight"
+                          data-target-attr="limitingConeAngle"
+                          data-force-reload-svg="true"
+                        />
+                      </div>
+                      <output class="col-3"></output>
                     </div>
-                    <output class="col-3"></output>
                   </div>
-                </div>
-              </div>
+                  <div class="form-control-wrapper">
+                    <label class="form-label" for="ctrl-lighting-spot-overhead-x"> X </label>
+                    <div class="row">
+                      <div class="col-9">
+                        <input
+                          type="range"
+                          class="form-range"
+                          id="ctrl-lighting-spot-overhead-x"
+                          min="0"
+                          max="1000"
+                          value="180"
+                          step="0.1"
+                          disabled
+                          data-target="#noise-filter feSpotLight"
+                          data-target-attr="x pointsAtX"
+                          data-handle-index="0"
+                          data-handle-position="left"
+                          data-force-reload-svg="true"
+                        />
+                      </div>
+                      <output class="col-3"></output>
+                    </div>
+                  </div>
+                  <div class="form-control-wrapper">
+                    <label class="form-label" for="ctrl-lighting-spot-overhead-y"> Y </label>
+                    <div class="row">
+                      <div class="col-9">
+                        <input
+                          type="range"
+                          class="form-range"
+                          id="ctrl-lighting-spot-overhead-y"
+                          min="0"
+                          max="1000"
+                          value="180"
+                          step="0.1"
+                          disabled
+                          data-target="#noise-filter feSpotLight"
+                          data-target-attr="y pointsAtY"
+                          data-handle-index="0"
+                          data-handle-position="top"
+                          data-force-reload-svg="true"
+                        />
+                      </div>
+                      <output class="col-3"></output>
+                    </div>
+                  </div>
+                  <div class="form-control-wrapper">
+                    <label class="form-label" for="ctrl-lighting-spot-overhead-z"> Z </label>
+                    <div class="row">
+                      <div class="col-9">
+                        <input
+                          type="range"
+                          class="form-range"
+                          id="ctrl-lighting-spot-overhead-z"
+                          min="0"
+                          max="300"
+                          value="100"
+                          step="0.1"
+                          disabled
+                          data-target="#noise-filter feSpotLight"
+                          data-target-attr="z"
+                          data-force-reload-svg="true"
+                        />
+                      </div>
+                      <output class="col-3"></output>
+                    </div>
+                  </div>
 
-              <div id="light-type-point-options">
-                <div class="form-control-wrapper">
-                  <label class="form-label" for="ctrl-lighting-point-x"> X </label>
-                  <div class="row">
-                    <div class="col-9">
-                      <input
-                        type="range"
-                        class="form-range"
-                        id="ctrl-lighting-point-x"
-                        min="0"
-                        max="1000"
-                        value="100"
-                        step="0.1"
-                        disabled
-                        data-target="#noise-filter fePointLight"
-                        data-target-attr="x"
-                        data-handle-index="0"
-                        data-handle-position="left"
-                        data-force-reload-svg="true"
-                      />
-                    </div>
-                    <output class="col-3"></output>
-                  </div>
-                </div>
-                <div class="form-control-wrapper">
-                  <label class="form-label" for="ctrl-lighting-point-y"> Y </label>
-                  <div class="row">
-                    <div class="col-9">
-                      <input
-                        type="range"
-                        class="form-range"
-                        id="ctrl-lighting-point-y"
-                        min="0"
-                        max="1000"
-                        value="100"
-                        step="0.1"
-                        disabled
-                        data-target="#noise-filter fePointLight"
-                        data-target-attr="y"
-                        data-handle-index="0"
-                        data-handle-position="top"
-                        data-force-reload-svg="true"
-                      />
-                    </div>
-                    <output class="col-3"></output>
-                  </div>
-                </div>
-                <div class="form-control-wrapper">
-                  <label class="form-label" for="ctrl-lighting-point-z"> Z </label>
-                  <div class="row">
-                    <div class="col-9">
-                      <input
-                        type="range"
-                        class="form-range"
-                        id="ctrl-lighting-point-z"
-                        min="0"
-                        max="100"
-                        value="50"
-                        step="0.1"
-                        disabled
-                        data-target="#noise-filter fePointLight"
-                        data-target-attr="z"
-                        data-force-reload-svg="true"
-                      />
-                    </div>
-                    <output class="col-3"></output>
-                  </div>
-                </div>
-              </div>
-
-              <div id="light-type-spot-overhead-options">
-                <div class="form-control-wrapper">
-                  <label class="form-label" for="ctrl-lighting-spot-overhead-cone-angle">
-                    Cone Angle
-                    <i
-                      class="bi bi-question-circle-fill tip"
-                      data-bs-toggle="tooltip"
-                      data-bs-title="The angle in degrees between the spot light axis (i.e. the axis between the light source and the point to which it is pointing at) and the spot light cone. So it defines a limiting cone which restricts the region where the light is projected. No light is projected outside the cone."
-                    ></i>
-                  </label>
-                  <div class="row">
-                    <div class="col-9">
-                      <input
-                        type="range"
-                        class="form-range"
-                        id="ctrl-lighting-spot-overhead-cone-angle"
-                        min="1"
-                        max="90"
-                        value="75"
-                        step="0.1"
-                        disabled
-                        data-target="#noise-filter feSpotLight"
-                        data-target-attr="limitingConeAngle"
-                        data-force-reload-svg="true"
-                      />
-                    </div>
-                    <output class="col-3"></output>
-                  </div>
-                </div>
-                <div class="form-control-wrapper">
-                  <label class="form-label" for="ctrl-lighting-spot-overhead-x"> X </label>
-                  <div class="row">
-                    <div class="col-9">
-                      <input
-                        type="range"
-                        class="form-range"
-                        id="ctrl-lighting-spot-overhead-x"
-                        min="0"
-                        max="1000"
-                        value="180"
-                        step="0.1"
-                        disabled
-                        data-target="#noise-filter feSpotLight"
-                        data-target-attr="x pointsAtX"
-                        data-handle-index="0"
-                        data-handle-position="left"
-                        data-force-reload-svg="true"
-                      />
-                    </div>
-                    <output class="col-3"></output>
-                  </div>
-                </div>
-                <div class="form-control-wrapper">
-                  <label class="form-label" for="ctrl-lighting-spot-overhead-y"> Y </label>
-                  <div class="row">
-                    <div class="col-9">
-                      <input
-                        type="range"
-                        class="form-range"
-                        id="ctrl-lighting-spot-overhead-y"
-                        min="0"
-                        max="1000"
-                        value="180"
-                        step="0.1"
-                        disabled
-                        data-target="#noise-filter feSpotLight"
-                        data-target-attr="y pointsAtY"
-                        data-handle-index="0"
-                        data-handle-position="top"
-                        data-force-reload-svg="true"
-                      />
-                    </div>
-                    <output class="col-3"></output>
-                  </div>
-                </div>
-                <div class="form-control-wrapper">
-                  <label class="form-label" for="ctrl-lighting-spot-overhead-z"> Z </label>
-                  <div class="row">
-                    <div class="col-9">
-                      <input
-                        type="range"
-                        class="form-range"
-                        id="ctrl-lighting-spot-overhead-z"
-                        min="0"
-                        max="300"
-                        value="100"
-                        step="0.1"
-                        disabled
-                        data-target="#noise-filter feSpotLight"
-                        data-target-attr="z"
-                        data-force-reload-svg="true"
-                      />
-                    </div>
-                    <output class="col-3"></output>
-                  </div>
+                  <input
+                    type="hidden"
+                    id="ctrl-lighting-spot-overhead-pointsat-z"
+                    value="0"
+                    disabled
+                    data-target="#noise-filter feSpotLight"
+                    data-target-attr="pointsAtZ"
+                  />
                 </div>
 
-                <input
-                  type="hidden"
-                  id="ctrl-lighting-spot-overhead-pointsat-z"
-                  value="0"
-                  disabled
-                  data-target="#noise-filter feSpotLight"
-                  data-target-attr="pointsAtZ"
-                />
-              </div>
-
-              <div id="light-type-spot-manual-options">
-                <div class="form-control-wrapper">
-                  <label class="form-label" for="ctrl-lighting-spot-manual-cone-angle">
-                    Cone Angle
-                    <i
-                      class="bi bi-question-circle-fill tip"
-                      data-bs-toggle="tooltip"
-                      data-bs-title="The angle in degrees between the spot light axis (i.e. the axis between the light source and the point to which it is pointing at) and the spot light cone. So it defines a limiting cone which restricts the region where the light is projected. No light is projected outside the cone."
-                    ></i>
-                  </label>
-                  <div class="row">
-                    <div class="col-9">
-                      <input
-                        type="range"
-                        class="form-range"
-                        id="ctrl-lighting-spot-manual-cone-angle"
-                        min="1"
-                        max="90"
-                        value="45"
-                        step="0.1"
-                        disabled
-                        data-target="#noise-filter feSpotLight"
-                        data-target-attr="limitingConeAngle"
-                        data-force-reload-svg="true"
-                      />
+                <div id="light-type-spot-manual-options">
+                  <div class="form-control-wrapper">
+                    <label class="form-label" for="ctrl-lighting-spot-manual-cone-angle">
+                      Cone Angle
+                      <i
+                        class="bi bi-question-circle-fill tip"
+                        data-bs-toggle="tooltip"
+                        data-bs-title="The angle in degrees between the spot light axis (i.e. the axis between the light source and the point to which it is pointing at) and the spot light cone. So it defines a limiting cone which restricts the region where the light is projected. No light is projected outside the cone."
+                      ></i>
+                    </label>
+                    <div class="row">
+                      <div class="col-9">
+                        <input
+                          type="range"
+                          class="form-range"
+                          id="ctrl-lighting-spot-manual-cone-angle"
+                          min="1"
+                          max="90"
+                          value="45"
+                          step="0.1"
+                          disabled
+                          data-target="#noise-filter feSpotLight"
+                          data-target-attr="limitingConeAngle"
+                          data-force-reload-svg="true"
+                        />
+                      </div>
+                      <output class="col-3"></output>
                     </div>
-                    <output class="col-3"></output>
                   </div>
-                </div>
-                <div class="form-control-wrapper">
-                  <label class="form-label" for="ctrl-lighting-spot-manual-x"> X </label>
-                  <div class="row">
-                    <div class="col-9">
-                      <input
-                        type="range"
-                        class="form-range"
-                        id="ctrl-lighting-spot-manual-x"
-                        min="0"
-                        max="1000"
-                        value="100"
-                        step="0.1"
-                        disabled
-                        data-target="#noise-filter feSpotLight"
-                        data-target-attr="x"
-                        data-handle-index="0"
-                        data-handle-position="left"
-                        data-force-reload-svg="true"
-                      />
+                  <div class="form-control-wrapper">
+                    <label class="form-label" for="ctrl-lighting-spot-manual-x"> X </label>
+                    <div class="row">
+                      <div class="col-9">
+                        <input
+                          type="range"
+                          class="form-range"
+                          id="ctrl-lighting-spot-manual-x"
+                          min="0"
+                          max="1000"
+                          value="100"
+                          step="0.1"
+                          disabled
+                          data-target="#noise-filter feSpotLight"
+                          data-target-attr="x"
+                          data-handle-index="0"
+                          data-handle-position="left"
+                          data-force-reload-svg="true"
+                        />
+                      </div>
+                      <output class="col-3"></output>
                     </div>
-                    <output class="col-3"></output>
                   </div>
-                </div>
-                <div class="form-control-wrapper">
-                  <label class="form-label" for="ctrl-lighting-spot-manual-y"> Y </label>
-                  <div class="row">
-                    <div class="col-9">
-                      <input
-                        type="range"
-                        class="form-range"
-                        id="ctrl-lighting-spot-manual-y"
-                        min="0"
-                        max="1000"
-                        value="100"
-                        step="0.1"
-                        disabled
-                        data-target="#noise-filter feSpotLight"
-                        data-target-attr="y"
-                        data-handle-index="0"
-                        data-handle-position="top"
-                        data-force-reload-svg="true"
-                      />
+                  <div class="form-control-wrapper">
+                    <label class="form-label" for="ctrl-lighting-spot-manual-y"> Y </label>
+                    <div class="row">
+                      <div class="col-9">
+                        <input
+                          type="range"
+                          class="form-range"
+                          id="ctrl-lighting-spot-manual-y"
+                          min="0"
+                          max="1000"
+                          value="100"
+                          step="0.1"
+                          disabled
+                          data-target="#noise-filter feSpotLight"
+                          data-target-attr="y"
+                          data-handle-index="0"
+                          data-handle-position="top"
+                          data-force-reload-svg="true"
+                        />
+                      </div>
+                      <output class="col-3"></output>
                     </div>
-                    <output class="col-3"></output>
                   </div>
-                </div>
-                <div class="form-control-wrapper">
-                  <label class="form-label" for="ctrl-lighting-spot-manual-z"> Z </label>
-                  <div class="row">
-                    <div class="col-9">
-                      <input
-                        type="range"
-                        class="form-range"
-                        id="ctrl-lighting-spot-manual-z"
-                        min="0"
-                        max="300"
-                        value="50"
-                        step="0.1"
-                        disabled
-                        data-target="#noise-filter feSpotLight"
-                        data-target-attr="z"
-                        data-force-reload-svg="true"
-                      />
+                  <div class="form-control-wrapper">
+                    <label class="form-label" for="ctrl-lighting-spot-manual-z"> Z </label>
+                    <div class="row">
+                      <div class="col-9">
+                        <input
+                          type="range"
+                          class="form-range"
+                          id="ctrl-lighting-spot-manual-z"
+                          min="0"
+                          max="300"
+                          value="50"
+                          step="0.1"
+                          disabled
+                          data-target="#noise-filter feSpotLight"
+                          data-target-attr="z"
+                          data-force-reload-svg="true"
+                        />
+                      </div>
+                      <output class="col-3"></output>
                     </div>
-                    <output class="col-3"></output>
                   </div>
-                </div>
-                <div class="form-control-wrapper">
-                  <label class="form-label" for="ctrl-lighting-spot-manual-pointsat-x">
-                    Points At X
-                  </label>
-                  <div class="row">
-                    <div class="col-9">
-                      <input
-                        type="range"
-                        class="form-range"
-                        id="ctrl-lighting-spot-manual-pointsat-x"
-                        min="0"
-                        max="1000"
-                        value="150"
-                        step="0.1"
-                        disabled
-                        data-target="#noise-filter feSpotLight"
-                        data-target-attr="pointsAtX"
-                        data-handle-index="1"
-                        data-handle-position="left"
-                        data-force-reload-svg="true"
-                      />
+                  <div class="form-control-wrapper">
+                    <label class="form-label" for="ctrl-lighting-spot-manual-pointsat-x">
+                      Points At X
+                    </label>
+                    <div class="row">
+                      <div class="col-9">
+                        <input
+                          type="range"
+                          class="form-range"
+                          id="ctrl-lighting-spot-manual-pointsat-x"
+                          min="0"
+                          max="1000"
+                          value="150"
+                          step="0.1"
+                          disabled
+                          data-target="#noise-filter feSpotLight"
+                          data-target-attr="pointsAtX"
+                          data-handle-index="1"
+                          data-handle-position="left"
+                          data-force-reload-svg="true"
+                        />
+                      </div>
+                      <output class="col-3"></output>
                     </div>
-                    <output class="col-3"></output>
                   </div>
-                </div>
-                <div class="form-control-wrapper">
-                  <label class="form-label" for="ctrl-lighting-spot-manual-pointsat-y"
-                    >Points At Y</label
-                  >
-                  <div class="row">
-                    <div class="col-9">
-                      <input
-                        type="range"
-                        class="form-range"
-                        id="ctrl-lighting-spot-manual-pointsat-y"
-                        min="0"
-                        max="1000"
-                        value="150"
-                        step="0.1"
-                        disabled
-                        data-target="#noise-filter feSpotLight"
-                        data-target-attr="pointsAtY"
-                        data-handle-index="1"
-                        data-handle-position="top"
-                        data-force-reload-svg="true"
-                      />
+                  <div class="form-control-wrapper">
+                    <label class="form-label" for="ctrl-lighting-spot-manual-pointsat-y"
+                      >Points At Y</label
+                    >
+                    <div class="row">
+                      <div class="col-9">
+                        <input
+                          type="range"
+                          class="form-range"
+                          id="ctrl-lighting-spot-manual-pointsat-y"
+                          min="0"
+                          max="1000"
+                          value="150"
+                          step="0.1"
+                          disabled
+                          data-target="#noise-filter feSpotLight"
+                          data-target-attr="pointsAtY"
+                          data-handle-index="1"
+                          data-handle-position="top"
+                          data-force-reload-svg="true"
+                        />
+                      </div>
+                      <output class="col-3"></output>
                     </div>
-                    <output class="col-3"></output>
                   </div>
-                </div>
-                <div class="form-control-wrapper">
-                  <label class="form-label" for="ctrl-lighting-spot-manual-pointsat-z"
-                    >Points At Z</label
-                  >
-                  <div class="row">
-                    <div class="col-9">
-                      <input
-                        type="range"
-                        class="form-range"
-                        id="ctrl-lighting-spot-manual-pointsat-z"
-                        min="0"
-                        max="300"
-                        value="50"
-                        step="0.1"
-                        disabled
-                        data-target="#noise-filter feSpotLight"
-                        data-target-attr="pointsAtZ"
-                        data-force-reload-svg="true"
-                      />
+                  <div class="form-control-wrapper">
+                    <label class="form-label" for="ctrl-lighting-spot-manual-pointsat-z"
+                      >Points At Z</label
+                    >
+                    <div class="row">
+                      <div class="col-9">
+                        <input
+                          type="range"
+                          class="form-range"
+                          id="ctrl-lighting-spot-manual-pointsat-z"
+                          min="0"
+                          max="300"
+                          value="50"
+                          step="0.1"
+                          disabled
+                          data-target="#noise-filter feSpotLight"
+                          data-target-attr="pointsAtZ"
+                          data-force-reload-svg="true"
+                        />
+                      </div>
+                      <output class="col-3"></output>
                     </div>
-                    <output class="col-3"></output>
                   </div>
                 </div>
               </div>
@@ -867,107 +869,109 @@
                 data-bs-title="How the generated noise interacts with the background"
               ></i>
             </h5>
-            <div class="card-body" id="effects-controls">
-              <div class="form-control-wrapper">
-                <label class="form-label" for="ctrl-blend-mode"> Blend Mode </label>
-                <select
-                  class="form-select form-select-sm"
-                  id="ctrl-blend-mode"
-                  data-target="#demo-output svg"
-                  data-target-style-prop="mix-blend-mode"
-                  data-target-style-value-when-disabled="normal"
-                >
-                  <option selected>normal</option>
-                  <option>multiply</option>
-                  <option>screen</option>
-                  <option>overlay</option>
-                  <option>darken</option>
-                  <option>lighten</option>
-                  <option>color-dodge</option>
-                  <option>color-burn</option>
-                  <option>hard-light</option>
-                  <option>soft-light</option>
-                  <option>difference</option>
-                  <option>exclusion</option>
-                  <option>hue</option>
-                  <option>saturation</option>
-                  <option>color</option>
-                  <option>luminosity</option>
-                </select>
-              </div>
-
-              <div class="form-control-wrapper">
-                <label class="form-label" for="ctrl-saturation">
-                  Saturation
-                  <i
-                    class="bi bi-question-circle-fill tip"
-                    data-bs-toggle="tooltip"
-                    title="1 is the default level of saturation"
-                  ></i>
-                </label>
-                <div class="row">
-                  <div class="col-9">
-                    <input
-                      type="range"
-                      class="form-range"
-                      id="ctrl-num-saturation"
-                      min="0"
-                      max="10"
-                      value="1"
-                      step="0.1"
-                      data-target="#demo-output svg"
-                      data-target-filter-prop="saturate"
-                    />
-                  </div>
-                  <output class="col-3"></output>
+            <div id="effects-controls">
+              <div class="card-body">
+                <div class="form-control-wrapper">
+                  <label class="form-label" for="ctrl-blend-mode"> Blend Mode </label>
+                  <select
+                    class="form-select form-select-sm"
+                    id="ctrl-blend-mode"
+                    data-target="#demo-output svg"
+                    data-target-style-prop="mix-blend-mode"
+                    data-target-style-value-when-disabled="normal"
+                  >
+                    <option selected>normal</option>
+                    <option>multiply</option>
+                    <option>screen</option>
+                    <option>overlay</option>
+                    <option>darken</option>
+                    <option>lighten</option>
+                    <option>color-dodge</option>
+                    <option>color-burn</option>
+                    <option>hard-light</option>
+                    <option>soft-light</option>
+                    <option>difference</option>
+                    <option>exclusion</option>
+                    <option>hue</option>
+                    <option>saturation</option>
+                    <option>color</option>
+                    <option>luminosity</option>
+                  </select>
                 </div>
-              </div>
 
-              <div class="form-control-wrapper">
-                <label class="form-label" for="ctrl-brightness">
-                  Brightness
-                  <i
-                    class="bi bi-question-circle-fill tip"
-                    data-bs-toggle="tooltip"
-                    data-bs-title="1 is the default level of brightness"
-                  ></i>
-                </label>
-                <div class="row">
-                  <div class="col-9">
-                    <input
-                      type="range"
-                      class="form-range"
-                      id="ctrl-num-brightness"
-                      min="0"
-                      max="10"
-                      value="1"
-                      step="0.1"
-                      data-target="#demo-output svg"
-                      data-target-filter-prop="brightness"
-                    />
+                <div class="form-control-wrapper">
+                  <label class="form-label" for="ctrl-saturation">
+                    Saturation
+                    <i
+                      class="bi bi-question-circle-fill tip"
+                      data-bs-toggle="tooltip"
+                      title="1 is the default level of saturation"
+                    ></i>
+                  </label>
+                  <div class="row">
+                    <div class="col-9">
+                      <input
+                        type="range"
+                        class="form-range"
+                        id="ctrl-num-saturation"
+                        min="0"
+                        max="10"
+                        value="1"
+                        step="0.1"
+                        data-target="#demo-output svg"
+                        data-target-filter-prop="saturate"
+                      />
+                    </div>
+                    <output class="col-3"></output>
                   </div>
-                  <output class="col-3"></output>
                 </div>
-              </div>
 
-              <div class="form-control-wrapper">
-                <label class="form-label" for="ctrl-blur"> Blur </label>
-                <div class="row">
-                  <div class="col-9">
-                    <input
-                      type="range"
-                      class="form-range"
-                      id="ctrl-num-blur"
-                      min="0"
-                      max="10"
-                      value="0"
-                      step="0.1"
-                      data-target="#demo-output svg"
-                      data-target-filter-prop="blur"
-                      data-target-value-suffix="px"
-                    />
+                <div class="form-control-wrapper">
+                  <label class="form-label" for="ctrl-brightness">
+                    Brightness
+                    <i
+                      class="bi bi-question-circle-fill tip"
+                      data-bs-toggle="tooltip"
+                      data-bs-title="1 is the default level of brightness"
+                    ></i>
+                  </label>
+                  <div class="row">
+                    <div class="col-9">
+                      <input
+                        type="range"
+                        class="form-range"
+                        id="ctrl-num-brightness"
+                        min="0"
+                        max="10"
+                        value="1"
+                        step="0.1"
+                        data-target="#demo-output svg"
+                        data-target-filter-prop="brightness"
+                      />
+                    </div>
+                    <output class="col-3"></output>
                   </div>
-                  <output class="col-3"></output>
+                </div>
+
+                <div class="form-control-wrapper mb-0">
+                  <label class="form-label" for="ctrl-blur"> Blur </label>
+                  <div class="row">
+                    <div class="col-9">
+                      <input
+                        type="range"
+                        class="form-range"
+                        id="ctrl-num-blur"
+                        min="0"
+                        max="10"
+                        value="0"
+                        step="0.1"
+                        data-target="#demo-output svg"
+                        data-target-filter-prop="blur"
+                        data-target-value-suffix="px"
+                      />
+                    </div>
+                    <output class="col-3"></output>
+                  </div>
                 </div>
               </div>
             </div>
@@ -999,7 +1003,7 @@
                 </select>
               </div>
 
-              <div class="form-control-wrapper" id="background-type-solid-color">
+              <div class="form-control-wrapper mb-0" id="background-type-solid-color">
                 <label class="form-label" for="ctrl-bg-color">Color</label>
                 <input
                   type="color"
@@ -1094,43 +1098,45 @@
                 data-bs-title="See how your pattern looks when constrained to a specific size"
               ></i>
             </h5>
-            <div class="card-body" id="custom-size">
-              <div class="row mt-3">
-                <div class="col">
-                  <div class="form-control-wrapper mb-0">
-                    <label class="form-label" for="ctrl-custom-width"> Width </label>
-                    <div class="input-group input-group-sm">
-                      <input
-                        class="form-control text-end"
-                        type="number"
-                        id="ctrl-custom-width"
-                        min="1"
-                        value="500"
-                        data-target="#demo-output svg"
-                        data-target-style-prop="width"
-                        data-target-value-suffix="px"
-                        data-force-reload-svg="true"
-                      />
-                      <span class="input-group-text">px</span>
+            <div id="custom-size">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col">
+                    <div class="form-control-wrapper mb-0">
+                      <label class="form-label" for="ctrl-custom-width"> Width </label>
+                      <div class="input-group input-group-sm">
+                        <input
+                          class="form-control text-end"
+                          type="number"
+                          id="ctrl-custom-width"
+                          min="1"
+                          value="500"
+                          data-target="#demo-output svg"
+                          data-target-style-prop="width"
+                          data-target-value-suffix="px"
+                          data-force-reload-svg="true"
+                        />
+                        <span class="input-group-text">px</span>
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div class="col">
-                  <div class="form-control-wrapper mb-0">
-                    <label class="form-label" for="ctrl-custom-height"> Height </label>
-                    <div class="input-group input-group-sm">
-                      <input
-                        class="form-control text-end"
-                        type="number"
-                        id="ctrl-custom-height"
-                        min="1"
-                        value="500"
-                        data-target="#demo-output svg"
-                        data-target-style-prop="height"
-                        data-target-value-suffix="px"
-                        data-force-reload-svg="true"
-                      />
-                      <span class="input-group-text">px</span>
+                  <div class="col">
+                    <div class="form-control-wrapper mb-0">
+                      <label class="form-label" for="ctrl-custom-height"> Height </label>
+                      <div class="input-group input-group-sm">
+                        <input
+                          class="form-control text-end"
+                          type="number"
+                          id="ctrl-custom-height"
+                          min="1"
+                          value="500"
+                          data-target="#demo-output svg"
+                          data-target-style-prop="height"
+                          data-target-value-suffix="px"
+                          data-force-reload-svg="true"
+                        />
+                        <span class="input-group-text">px</span>
+                      </div>
                     </div>
                   </div>
                 </div>

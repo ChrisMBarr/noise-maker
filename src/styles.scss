@@ -141,13 +141,13 @@ CARDS
     border-bottom-width: 0;
   }
 
-  ~ .card-body {
-    border-top: var(--bs-card-border-width) solid var(--bs-card-border-color);
-  }
-
   .form-check-input {
     margin-top: 0.1em;
   }
+}
+
+.card-body {
+  border-top: var(--bs-card-border-width) solid var(--bs-card-border-color);
 }
 
 /*===========================

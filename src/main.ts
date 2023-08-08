@@ -98,19 +98,32 @@ $(() => {
     $outputDisplay: JQuery<HTMLOutputElement>
   ) {
     if ($toggleVisibilityInput.is(':checkbox')) {
-      const $toggleTargets = $($toggleVisibilityInput.data('toggle-visibility'));
+      const targetSelector = $toggleVisibilityInput.data('toggle-visibility');
+      const collapseEls = document.querySelectorAll(targetSelector);
+      const collapseList = [...collapseEls].map(
+        (el) => new bootstrap.Collapse(el, { toggle: false })
+      );
+
       $toggleVisibilityInput.on(inputEventName, () => {
-        $toggleTargets.toggle($toggleVisibilityInput.is(':checked'));
+        if ($toggleVisibilityInput.is(':checked')) {
+          collapseList.forEach((e) => e.show());
+        } else {
+          collapseList.forEach((e) => e.hide());
+        }
 
         if ($toggleVisibilityInput.attr('id') === 'ctrl-separate-frequencies') {
           updateTexture($baseFrequencyX, $outputDisplay);
         }
       });
       //Initialize
-      $toggleTargets.toggle($toggleVisibilityInput.is(':checked'));
+      $(targetSelector)
+        .addClass('collapse')
+        .toggleClass('show', $toggleVisibilityInput.is(':checked'));
     } else if ($toggleVisibilityInput.is('select')) {
-      const $allToggles = $toggleVisibilityInput.find('option[data-toggle-visibility-and-enable]');
-      const allTargetsSelectorStr = $allToggles
+      const $allToggleOptions = $toggleVisibilityInput.find(
+        'option[data-toggle-visibility-and-enable]'
+      );
+      const allTargetsSelectorStr = $allToggleOptions
         .toArray()
         .map((x) => {
           return $(x).data('toggle-visibility-and-enable');
@@ -118,11 +131,16 @@ $(() => {
         .join(',');
       const $allTargets = $(allTargetsSelectorStr);
 
+      //Create collapsable elements
+      const collapseEls = document.querySelectorAll(allTargetsSelectorStr);
+      [...collapseEls].forEach((el) => new bootstrap.Collapse(el, { toggle: false }));
+
       $toggleVisibilityInput.on(inputEventName, (ev) => {
         const el = ev.target;
         // @ts-ignore
         const $currentTarget = $toggleVisibilityInput.children().eq(el.selectedIndex);
-        const $toggleTargets = $($currentTarget.data('toggle-visibility-and-enable'));
+        const currentTgtSelector = $currentTarget.data('toggle-visibility-and-enable');
+        const $toggleTargets = $(currentTgtSelector);
 
         const id = $toggleVisibilityInput.attr('id');
         if (lightingEffectsEnabled) {
@@ -139,14 +157,31 @@ $(() => {
           }
         }
 
-        $allTargets.hide().find('input, select').attr('disabled', 'disabled');
+        collapseEls.forEach((el) => {
+          const collapse = bootstrap.Collapse.getInstance(el);
+          if ($toggleTargets.is(el)) {
+            collapse?.show();
+          } else {
+            collapse?.hide();
+          }
+        });
+
+        $allTargets.find('input, select').attr('disabled', 'disabled');
         const $enabledInputs = $toggleTargets
-          .show()
           .find('input, select')
           .removeAttr('disabled') as JQuery<HTMLInputElement>;
         $enabledInputs.each((_i, t) => updateTexture($(t), $outputDisplay));
         $enabledInputs.trigger(inputEventName);
       });
+
+      //Initialize
+      const $selectedOpt = $toggleVisibilityInput
+        .children()
+        .filter(`[value='${$toggleVisibilityInput.val()}']`);
+      const selectedToggle = $selectedOpt.data('toggle-visibility-and-enable');
+      $(allTargetsSelectorStr)
+        .addClass('collapse')
+        .toggleClass('show', $toggleVisibilityInput.is(selectedToggle));
     }
   }
 
