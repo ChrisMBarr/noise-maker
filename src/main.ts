@@ -23,6 +23,9 @@ $(() => {
     HTMLInputElement | HTMLSelectElement
   >;
 
+  const themePref = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  $('html').attr('data-bs-theme', themePref);
+
   //----------------------------------------------------
   //Enable tooltips
   $('[data-bs-toggle="tooltip"]').each((_i, el) => {
