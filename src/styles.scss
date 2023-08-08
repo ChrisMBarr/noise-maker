@@ -13,14 +13,14 @@ body {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
   border-top-right-radius: 0;
-  transition: left var(--transition-duration);
+  transition: left $transition-duration;
 
   .open-icon {
     display: none;
   }
 
   .controls-open & {
-    left: var(--controls-width);
+    left: $controls-width;
 
     .open-icon {
       display: inline;
@@ -41,7 +41,7 @@ aside {
   left: 0;
   transform: translateX(-100%);
 
-  transition: transform var(--transition-duration);
+  transition: transform $transition-duration;
 
   .controls-open & {
     transform: translateX(0);
