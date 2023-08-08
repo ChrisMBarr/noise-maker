@@ -196,21 +196,3 @@ function scrollElementIntoView(el: HTMLElement) {
 function updateHandlePosition(index: number, positionProperty: string, value: number) {
   $handles.eq(index).css(positionProperty, value + 'px');
 }
-
-$(() => {
-  $('.dropdown-toggle').on('click', (ev) => {
-    const $menu = $(ev.target).siblings('.dropdown-menu');
-    $(ev.target).add($menu).toggleClass('show');
-  });
-
-  $(document).on('click', (ev) => {
-    const $clicked = $(ev.target);
-    if (
-      $clicked.parents('.dropdown, .dropup').length === 0 ||
-      $clicked.parents('.dropdown-menu').length === 1
-    ) {
-      // close the dropdown
-      $('.dropdown .show, .dropup .show').removeClass('show');
-    }
-  });
-});
