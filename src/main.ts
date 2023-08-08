@@ -77,11 +77,20 @@ $(() => {
   const $presetDdl = $('#ddl-preset');
   const presetOptions = presets
     .map((p, i) => {
-      const itemContent = Object.hasOwn(p, 'divider')
-        ? `<hr class="dropdown-divider">`
-        : `<a class="dropdown-item" href="#" onclick="applyPreset(${i});">${
-            (p as IPreset).name
-          }</a>`;
+      let itemContent = '';
+      if (Object.hasOwn(p, 'divider')) {
+        itemContent = `<li><hr class="dropdown-divider"></li>`;
+      } else {
+        const preset = p as IPreset;
+        itemContent += `<a class="dropdown-item" href="#" onclick="applyPreset(${i}, this);">`;
+
+        if (preset.icon) {
+          itemContent += `<i class="bi bi-${preset.icon}"></i> `;
+        }
+
+        itemContent += preset.name + '</a>';
+      }
+
       return `<li>${itemContent}</li>`;
     })
     .join('');

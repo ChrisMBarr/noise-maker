@@ -66,7 +66,8 @@ function randomizeColorValue(colorInput: HTMLInputElement) {
 
 const presets: (IPreset | IPresetDivider)[] = [
   {
-    name: 'Default',
+    name: 'Reset To Default',
+    icon: 'arrow-counterclockwise',
     settings: [
       { id: 'base-frequency-x', value: 0.03 },
       { id: 'base-frequency-y', value: 0.03 },
@@ -225,6 +226,32 @@ const presets: (IPreset | IPresetDivider)[] = [
       { id: 'enable-effects', value: false },
       { id: 'bg-type', value: 'solid-color' },
       { id: 'bg-color', value: '#453e32' },
+    ],
+  },
+  {
+    name: 'Infrared',
+    settings: [
+      { id: 'base-frequency-x', value: 0.001 },
+      { id: 'separate-frequencies', value: false },
+      { id: 'octaves', value: 1 },
+      { id: 'noise-type', value: 'fractalNoise' },
+      { id: 'seed', value: 8 },
+      { id: 'noise-type', value: 'stitch' },
+      { id: 'enable-lighting', value: true },
+      { id: 'lighting-lighting-color', value: '#d21908' },
+      { id: 'lighting-primitive-type', value: 'feDiffuseLighting' },
+      { id: 'lighting-surface-scale', value: 0.1 },
+      { id: 'lighting-diffuse-constant', value: 0.93 },
+      { id: 'light-type', value: 'distant' },
+      { id: 'lighting-distant-azimuth', value: 1 },
+      { id: 'lighting-distant-elevation', value: 31 },
+      { id: 'enable-effects', value: true },
+      { id: 'blend-mode', value: 'lighten' },
+      { id: 'effect-saturation', value: 1 },
+      { id: 'effect-brightness', value: 2 },
+      { id: 'effect-blur', value: 0 },
+      { id: 'bg-type', value: 'img' },
+      { id: 'bg-img-id', value: 482 },
     ],
   },
   {
