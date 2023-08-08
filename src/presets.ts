@@ -1,6 +1,3 @@
-let $controls: JQuery<HTMLInputElement | HTMLSelectElement>;
-const ctrlIdPrefix = 'ctrl-';
-
 function serializeControls() {
   //used to log out the current values to the console to manually save as presets
   return $controls
@@ -66,41 +63,6 @@ function randomizeColorValue(colorInput: HTMLInputElement) {
   }
   colorInput.value = color;
 }
-
-$(() => {
-  $controls = $('#svg-controls').find('input:not([type="hidden"]), select') as JQuery<
-    HTMLInputElement | HTMLSelectElement
-  >;
-  const $presetDdl = $('#ddl-preset');
-  const presetOptions = presets
-    .map((p, i) => {
-      const itemContent = Object.hasOwn(p, 'divider')
-        ? `<hr class="dropdown-divider">`
-        : `<a class="dropdown-item" href="#" onclick="applyPreset(${i});">${
-            (p as IPreset).name
-          }</a>`;
-      return `<li>${itemContent}</li>`;
-    })
-    .join('');
-  $(presetOptions).appendTo($presetDdl);
-
-  $('#btn-randomize').on('click', () => {
-    $controls
-      .filter(':not(#ctrl-enable-custom-size,#ctrl-custom-width,#ctrl-custom-height)')
-      .each((_i, el) => {
-        if (el.type === 'range' || el.type === 'number') {
-          randomizeRangeOrNumberInput(el as HTMLInputElement);
-        } else if (el.type === 'color') {
-          randomizeColorValue(el as HTMLInputElement);
-        } else if (el.type === 'checkbox') {
-          (el as HTMLInputElement).checked = Math.random() < 0.5;
-        } else if (el.type.startsWith('select')) {
-          randomizeSelectOption(el as HTMLSelectElement);
-        }
-      })
-      .trigger(inputEventName);
-  });
-});
 
 const presets: (IPreset | IPresetDivider)[] = [
   {

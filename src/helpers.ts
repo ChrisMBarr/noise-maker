@@ -1,5 +1,3 @@
-let $handles: JQuery<HTMLElement>;
-
 let forceReloadDebounce: number | undefined;
 function forceReloadSvg() {
   clearTimeout(forceReloadDebounce);
@@ -21,32 +19,7 @@ function forceReloadSvg() {
   }, 50);
 }
 
-let lightingMaxDebounce: number | undefined;
-function updateLightingMaxValues() {
-  clearTimeout(lightingMaxDebounce);
-  lightingMaxDebounce = setTimeout(() => {
-    const $svg = $demoOutput.children('svg');
-    let maxX = $svg.width()!;
-    let maxY = $svg.height()!;
-
-    canvasSize.height = maxY;
-    canvasSize.width = maxX;
-    canvasSize.left = $svg.offset()!.left;
-
-    $(
-      '#ctrl-lighting-point-x, #ctrl-lighting-spot-overhead-x, #ctrl-lighting-spot-manual-x, #ctrl-lighting-spot-manual-pointsat-x'
-    )
-      .attr('max', maxX)
-      .trigger(inputEventName);
-    $(
-      '#ctrl-lighting-point-y, #ctrl-lighting-spot-overhead-y, #ctrl-lighting-spot-manual-y, #ctrl-lighting-spot-manual-pointsat-y'
-    )
-      .attr('max', maxY)
-      .trigger(inputEventName);
-  }, 50);
-}
-
-function updateTextureFilter(
+function updateFilterStyles(
   $tgt: JQuery<HTMLElement>,
   tgtFilterProp: string,
   val: string | number,
@@ -86,103 +59,6 @@ function getFormattedValue($el: JQuery<HTMLInputElement>) {
   return formatterStr;
 }
 
-function clearLightingEffects() {
-  $('#noise-filter').find('feDiffuseLighting, feSpecularLighting').remove();
-}
-
-function createLightingElement() {
-  const $svgFilter = $('#noise-filter');
-  const result = $svgFilter.find('feTurbulence').attr('result')!;
-  const lightingPrimitiveType = $('#ctrl-lighting-primitive-type').val()!.toString();
-  const lightingPrimitiveEl = document.createElementNS(svgNs, lightingPrimitiveType);
-  lightingPrimitiveEl.setAttributeNS(svgNs, 'in', result);
-  lightingPrimitiveEl.appendChild(document.createTextNode('\n'));
-  lightingPrimitiveEl.appendChild(getLightElement());
-  lightingPrimitiveEl.appendChild(document.createTextNode('\n'));
-
-  $svgFilter.append('\n').append(lightingPrimitiveEl).append('\n');
-}
-
-function getLightElement() {
-  const selectedVal = $('#ctrl-light-type').val();
-  const lightType = $(`#ctrl-light-type option[value="${selectedVal}"]`).data('light-type');
-  return document.createElementNS(svgNs, lightType);
-}
-
-function replaceLightElement() {
-  const $svgFilter = $('#noise-filter');
-  $svgFilter.find('feDistantLight, fePointLight, feSpotLight').remove();
-  $svgFilter
-    .find('feDiffuseLighting, feSpecularLighting')
-    .append('\n')
-    .append(getLightElement())
-    .append('\n');
-}
-
-function clearLightingHandles() {
-  isDraggingHandle = false;
-  $demoOutput.children('.handle').remove();
-  $handles = $demoOutput.children('.handle'); //should select nothing, which is what we want here
-
-  //Remove event listeners
-  $demoOutput.off('mousedown touchstart mousemove touchmove mouseup touchend');
-}
-
-function createLightHandles(handleMappings: ILightHandleMapping[]) {
-  clearLightingHandles();
-
-  if (handleMappings.length > 0) {
-    handleMappings.forEach((data) => {
-      $('<div class="handle bg-light rounded-circle border border-secondary" tabindex="0"></div>')
-        .data('mapping', data)
-        .insertBefore($demoOutput.children('svg'));
-    });
-
-    $handles = $demoOutput.children('.handle');
-
-    let mapping: ILightHandleMapping | undefined;
-    let $dragHandle: JQuery<HTMLElement> | undefined;
-    $demoOutput
-      .on('mousedown touchstart', (ev) => {
-        $('body').removeClass('controls-open'); //close the sidebar
-        if (ev.target.classList.contains('handle')) {
-          isDraggingHandle = true;
-          $dragHandle = $(ev.target);
-          mapping = $dragHandle.data('mapping');
-        }
-      })
-      .on('mousemove touchmove', (ev) => {
-        if (isDraggingHandle) {
-          const clientX = ev.touches ? ev.touches[0].clientX : ev.clientX!;
-          const clientY = ev.touches ? ev.touches[0].clientY : ev.clientY!;
-
-          const x = Math.min(Math.max(clientX - canvasSize.left, 0), canvasSize.width);
-          const y = Math.min(Math.max(clientY, 0), canvasSize.height);
-
-          const ctrlLeft = $('#' + mapping!.left)
-            .val(x)
-            .trigger(inputEventName)
-            .get(0)!;
-
-          const ctrlTop = $('#' + mapping!.top)
-            .val(y)
-            .trigger(inputEventName)
-            .get(0)!;
-
-          scrollElementIntoView(ctrlLeft);
-          scrollElementIntoView(ctrlTop);
-
-          $dragHandle!.css({ left: x, top: y });
-        }
-      })
-      .on('mouseup touchend', () => {
-        isDraggingHandle = false;
-        mapping = undefined;
-        $dragHandle = undefined;
-      });
-  }
-}
-
 function scrollElementIntoView(el: HTMLElement) {
   const rect = el.getBoundingClientRect();
   // Only completely visible elements return true
@@ -191,8 +67,4 @@ function scrollElementIntoView(el: HTMLElement) {
   if (!isVisible) {
     el.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }
-}
-
-function updateHandlePosition(index: number, positionProperty: string, value: number) {
-  $handles.eq(index).css(positionProperty, value + 'px');
 }
