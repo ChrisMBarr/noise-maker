@@ -116,7 +116,7 @@
               </div>
 
               <div class="form-control-wrapper">
-                <label class="form-label" for="ctrl-num-octaves">
+                <label class="form-label" for="ctrl-octaves">
                   Octaves
                   <i
                     class="bi bi-question-circle-fill tip"
@@ -129,7 +129,7 @@
                     <input
                       type="range"
                       class="form-range"
-                      id="ctrl-num-octaves"
+                      id="ctrl-octaves"
                       min="1"
                       max="6"
                       value="3"
@@ -189,7 +189,7 @@
                   <i
                     class="bi bi-question-circle-fill tip"
                     data-bs-toggle="tooltip"
-                    data-bs-title="defines how the Perlin Noise tiles behave at the borders. Choose 'Stitch' in most cases."
+                    data-bs-title="Defines how the Perlin Noise tiles behave at the borders. Choose 'Stitch' in most cases."
                   ></i>
                 </label>
                 <select
@@ -863,16 +863,18 @@
                 data-enable="#effects-controls input, #effects-controls select"
               />
               <label for="ctrl-enable-effects">Effects</label>
-              <i
-                class="bi bi-question-circle-fill tip"
-                data-bs-toggle="tooltip"
-                data-bs-title="How the generated noise interacts with the background"
-              ></i>
             </h5>
             <div id="effects-controls">
               <div class="card-body">
                 <div class="form-control-wrapper">
-                  <label class="form-label" for="ctrl-blend-mode"> Blend Mode </label>
+                  <label class="form-label" for="ctrl-blend-mode">
+                    Blend Mode
+                    <i
+                      class="bi bi-question-circle-fill tip"
+                      data-bs-toggle="tooltip"
+                      data-bs-title="How the generated noise should blend with the background"
+                    ></i>
+                  </label>
                   <select
                     class="form-select form-select-sm"
                     id="ctrl-blend-mode"
@@ -900,12 +902,12 @@
                 </div>
 
                 <div class="form-control-wrapper">
-                  <label class="form-label" for="ctrl-saturation">
+                  <label class="form-label" for="ctrl-effect-saturation">
                     Saturation
                     <i
                       class="bi bi-question-circle-fill tip"
                       data-bs-toggle="tooltip"
-                      title="1 is the default level of saturation"
+                      title="Color saturation. Anything below 1 will desaturate (make grayscale), anything over 1 will over-saturate the colors"
                     ></i>
                   </label>
                   <div class="row">
@@ -913,7 +915,7 @@
                       <input
                         type="range"
                         class="form-range"
-                        id="ctrl-num-saturation"
+                        id="ctrl-effect-saturation"
                         min="0"
                         max="10"
                         value="1"
@@ -927,12 +929,12 @@
                 </div>
 
                 <div class="form-control-wrapper">
-                  <label class="form-label" for="ctrl-brightness">
+                  <label class="form-label" for="ctrl-effect-brightness">
                     Brightness
                     <i
                       class="bi bi-question-circle-fill tip"
                       data-bs-toggle="tooltip"
-                      data-bs-title="1 is the default level of brightness"
+                      data-bs-title="Anything below 1 will darken, anything over 1 will brighten"
                     ></i>
                   </label>
                   <div class="row">
@@ -940,7 +942,7 @@
                       <input
                         type="range"
                         class="form-range"
-                        id="ctrl-num-brightness"
+                        id="ctrl-effect-brightness"
                         min="0"
                         max="10"
                         value="1"
@@ -954,13 +956,13 @@
                 </div>
 
                 <div class="form-control-wrapper mb-0">
-                  <label class="form-label" for="ctrl-blur"> Blur </label>
+                  <label class="form-label" for="ctrl-effect-blur"> Blur </label>
                   <div class="row">
                     <div class="col-9">
                       <input
                         type="range"
                         class="form-range"
-                        id="ctrl-num-blur"
+                        id="ctrl-effect-blur"
                         min="0"
                         max="10"
                         value="0"
@@ -981,29 +983,25 @@
             <h5 class="card-header">Background</h5>
             <div class="card-body">
               <div class="form-control-wrapper">
-                <label class="form-label" for="ctrl-background-type"> Background Type </label>
-                <select
-                  class="form-select form-select-sm"
-                  id="ctrl-background-type"
-                  data-toggle-visibility
-                >
+                <label class="form-label" for="ctrl-bg-type"> Background Type </label>
+                <select class="form-select form-select-sm" id="ctrl-bg-type" data-toggle-visibility>
                   <option
                     value="solid-color"
-                    data-toggle-visibility-and-enable="#background-type-solid-color"
+                    data-toggle-visibility-and-enable="#bg-type-solid-color"
                     selected
                   >
                     Solid Color
                   </option>
                   <option
                     value="linear-gradient"
-                    data-toggle-visibility-and-enable="#background-type-linear-gradient"
+                    data-toggle-visibility-and-enable="#bg-type-linear-gradient"
                   >
                     Linear Gradient
                   </option>
                 </select>
               </div>
 
-              <div class="form-control-wrapper mb-0" id="background-type-solid-color">
+              <div class="form-control-wrapper mb-0" id="bg-type-solid-color">
                 <label class="form-label" for="ctrl-bg-color">Color</label>
                 <input
                   type="color"
@@ -1015,7 +1013,7 @@
                 />
               </div>
 
-              <div id="background-type-linear-gradient">
+              <div id="bg-type-linear-gradient">
                 <div class="form-control-wrapper">
                   <div class="row">
                     <div class="col">
@@ -1023,11 +1021,11 @@
                       <input
                         type="color"
                         class="form-control form-control-sm form-control-color w-100"
-                        id="ctrl-gradient-color1"
+                        id="ctrl-linear-gradient-color1"
                         value="#e66465"
                         data-target="#demo-output"
                         data-target-style-prop="background"
-                        data-target-value-formatter="linear-gradient({{#ctrl-linear-gradient-angle}}, {{#ctrl-gradient-color1}}, {{#ctrl-gradient-color2}})"
+                        data-target-value-formatter="linear-gradient({{#ctrl-linear-gradient-angle}}, {{#ctrl-linear-gradient-color1}}, {{#ctrl-linear-gradient-color2}})"
                       />
                     </div>
                     <div class="col">
@@ -1035,11 +1033,11 @@
                       <input
                         type="color"
                         class="form-control form-control-sm form-control-color w-100"
-                        id="ctrl-gradient-color2"
+                        id="ctrl-linear-gradient-color2"
                         value="#9198e5"
                         data-target="#demo-output"
                         data-target-style-prop="background"
-                        data-target-value-formatter="linear-gradient({{#ctrl-linear-gradient-angle}}, {{#ctrl-gradient-color1}}, {{#ctrl-gradient-color2}})"
+                        data-target-value-formatter="linear-gradient({{#ctrl-linear-gradient-angle}}, {{#ctrl-linear-gradient-color1}}, {{#ctrl-linear-gradient-color2}})"
                       />
                     </div>
                   </div>
@@ -1061,7 +1059,7 @@
                         data-target="#demo-output"
                         data-target-style-prop="background"
                         data-target-value-suffix="deg"
-                        data-target-value-formatter="linear-gradient({{#ctrl-linear-gradient-angle}}, {{#ctrl-gradient-color1}}, {{#ctrl-gradient-color2}})"
+                        data-target-value-formatter="linear-gradient({{#ctrl-linear-gradient-angle}}, {{#ctrl-linear-gradient-color1}}, {{#ctrl-linear-gradient-color2}})"
                       />
                     </div>
                     <output class="col-4"></output>
