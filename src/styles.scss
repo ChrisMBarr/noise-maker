@@ -100,28 +100,6 @@ SVG Output & Handles
 }
 
 /*===========================
-MODALS
-===========================*/
-.modal {
-  --bs-modal-width: 600px !important;
-}
-
-dialog {
-  padding: 0;
-  border: none;
-  background-color: transparent;
-
-  &::backdrop {
-    background-color: #000;
-    opacity: 0.5;
-  }
-
-  .form-control-sm {
-    font-size: calc(var(--bs-body-font-size) * 0.75);
-  }
-}
-
-/*===========================
 FORMS
 ===========================*/
 .form-control-wrapper {
@@ -178,9 +156,10 @@ BUTTONS
 .btn-copy {
   position: absolute;
   right: var(--bs-border-width);
-  top: calc(2rem + var(--bs-border-width)); /*line-height + form label bottom margin*/
+  top: calc(1.75rem + var(--bs-border-width)); /*line-height + form label bottom margin*/
   border-top-right-radius: 0 !important;
   border-top-left-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
 }
 
 .dropup .dropdown-menu.show {

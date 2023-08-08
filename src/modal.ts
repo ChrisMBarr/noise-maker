@@ -1,10 +1,6 @@
 $(() => {
-  const $modal = $('#code-modal');
-  const $modalDialog = $modal.find('dialog');
   const $ctrlCodeHtml = $('#code-html');
   const $ctrlCodeCss = $('#code-css');
-
-  $('#btn-get-code').on('click', openDialog);
 
   //All the 'copy' buttons
   $('.btn-copy').on('click', (event) => {
@@ -19,26 +15,7 @@ $(() => {
     }
   });
 
-  $modalDialog.on('click', function (ev) {
-    closeDialog(ev, this);
-  });
-
-  $modalDialog.find('.btn-close').on('click', function (ev) {
-    closeDialog(ev, this);
-  });
-
-  function openDialog() {
-    writeCodeToFields();
-    $modal.show();
-    $modalDialog.get(0)?.showModal();
-  }
-
-  function closeDialog(ev: JQuery.ClickEvent, self: HTMLElement) {
-    if (ev.target == self) {
-      $modalDialog.get(0)?.close();
-      $modal.hide();
-    }
-  }
+  $('#modal-code').on('show.bs.modal', writeCodeToFields);
 
   function writeCodeToFields() {
     const $svgFilter = $('#demo-output svg filter');
