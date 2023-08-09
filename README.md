@@ -17,4 +17,3 @@ Built with jQuery and Bootstrap. In hindsight I wish I had started this project 
 ## TODO Items
 
 - Settings as shareable links with query string params
-- Different shapes as container elements

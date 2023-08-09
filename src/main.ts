@@ -139,7 +139,7 @@ $(() => {
 function updateTexture(
   $inputEl: JQuery<HTMLInputElement>,
   $outputDisplay: JQuery<HTMLOutputElement>
-) {
+): void {
   const isDisabled = $inputEl.is(':disabled');
   const suffix = $inputEl.data('target-value-suffix');
   let val = suffix ? $inputEl.val() + suffix : $inputEl.val();

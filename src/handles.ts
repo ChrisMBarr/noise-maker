@@ -1,6 +1,6 @@
 let $handles: JQuery<HTMLElement>;
 
-function createHandles(handleMappings: ILightHandleMapping[]) {
+function createHandles(handleMappings: ILightHandleMapping[]): void {
   clearHandles();
 
   if (handleMappings.length > 0) {
@@ -55,7 +55,7 @@ function createHandles(handleMappings: ILightHandleMapping[]) {
   }
 }
 
-function clearHandles() {
+function clearHandles(): void {
   isDraggingHandle = false;
   $demoOutput.children('.handle').remove();
   $handles = $demoOutput.children('.handle'); //should select nothing, which is what we want here
@@ -64,6 +64,6 @@ function clearHandles() {
   $demoOutput.off('mousedown touchstart mousemove touchmove mouseup touchend');
 }
 
-function updateHandlePosition(index: number, positionProperty: string, value: number) {
+function updateHandlePosition(index: number, positionProperty: string, value: number): void {
   $handles.eq(index).css(positionProperty, value + 'px');
 }

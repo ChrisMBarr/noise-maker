@@ -1,5 +1,5 @@
 let lightingMaxDebounce: number | undefined;
-function updateLightingMaxValues() {
+function updateLightingMaxValues(): void {
   clearTimeout(lightingMaxDebounce);
   lightingMaxDebounce = setTimeout(() => {
     const $svg = $demoOutput.children('svg');
@@ -23,11 +23,11 @@ function updateLightingMaxValues() {
   }, 50);
 }
 
-function clearLightingEffects() {
+function clearLightingEffects(): void {
   $('#noise-filter').find('feDiffuseLighting, feSpecularLighting').remove();
 }
 
-function createLightingElement() {
+function createLightingElement(): void {
   const $svgFilter = $('#noise-filter');
   const result = $svgFilter.find('feTurbulence').attr('result')!;
   const lightingPrimitiveType = $('#ctrl-lighting-primitive-type').val()!.toString();
@@ -40,9 +40,11 @@ function createLightingElement() {
   $svgFilter.append('\n').append(lightingPrimitiveEl).append('\n');
 }
 
-function getLightElement() {
+function getLightElement(): SVGElement {
   const selectedVal = $('#ctrl-light-type').val();
-  const lightType = $(`#ctrl-light-type option[value="${selectedVal}"]`).data('light-type');
+  const lightType = $(`#ctrl-light-type option[value="${selectedVal}"]`).data(
+    'light-type'
+  ) as string;
   return document.createElementNS(svgNs, lightType);
 }
 

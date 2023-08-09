@@ -1,4 +1,4 @@
-function serializeControls() {
+function serializeControls(): IPresetSetting[] {
   //used to log out the current values to the console to manually save as presets
   return $controls
     .filter(':not(:disabled):not(#ctrl-enable-custom-size)')
@@ -15,7 +15,7 @@ function serializeControls() {
     });
 }
 
-function applyPreset(num: number) {
+function applyPreset(num: number): void {
   //dividers can't be selected so we can force the type here
   const selectedPreset = presets[num] as IPreset;
   const arr: IPresetSetting[] = selectedPreset.settings;
@@ -32,13 +32,13 @@ function applyPreset(num: number) {
   });
 }
 
-function randomizeSelectOption(ddl: HTMLSelectElement) {
+function randomizeSelectOption(ddl: HTMLSelectElement): void {
   const items = ddl.getElementsByTagName('option');
   const index = Math.floor(Math.random() * items.length);
   ddl.selectedIndex = index;
 }
 
-function randomizeRangeOrNumberInput(rangeInput: HTMLInputElement) {
+function randomizeRangeOrNumberInput(rangeInput: HTMLInputElement): void {
   //default values defined here: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/range#validation
   let min = parseFloat(rangeInput.min);
   if (isNaN(min)) min = 0;
@@ -55,7 +55,7 @@ function randomizeRangeOrNumberInput(rangeInput: HTMLInputElement) {
   rangeInput.value = (stepIsWholeNumber ? Math.round(randomVal) : randomVal).toString();
 }
 
-function randomizeColorValue(colorInput: HTMLInputElement) {
+function randomizeColorValue(colorInput: HTMLInputElement): void {
   var letters = '0123456789ABCDEF';
   var color = '#';
   for (var i = 0; i < 6; i++) {
