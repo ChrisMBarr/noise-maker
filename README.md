@@ -13,7 +13,3 @@ Built with jQuery and Bootstrap. In hindsight I wish I had started this project 
 - Install `sass` globally by running `npm i sass -g`
 - Run `npm run watch:ts` and `npm run watch:sass` in separate processes to compile TypeScript and SCSS as files are changed
 - Run `npm run build` to generate a prod-ready minified version of the app
-
-## TODO Items
-
-- Settings as shareable links with query string params

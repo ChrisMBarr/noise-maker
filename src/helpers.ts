@@ -68,3 +68,52 @@ function scrollElementIntoView(el: HTMLElement) {
     el.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }
 }
+
+//----------------------------------------------------
+//Toast
+function showToast(state: string, message: string) {
+  const $toastTemplate = $('#toast-template');
+  const $newToast = $toastTemplate.clone();
+  $newToast
+    .removeAttr('id')
+    .addClass(`text-bg-${state}`)
+    .appendTo($toastTemplate.parent())
+    .find('.toast-body')
+    .text(message);
+
+  const newToastEl = $newToast.get(0)!;
+
+  bootstrap.Toast.getOrCreateInstance(newToastEl).show();
+
+  newToastEl.addEventListener('hidden.bs.toast', () => {
+    newToastEl.remove();
+  });
+}
+
+//----------------------------------------------------
+//Sharable link
+function getShareableLink(): string {
+  const values = serializeControls(true);
+  const qs = Object.values(values)
+    .map((o) => `${o.id}=${encodeURIComponent(o.value)}`)
+    .join('&');
+
+  return `${location.origin + location.pathname}?${qs}`;
+}
+
+function applySettingsFromUrl(): void {
+  const settings = new URLSearchParams(location.search);
+  if (settings) {
+    settings.forEach((value, key) => {
+      if (/^(true|false)$/.test(value)) {
+        $('#' + ctrlIdPrefix + key)
+          .prop('checked', /^true$/i.test(value))
+          .trigger(inputEventName);
+      } else {
+        $('#' + ctrlIdPrefix + key)
+          .val(value)
+          .trigger(inputEventName);
+      }
+    });
+  }
+}

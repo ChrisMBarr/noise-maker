@@ -126,14 +126,38 @@ $(() => {
   $('.btn-copy').on('click', (event) => {
     const tgtSelector = $(event.target).data('target');
     if (tgtSelector) {
-      navigator.clipboard.writeText($(tgtSelector).get(0).value).then(
-        () => {},
+      const $tgtEl = $(tgtSelector);
+      navigator.clipboard.writeText($tgtEl.get(0).value).then(
         () => {
-          alert('could not copy text, please select and copy it manually!');
+          const labelTxt = $tgtEl.siblings('label').text();
+          showToast('success', labelTxt + ' Code Copied!');
+        },
+        () => {
+          showToast('danger', 'could not copy text, please select and copy it manually!');
         }
       );
     }
   });
+
+  $('#btn-copy-sharable-link').on('click', () => {
+    const link = getShareableLink();
+    window.history.replaceState(null, document.title, link);
+    navigator.clipboard.writeText(link).then(
+      () => {
+        showToast('success', 'Link Copied!');
+      },
+      () => {
+        showToast(
+          'danger',
+          'could not copy link! It has been set as the current URL, please select that and copy it manually'
+        );
+      }
+    );
+  });
+
+  //----------------------------------------------------
+  //If the URL contains settings to apply, apply them
+  applySettingsFromUrl();
 });
 
 function updateTexture(

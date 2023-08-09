@@ -1,7 +1,12 @@
-function serializeControls(): IPresetSetting[] {
+function serializeControls(includeSize = false): IPresetSetting[] {
   //used to log out the current values to the console to manually save as presets
+  let excludeFilter = ':not(:disabled)';
+  if (!includeSize) {
+    excludeFilter += ':not(#ctrl-enable-custom-size)';
+  }
+
   return $controls
-    .filter(':not(:disabled):not(#ctrl-enable-custom-size)')
+    .filter(excludeFilter)
     .toArray()
     .map((el) => {
       let value: IPresetValue = el.value;
