@@ -91,7 +91,29 @@ function showToast(state: string, message: string) {
 }
 
 //----------------------------------------------------
-//Sharable link
+//Sharable links
+function serializeControls(includeSize = false): IPresetSetting[] {
+  //used to log out the current values to the console to manually save as presets
+  let excludeFilter = ':not(:disabled)';
+  if (!includeSize) {
+    excludeFilter += ':not(#ctrl-enable-custom-size)';
+  }
+
+  return $controls
+    .filter(excludeFilter)
+    .toArray()
+    .map((el) => {
+      let value: IPresetValue = el.value;
+      const numVal = (el as HTMLInputElement).valueAsNumber;
+      if (el.type === 'checkbox') {
+        value = (el as HTMLInputElement).checked;
+      } else if (typeof numVal !== 'undefined' && !isNaN(numVal)) {
+        value = numVal;
+      }
+      return { id: el.id.replace(ctrlIdPrefix, ''), value };
+    });
+}
+
 function getShareableLink(): string {
   const values = serializeControls(true);
   const qs = Object.values(values)
@@ -99,6 +121,17 @@ function getShareableLink(): string {
     .join('&');
 
   return `${location.origin + location.pathname}?${qs}`;
+}
+
+let historyDebounce: number | undefined;
+function updateHistory() {
+  clearTimeout(forceReloadDebounce);
+  forceReloadDebounce = setTimeout(() => {
+    const newUrl = getShareableLink();
+    if (location.href !== newUrl) {
+      window.history.pushState(null, document.title, newUrl);
+    }
+  }, 500);
 }
 
 function applySettingsFromUrl(): void {

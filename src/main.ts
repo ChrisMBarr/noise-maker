@@ -76,27 +76,7 @@ $(() => {
 
   //----------------------------------------------------
   //Build the presets menu
-  const $presetDdl = $('#ddl-preset');
-  const presetOptions = presets
-    .map((p, i) => {
-      let itemContent = '';
-      if (Object.hasOwn(p, 'divider')) {
-        itemContent = `<li><hr class="dropdown-divider"></li>`;
-      } else {
-        const preset = p as IPreset;
-        itemContent += `<a class="dropdown-item" href="#" onclick="applyPreset(${i});">`;
-
-        if (preset.icon) {
-          itemContent += `<i class="bi bi-${preset.icon}"></i> `;
-        }
-
-        itemContent += preset.name + '</a>';
-      }
-
-      return `<li>${itemContent}</li>`;
-    })
-    .join('');
-  $(presetOptions).appendTo($presetDdl);
+  buildPresetsMenu();
 
   //----------------------------------------------------
   //Make the "randomize" button work
@@ -157,6 +137,10 @@ $(() => {
 
   //----------------------------------------------------
   //If the URL contains settings to apply, apply them
+
+  $(window).on('popstate', (event) => {
+    applySettingsFromUrl();
+  });
   applySettingsFromUrl();
 });
 
@@ -226,5 +210,7 @@ function updateTexture(
     if ($inputEl.data('force-reload-svg')) {
       forceReloadSvg();
     }
+
+    updateHistory();
   }
 }

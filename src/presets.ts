@@ -1,26 +1,28 @@
-function serializeControls(includeSize = false): IPresetSetting[] {
-  //used to log out the current values to the console to manually save as presets
-  let excludeFilter = ':not(:disabled)';
-  if (!includeSize) {
-    excludeFilter += ':not(#ctrl-enable-custom-size)';
-  }
+function buildPresetsMenu() {
+  const $presetDdl = $('#ddl-preset');
+  const presetOptions = presets
+    .map((p, i) => {
+      let itemContent = '';
+      if (Object.hasOwn(p, 'divider')) {
+        itemContent = `<li><hr class="dropdown-divider"></li>`;
+      } else {
+        const preset = p as IPreset;
+        itemContent += `<button type="button" class="dropdown-item" onclick="applyPreset(${i});">`;
 
-  return $controls
-    .filter(excludeFilter)
-    .toArray()
-    .map((el) => {
-      let value: IPresetValue = el.value;
-      const numVal = (el as HTMLInputElement).valueAsNumber;
-      if (el.type === 'checkbox') {
-        value = (el as HTMLInputElement).checked;
-      } else if (typeof numVal !== 'undefined' && !isNaN(numVal)) {
-        value = numVal;
+        if (preset.icon) {
+          itemContent += `<i class="bi bi-${preset.icon}"></i> `;
+        }
+
+        itemContent += preset.name + '</a>';
       }
-      return { id: el.id.replace(ctrlIdPrefix, ''), value };
-    });
+
+      return `<li>${itemContent}</li>`;
+    })
+    .join('');
+  $(presetOptions).appendTo($presetDdl);
 }
 
-function applyPreset(num: number): void {
+function applyPreset(num: number): false {
   //dividers can't be selected so we can force the type here
   const selectedPreset = presets[num] as IPreset;
   const arr: IPresetSetting[] = selectedPreset.settings;
@@ -35,6 +37,8 @@ function applyPreset(num: number): void {
         .trigger(inputEventName);
     }
   });
+
+  return false;
 }
 
 function randomizeSelectOption(ddl: HTMLSelectElement): void {
