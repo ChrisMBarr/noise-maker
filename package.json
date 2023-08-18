@@ -26,13 +26,18 @@
     "build": "npm run build:ts && npm run build:sass",
     "build:sass": "node sass-build.js",
     "build:ts": "tsc && esbuild app/index.js --minify --allow-overwrite --outfile=app/index.js",
+    "lint": "npx eslint .",
     "watch:sass": "sass -w src:app",
+    "watch:scss": "npm run watch sass",
     "watch:ts": "tsc -w"
   },
   "devDependencies": {
     "@types/bootstrap": "^5.2.6",
     "@types/jquery": "^3.5.16",
+    "@typescript-eslint/eslint-plugin": "^6.4.0",
+    "@typescript-eslint/parser": "^6.4.0",
     "esbuild": "^0.19.2",
+    "eslint": "^8.47.0",
     "sass": "^1.66.0",
     "typescript": "^5.1.6"
   }

@@ -3,8 +3,8 @@ function updateLightingMaxValues(): void {
   clearTimeout(lightingMaxDebounce);
   lightingMaxDebounce = setTimeout(() => {
     const $svg = $demoOutput.children('svg');
-    let maxX = $svg.width()!;
-    let maxY = $svg.height()!;
+    const maxX = $svg.width()!;
+    const maxY = $svg.height()!;
 
     canvasSize.height = maxY;
     canvasSize.width = maxX;

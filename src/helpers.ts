@@ -123,7 +123,6 @@ function getShareableLink(): string {
   return `${location.origin + location.pathname}?${qs}`;
 }
 
-let historyDebounce: number | undefined;
 function updateHistory() {
   clearTimeout(forceReloadDebounce);
   forceReloadDebounce = setTimeout(() => {

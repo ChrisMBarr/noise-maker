@@ -36,7 +36,7 @@ function initToggleVisibilityInputs(
   $outputDisplay: JQuery<HTMLOutputElement>
 ) {
   if ($toggleVisibilityInput.is(':checkbox')) {
-    const targetSelector = $toggleVisibilityInput.data('toggle-visibility');
+    const targetSelector = $toggleVisibilityInput.data('toggle-visibility') as string;
     const collapseEls = document.querySelectorAll(targetSelector);
     const collapseList = [...collapseEls].map(
       (el) => new bootstrap.Collapse(el, { toggle: false })
@@ -75,7 +75,8 @@ function initToggleVisibilityInputs(
 
     $toggleVisibilityInput.on(inputEventName, (ev) => {
       const el = ev.target;
-      // @ts-ignore
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore - we have to do this because we know the element type here and TS doesn't let us tell jQuery's types what that is
       const $currentTarget = $toggleVisibilityInput.children().eq(el.selectedIndex);
       const currentTgtSelector = $currentTarget.data('toggle-visibility-and-enable');
       const $toggleTargets = $(currentTgtSelector);

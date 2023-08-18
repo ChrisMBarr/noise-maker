@@ -138,7 +138,7 @@ $(() => {
   //----------------------------------------------------
   //If the URL contains settings to apply, apply them
 
-  $(window).on('popstate', (event) => {
+  $(window).on('popstate', () => {
     applySettingsFromUrl();
   });
   applySettingsFromUrl();
