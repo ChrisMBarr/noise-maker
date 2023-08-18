@@ -5,7 +5,9 @@ function createHandles(handleMappings: ILightHandleMapping[]): void {
 
   if (handleMappings.length > 0) {
     handleMappings.forEach((data) => {
-      $('<div class="handle bg-light rounded-circle border border-secondary" tabindex="0"></div>')
+      $(
+        '<div class="handle bg-light rounded-circle border border-secondary" tabindex="0"><i class="bi bi-arrows-move text-dark pe-none"></i></div>'
+      )
         .data('mapping', data)
         .insertBefore($demoOutput.children('svg'));
     });

@@ -93,9 +93,21 @@ aside {
 
   &:active {
     cursor: grabbing;
+    transform: translate(-50%, -50%) scale(1.25);
   }
+
   &:focus {
     box-shadow: $handle-shadow, 0 0 0 var(--bs-focus-ring-width) var(--bs-focus-ring-color);
+  }
+
+  .bi {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    line-height: 0;
   }
 }
 
