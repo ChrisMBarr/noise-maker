@@ -13,6 +13,11 @@ Built with jQuery and Bootstrap. In hindsight I wish I had started this project 
 
 ## Development
 
+- Highly recommended to use VSCode and install the "Live Server" extension. You should be prompted to install it
 - Install `sass` globally by running `npm i sass -g`
 - Run `npm run watch:ts` and `npm run watch:sass` in separate processes to compile TypeScript and SCSS as files are changed
+- Press the "Go Live" button in VSCode, and it will start a dev server. In your browser navigate to the `app` folder to view the page then any file changes should automatically reload it.
+
+## Building
+
 - Run `npm run build` to generate a prod-ready minified version of the app
