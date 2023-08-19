@@ -167,7 +167,6 @@ function updateTexture(
 
   if (tgtSelector) {
     const $tgt = $(tgtSelector);
-    const id = $inputEl.attr('id');
 
     if (tgtStyleProp) {
       const disabledVal = $inputEl.data('target-style-value-when-disabled');
@@ -178,6 +177,7 @@ function updateTexture(
       }
 
       if (!isDisabled) {
+        const id = $inputEl.attr('id');
         textureStyles[tgtStyleProp] = val;
 
         if (tgtStyleProp.includes('background') && val.includes("url('")) {

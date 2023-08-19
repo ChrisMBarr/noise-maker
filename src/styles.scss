@@ -127,6 +127,10 @@ aside {
   }
 }
 
+.form-select option {
+  background-color: var(--bs-body-bg);
+}
+
 .form-control,
 .form-select,
 .form-check-input:not(:checked) {

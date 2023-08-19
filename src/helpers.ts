@@ -11,12 +11,12 @@ function forceReloadSvg() {
     }
 
     //clone the element and replace it
-    var $clone = $svg.clone();
+    const $clone = $svg.clone();
     $svg.replaceWith($clone);
 
     //force it into a new GPU rendering layer
     $clone.css('transform', 'translateZ(0)');
-  }, 50);
+  }, 5);
 }
 
 function updateFilterStyles(
@@ -45,8 +45,9 @@ function getFormattedValue($el: JQuery<HTMLInputElement>) {
 
   for (const match of selectorMatches) {
     const token = match[0];
-    const cssSelector = match[1];
-    const $tokenizedEl = $(cssSelector);
+    const tokenValue = match[1];
+    const $tokenizedEl = $(tokenValue);
+
     let value = '';
     if ($tokenizedEl.is(':not(:disabled)')) {
       const suffix = $tokenizedEl.data('target-value-suffix');
@@ -157,9 +158,10 @@ function getShareableLink(): string {
   return `${location.origin + location.pathname}?${qs}`;
 }
 
+let forceHistoryDebounce: number | undefined;
 function updateHistory() {
-  clearTimeout(forceReloadDebounce);
-  forceReloadDebounce = setTimeout(() => {
+  clearTimeout(forceHistoryDebounce);
+  forceHistoryDebounce = setTimeout(() => {
     const newUrl = getShareableLink();
     if (location.href !== newUrl) {
       window.history.pushState(null, document.title, newUrl);
