@@ -59,6 +59,40 @@ function getFormattedValue($el: JQuery<HTMLInputElement>) {
   return formatterStr;
 }
 
+let $preloadImg: JQuery<HTMLElement> = $();
+function preloadImage($tgtEl: JQuery<HTMLElement>, tgtStyleProp: string, propertyValue: string) {
+  $preloadImg.remove(); //cancel any previous loaders
+
+  //extract the image URL
+  const imgUrlMatch = propertyValue.match(/url\('(.+?)'\)/);
+  const imgUrl = imgUrlMatch?.[1];
+
+  if (imgUrl) {
+    $('#img-loader').removeClass('d-none');
+
+    //create an image in memory
+    $preloadImg = $('<img/>')
+      .attr('src', imgUrl)
+      .on('load', () => {
+        $preloadImg.remove();
+        $('#img-loader').addClass('d-none');
+        $tgtEl.css(tgtStyleProp, propertyValue);
+      })
+      .on('error', () => {
+        const imgNumMatch = imgUrl.match(/id\/(\d+)\//i);
+        const imgNum = imgNumMatch?.[1];
+        const msg = imgNum
+          ? `Error loading background image #${imgNum}!`
+          : 'Error loading this background image!';
+        showToast('danger', msg);
+        $('#img-loader').addClass('d-none');
+      });
+  } else {
+    //con't find url, so just set it and skip preloading!
+    $tgtEl.css(tgtStyleProp, propertyValue);
+  }
+}
+
 function scrollElementIntoView(el: HTMLElement) {
   const rect = el.getBoundingClientRect();
   // Only completely visible elements return true

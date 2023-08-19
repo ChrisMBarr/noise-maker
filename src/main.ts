@@ -178,8 +178,15 @@ function updateTexture(
       }
 
       if (!isDisabled) {
-        $tgt.css(tgtStyleProp, val);
         textureStyles[tgtStyleProp] = val;
+
+        if (tgtStyleProp.includes('background') && val.includes("url('")) {
+          //we are setting a background image that needs a preloader
+          preloadImage($tgt, tgtStyleProp, val);
+        } else {
+          //All other properties just set directly
+          $tgt.css(tgtStyleProp, val);
+        }
         if (id === 'ctrl-custom-height' || id === 'ctrl-custom-width') {
           updateLightingMaxValues();
         }

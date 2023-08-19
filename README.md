@@ -26,4 +26,3 @@ Built with jQuery and Bootstrap. In hindsight I wish I had started this project 
 ## TODO
 
 - displacement maps
-- loader for image backgrounds while downloading
