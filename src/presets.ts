@@ -7,7 +7,7 @@ function buildPresetsMenu() {
         itemContent = `<li><hr class="dropdown-divider"></li>`;
       } else {
         const preset = p as IPreset;
-        itemContent += `<button type="button" class="dropdown-item" onclick="applyPreset(${i});">`;
+        itemContent += `<button type="button" class="dropdown-item" data-preset-index="${i}">`;
 
         if (preset.icon) {
           itemContent += `<i class="bi bi-${preset.icon}"></i> `;
@@ -19,7 +19,13 @@ function buildPresetsMenu() {
       return `<li>${itemContent}</li>`;
     })
     .join('');
-  $(presetOptions).appendTo($presetDdl);
+
+  $(presetOptions)
+    .on('click', (event: JQuery.ClickEvent) => {
+      const presetIndex = $(event.target).data('preset-index');
+      applyPreset(presetIndex);
+    })
+    .appendTo($presetDdl);
 }
 
 function applyPreset(num: number): false {
