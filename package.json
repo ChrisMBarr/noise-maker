@@ -27,6 +27,7 @@
     "build:ts": "npm-run-all lint tsc",
     "bundle": "node esbuild.config.mjs",
     "lint": "npx eslint .",
+    "update": "ncu -u && npm i",
     "watch":"npm-run-all --parallel watch:sass watch:bundle",
     "watch:bundle": "node esbuild-watch.config.mjs",
     "watch:sass": "sass -w src:app",
