@@ -1,6 +1,9 @@
+import { scrollElementIntoView } from './helpers';
+import { $demoOutput, controlsMenuOpenClass, canvasSize, inputEventName, appState } from './main';
+
 let $handles: JQuery<HTMLElement>;
 
-function createHandles(handleMappings: ILightHandleMapping[]): void {
+export function createHandles(handleMappings: ILightHandleMapping[]): void {
   clearHandles();
 
   if (handleMappings.length > 0) {
@@ -20,13 +23,13 @@ function createHandles(handleMappings: ILightHandleMapping[]): void {
       .on('mousedown touchstart', (ev) => {
         $('body').removeClass(controlsMenuOpenClass); //close the sidebar
         if (ev.target.classList.contains('handle')) {
-          isDraggingHandle = true;
+          appState.isDraggingHandle = true;
           $dragHandle = $(ev.target);
           mapping = $dragHandle.data('mapping');
         }
       })
       .on('mousemove touchmove', (ev) => {
-        if (isDraggingHandle) {
+        if (appState.isDraggingHandle) {
           const clientX = ev.touches ? ev.touches[0].clientX : ev.clientX!;
           const clientY = ev.touches ? ev.touches[0].clientY : ev.clientY!;
 
@@ -50,15 +53,15 @@ function createHandles(handleMappings: ILightHandleMapping[]): void {
         }
       })
       .on('mouseup touchend', () => {
-        isDraggingHandle = false;
+        appState.isDraggingHandle = false;
         mapping = undefined;
         $dragHandle = undefined;
       });
   }
 }
 
-function clearHandles(): void {
-  isDraggingHandle = false;
+export function clearHandles(): void {
+  appState.isDraggingHandle = false;
   $demoOutput.children('.handle').remove();
   $handles = $demoOutput.children('.handle'); //should select nothing, which is what we want here
 
@@ -66,6 +69,6 @@ function clearHandles(): void {
   $demoOutput.off('mousedown touchstart mousemove touchmove mouseup touchend');
 }
 
-function updateHandlePosition(index: number, positionProperty: string, value: number): void {
+export function updateHandlePosition(index: number, positionProperty: string, value: number): void {
   $handles.eq(index).css(positionProperty, value + 'px');
 }

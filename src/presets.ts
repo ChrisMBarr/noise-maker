@@ -1,4 +1,6 @@
-function buildPresetsMenu() {
+import { ctrlIdPrefix, inputEventName } from './main';
+
+export function buildPresetsMenu() {
   const $presetDdl = $('#ddl-preset');
   const presetOptions = presets
     .map((p, i) => {
@@ -47,13 +49,13 @@ function applyPreset(num: number): false {
   return false;
 }
 
-function randomizeSelectOption(ddl: HTMLSelectElement): void {
+export function randomizeSelectOption(ddl: HTMLSelectElement): void {
   const items = ddl.getElementsByTagName('option');
   const index = Math.floor(Math.random() * items.length);
   ddl.selectedIndex = index;
 }
 
-function randomizeRangeOrNumberInput(rangeInput: HTMLInputElement): void {
+export function randomizeRangeOrNumberInput(rangeInput: HTMLInputElement): void {
   //default values defined here: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/range#validation
   let min = parseFloat(rangeInput.min);
   if (isNaN(min)) min = 0;
@@ -70,7 +72,7 @@ function randomizeRangeOrNumberInput(rangeInput: HTMLInputElement): void {
   rangeInput.value = (stepIsWholeNumber ? Math.round(randomVal) : randomVal).toString();
 }
 
-function randomizeColorValue(colorInput: HTMLInputElement): void {
+export function randomizeColorValue(colorInput: HTMLInputElement): void {
   const letters = '0123456789ABCDEF';
   let color = '#';
   for (let i = 0; i < 6; i++) {

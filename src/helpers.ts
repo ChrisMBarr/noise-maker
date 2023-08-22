@@ -1,5 +1,10 @@
+import { $demoOutput, textureStyles, $controls, ctrlIdPrefix, inputEventName } from './main';
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+declare const bootstrap: any;
+
 let forceReloadDebounce: number | undefined;
-function forceReloadSvg() {
+export function forceReloadSvg() {
   clearTimeout(forceReloadDebounce);
   forceReloadDebounce = setTimeout(() => {
     //Re-select every time since it's being replaced and we lose the reference
@@ -19,7 +24,7 @@ function forceReloadSvg() {
   }, 5);
 }
 
-function updateFilterStyles(
+export function updateFilterStyles(
   $tgt: JQuery<HTMLElement>,
   tgtFilterProp: string,
   val: string | number,
@@ -29,7 +34,7 @@ function updateFilterStyles(
   $tgt.css('filter', getPropsAsCssString(textureStyles.filter));
 }
 
-function getPropsAsCssString(obj: IIndexableObject) {
+export function getPropsAsCssString(obj: IIndexableObject) {
   return Object.keys(obj)
     .map((key) => {
       const val = obj[key];
@@ -39,7 +44,7 @@ function getPropsAsCssString(obj: IIndexableObject) {
     .join(' ');
 }
 
-function getFormattedValue($el: JQuery<HTMLInputElement>) {
+export function getFormattedValue($el: JQuery<HTMLInputElement>) {
   let formatterStr = $el.data('target-value-formatter') as string;
   const selectorMatches = formatterStr.matchAll(/{{(.+?)}}/g);
 
@@ -61,7 +66,11 @@ function getFormattedValue($el: JQuery<HTMLInputElement>) {
 }
 
 let $preloadImg: JQuery<HTMLElement> = $();
-function preloadImage($tgtEl: JQuery<HTMLElement>, tgtStyleProp: string, propertyValue: string) {
+export function preloadImage(
+  $tgtEl: JQuery<HTMLElement>,
+  tgtStyleProp: string,
+  propertyValue: string
+) {
   $preloadImg.remove(); //cancel any previous loaders
 
   //extract the image URL
@@ -94,7 +103,7 @@ function preloadImage($tgtEl: JQuery<HTMLElement>, tgtStyleProp: string, propert
   }
 }
 
-function scrollElementIntoView(el: HTMLElement) {
+export function scrollElementIntoView(el: HTMLElement) {
   const rect = el.getBoundingClientRect();
   // Only completely visible elements return true
   const isVisible = rect.top >= 0 && rect.bottom <= window.innerHeight;
@@ -106,7 +115,7 @@ function scrollElementIntoView(el: HTMLElement) {
 
 //----------------------------------------------------
 //Toast
-function showToast(state: string, message: string) {
+export function showToast(state: string, message: string) {
   const $toastTemplate = $('#toast-template');
   const $newToast = $toastTemplate.clone();
   $newToast
@@ -127,7 +136,7 @@ function showToast(state: string, message: string) {
 
 //----------------------------------------------------
 //Sharable links
-function serializeControls(includeSize = false): IPresetSetting[] {
+export function serializeControls(includeSize = false): IPresetSetting[] {
   //used to log out the current values to the console to manually save as presets
   let excludeFilter = ':not(:disabled)';
   if (!includeSize) {
@@ -149,7 +158,7 @@ function serializeControls(includeSize = false): IPresetSetting[] {
     });
 }
 
-function getShareableLink(): string {
+export function getShareableLink(): string {
   const values = serializeControls(true);
   const qs = Object.values(values)
     .map((o) => `${o.id}=${encodeURIComponent(o.value)}`)
@@ -159,7 +168,7 @@ function getShareableLink(): string {
 }
 
 let forceHistoryDebounce: number | undefined;
-function updateHistory() {
+export function updateHistory() {
   clearTimeout(forceHistoryDebounce);
   forceHistoryDebounce = setTimeout(() => {
     const newUrl = getShareableLink();
@@ -169,7 +178,7 @@ function updateHistory() {
   }, 500);
 }
 
-function applySettingsFromUrl(): void {
+export function applySettingsFromUrl(): void {
   const settings = new URLSearchParams(location.search);
   if (settings) {
     settings.forEach((value, key) => {

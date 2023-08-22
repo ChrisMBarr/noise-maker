@@ -1,18 +1,45 @@
-const svgNs = 'http://www.w3.org/2000/svg';
-let customSizeEnabled = false;
-let lightingEffectsEnabled = false;
-let isDraggingHandle = false;
-let $demoOutput: JQuery<HTMLElement>;
-let canvasSize = {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+declare const bootstrap: any;
+
+import {
+  applySettingsFromUrl,
+  forceReloadSvg,
+  getFormattedValue,
+  getShareableLink,
+  preloadImage,
+  showToast,
+  updateFilterStyles,
+  updateHistory,
+} from './helpers';
+import { writeCodeToFields } from './code-output';
+import { initEnableInputs, initToggleVisibilityInputs, initFormInputs } from './controls';
+import { updateHandlePosition } from './handles';
+import { updateLightingMaxValues } from './lighting';
+import {
+  buildPresetsMenu,
+  randomizeRangeOrNumberInput,
+  randomizeColorValue,
+  randomizeSelectOption,
+} from './presets';
+
+export const appState = {
+  customSizeEnabled: false,
+  lightingEffectsEnabled: false,
+  isDraggingHandle: false,
+};
+
+export const svgNs = 'http://www.w3.org/2000/svg';
+export let $demoOutput: JQuery<HTMLElement>;
+export const canvasSize = {
   left: 0,
   width: 0,
   height: 0,
 };
-let $controls: JQuery<HTMLInputElement | HTMLSelectElement>;
-const ctrlIdPrefix = 'ctrl-';
-const controlsMenuOpenClass = 'controls-open';
-const inputEventName = 'input';
-const textureStyles: IIndexableObject = {
+export let $controls: JQuery<HTMLInputElement | HTMLSelectElement>;
+export const ctrlIdPrefix = 'ctrl-';
+export const controlsMenuOpenClass = 'controls-open';
+export const inputEventName = 'input';
+export const textureStyles: IIndexableObject = {
   filter: {},
 };
 
@@ -144,7 +171,7 @@ $(() => {
   applySettingsFromUrl();
 });
 
-function updateTexture(
+export function updateTexture(
   $inputEl: JQuery<HTMLInputElement>,
   $outputDisplay: JQuery<HTMLOutputElement>
 ): void {
@@ -203,7 +230,7 @@ function updateTexture(
       }
 
       //Handle dragging updates the input value, but we don't want that coming back through to update the handle position
-      if (!isDraggingHandle) {
+      if (!appState.isDraggingHandle) {
         const handleIndex = $inputEl.data('handle-index');
         const handlePos = $inputEl.data('handle-position');
         if (handleIndex !== undefined && handlePos !== undefined) {

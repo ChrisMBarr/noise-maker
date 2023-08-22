@@ -4,7 +4,8 @@
   "editor.formatOnSave": true,
   "explorer.fileNesting.patterns": {
     "tsconfig.json": "tsconfig.*.json",
-    "package.json": "package-lock.json"
+    "package.json": "package-lock.json",
+    "*.css": "${capture}.css.map"
   },
   "explorer.fileNesting.expand": false,
   "files.exclude": {

@@ -1,4 +1,16 @@
-function initEnableInputs($enableInput: JQuery<HTMLInputElement>) {
+import { clearHandles, createHandles } from './handles';
+import { inputEventName, $demoOutput, updateTexture, appState } from './main';
+import {
+  createLightingElement,
+  clearLightingEffects,
+  updateLightingMaxValues,
+  replaceLightElement,
+} from './lighting';
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+declare const bootstrap: any;
+
+export function initEnableInputs($enableInput: JQuery<HTMLInputElement>) {
   const $enableTargets = $($enableInput.data('enable'));
   $enableInput.on(inputEventName, () => {
     const isChecked = $enableInput.is(':checked');
@@ -9,7 +21,7 @@ function initEnableInputs($enableInput: JQuery<HTMLInputElement>) {
     }
 
     if ($enableInput.attr('id') === 'ctrl-enable-lighting') {
-      lightingEffectsEnabled = isChecked;
+      appState.lightingEffectsEnabled = isChecked;
       if (isChecked) {
         createLightingElement();
       } else {
@@ -17,7 +29,7 @@ function initEnableInputs($enableInput: JQuery<HTMLInputElement>) {
         clearHandles();
       }
     } else if ($enableInput.attr('id') === 'ctrl-enable-custom-size') {
-      customSizeEnabled = isChecked;
+      appState.customSizeEnabled = isChecked;
       updateLightingMaxValues();
       if (!isChecked) {
         $demoOutput.children('svg').css({ height: '100%', width: '100%' });
@@ -31,7 +43,7 @@ function initEnableInputs($enableInput: JQuery<HTMLInputElement>) {
   $enableInput.trigger(inputEventName);
 }
 
-function initToggleVisibilityInputs(
+export function initToggleVisibilityInputs(
   $toggleVisibilityInput: JQuery<HTMLInputElement>,
   $outputDisplay: JQuery<HTMLOutputElement>
 ) {
@@ -82,7 +94,7 @@ function initToggleVisibilityInputs(
       const $toggleTargets = $(currentTgtSelector);
 
       const id = $toggleVisibilityInput.attr('id');
-      if (lightingEffectsEnabled) {
+      if (appState.lightingEffectsEnabled) {
         if (id === 'ctrl-lighting-primitive-type') {
           clearLightingEffects();
           createLightingElement();
@@ -124,7 +136,7 @@ function initToggleVisibilityInputs(
   }
 }
 
-function initFormInputs(
+export function initFormInputs(
   $input: JQuery<HTMLInputElement>,
   $outputDisplay: JQuery<HTMLOutputElement>
 ) {

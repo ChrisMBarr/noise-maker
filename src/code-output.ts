@@ -1,4 +1,7 @@
-function writeCodeToFields() {
+import { getPropsAsCssString } from './helpers';
+import { textureStyles, svgNs } from './main';
+
+export function writeCodeToFields() {
   const $svgFilter = $('#demo-output svg filter');
 
   const textureStylesStr = Object.keys(textureStyles)
