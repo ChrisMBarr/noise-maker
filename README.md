@@ -25,4 +25,4 @@ Built with jQuery and Bootstrap. In hindsight I wish I had started this project 
 
 ## TODO
 
-- displacement maps
+- Use pattern as a displacement maps to distort BG images or gradients
