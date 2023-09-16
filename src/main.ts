@@ -198,9 +198,13 @@ export function updateTexture(
     if (tgtStyleProp) {
       const disabledVal = $inputEl.data('target-style-value-when-disabled');
 
-      if (isDisabled && disabledVal) {
-        $tgt.css(tgtStyleProp, disabledVal);
-        textureStyles[tgtStyleProp] = disabledVal;
+      if (isDisabled) {
+        if (disabledVal) {
+          $tgt.css(tgtStyleProp, disabledVal);
+          textureStyles[tgtStyleProp] = disabledVal;
+        } else {
+          textureStyles[tgtStyleProp] = null;
+        }
       }
 
       if (!isDisabled) {

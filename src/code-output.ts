@@ -4,11 +4,23 @@ import { textureStyles, svgNs } from './main';
 export function writeCodeToFields() {
   const $svgFilter = $('#demo-output svg filter');
 
+  const backgroundStylesStr = textureStyles['background']
+    ? `background: ${textureStyles['background']};`
+    : '';
+
   const textureStylesStr = Object.keys(textureStyles)
-    //skip the mix-blend-mode if it's set to 'normal'
-    .filter(
-      (k) => k !== 'mix-blend-mode' || (k === 'mix-blend-mode' && textureStyles[k] !== 'normal')
-    )
+    .filter((k) => {
+      //skip the background, we don't want ot add it to the texture pseudo-element
+      //also skip the width and height - they are for app preview purposes only!
+      //skip the mix-blend-mode if it's set to 'normal'
+      const isSkippedKey =
+        k === 'background' ||
+        k === 'width' ||
+        k === 'height' ||
+        (k === 'mix-blend-mode' && textureStyles[k] === 'normal');
+
+      return !isSkippedKey && textureStyles[k] !== null;
+    })
     .map((k) => {
       const val = textureStyles[k];
       if (k === 'filter') {
@@ -23,7 +35,7 @@ export function writeCodeToFields() {
           }
         });
         const filterValues = getPropsAsCssString(skipDefaultFilters);
-        return `  filter: url(#${$svgFilter.attr('id')}) ${filterValues};`;
+        return `  filter: url(#${$svgFilter.attr('id')})${filterValues ? ' ' + filterValues : ''};`;
       }
       return `  ${k}: ${val};`;
     })
@@ -36,28 +48,28 @@ export function writeCodeToFields() {
   );
 
   $('#code-css').val(`.bg-texture {
-position: relative;
+  position: relative;
+  ${backgroundStylesStr}
 }
 .bg-texture::after {
-content: '';
-position: absolute;
-left: 0;
-top: 0;
-height: 100%;
-width: 100%;
-z-index: -1;
-
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  z-index: -1;
 ${textureStylesStr}
 }
 .hidden-svg {
-height: 0px;
-width: 0px;
-overflow: hidden;
-opacity: 0;
-position: absolute;
-z-index: -999;
-left: 0;
-top: 0;
+  height: 0px;
+  width: 0px;
+  overflow: hidden;
+  opacity: 0;
+  position: absolute;
+  z-index: -999;
+  left: 0;
+  top: 0;
 }`);
 }
 
