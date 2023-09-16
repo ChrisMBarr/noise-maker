@@ -1,4 +1,4 @@
-import { getPropsAsCssString } from './helpers';
+import { getPropsAsCssString, getShareableLink } from './helpers';
 import { textureStyles, svgNs } from './main';
 
 export function writeCodeToFields() {
@@ -44,7 +44,8 @@ export function writeCodeToFields() {
   $('#code-html').val(
     `<svg xmlns="${svgNs}" class="hidden-svg">${prettyIndentHtml(
       '\n' + $svgFilter.get(0)?.outerHTML
-    )}</svg>`
+    )}</svg>
+<!-- Generated from ${getShareableLink()} -->`
   );
 
   $('#code-css').val(`.bg-texture {
