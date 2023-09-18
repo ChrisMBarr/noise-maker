@@ -35,7 +35,7 @@
     "watch:ts": "tsc -w"
   },
   "devDependencies": {
-    "@types/bootstrap": "^5.2.6",
+    "@types/bootstrap": "^5.2.7",
     "@types/jquery": "^3.5.18",
     "@typescript-eslint/eslint-plugin": "^6.6.0",
     "@typescript-eslint/parser": "^6.7.0",
