@@ -13,11 +13,11 @@ Built with jQuery and Bootstrap. In hindsight I wish I had started this project 
 
 ## What's it look like?
 
-![](screen_recordings/basics.gif)
+![Screen recording: The basics](screen_recordings/basics.gif)
 
-![](screen_recordings/effects.gif)
+![Screen recording: Effects](screen_recordings/effects.gif)
 
-![](screen_recordings/random_and_presets.gif)
+![Screen recording: Randomized settings & Presets](screen_recordings/random_and_presets.gif)
 
 ## Development
 
