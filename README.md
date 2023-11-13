@@ -11,6 +11,14 @@ Built with jQuery and Bootstrap. In hindsight I wish I had started this project 
 
 ---
 
+## What's it look like?
+
+![](screen_recordings/basics.gif)
+
+![](screen_recordings/effects.gif)
+
+![](screen_recordings/random_and_presets.gif)
+
 ## Development
 
 - Highly recommended to use VSCode and install the "Live Server" extension. You should be prompted to install it
