@@ -9,11 +9,11 @@ updates:
   - package-ecosystem: 'github-actions'
     directory: '/'
     schedule:
-      interval: 'weekly'
+      interval: 'monthly'
 
   # Maintain dependencies for npm
   - package-ecosystem: 'npm'
     versioning-strategy: increase
     directory: '/'
     schedule:
-      interval: 'weekly'
+      interval: 'monthly'
