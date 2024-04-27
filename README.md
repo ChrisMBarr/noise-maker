@@ -2,7 +2,7 @@
 
 Makes noise based SVG patterns/textures
 
-https://finitelooper.github.io/noise-maker/
+https://ChrisMBarr.github.io/noise-maker/
 
 You can generate Perlin Noise, add lighting effects, add 2D filter effects, and change the background behind it all.
 Once you have something you like you can copy the code it generates to use this on your own web project, or copy a URL to share.

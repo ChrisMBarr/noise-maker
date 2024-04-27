@@ -3,17 +3,17 @@
   "version": "1.0.0",
   "type": "module",
   "description": "Makes noise based SVG patterns/textures",
-  "homepage": "https://github.com/FiniteLooper/noise-maker#readme",
+  "homepage": "https://github.com/ChrisMBarr/noise-maker#readme",
   "author": {
     "name": "Chris Barr",
     "url": "https://chrisbarr.me"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/FiniteLooper/noise-maker.git"
+    "url": "git+https://github.com/ChrisMBarr/noise-maker.git"
   },
   "bugs": {
-    "url": "https://github.com/FiniteLooper/noise-maker/issues"
+    "url": "https://github.com/ChrisMBarr/noise-maker/issues"
   },
   "keywords": [],
   "prettier": {
