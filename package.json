@@ -36,7 +36,7 @@
   },
   "devDependencies": {
     "@types/bootstrap": "^5.2.10",
-    "@types/jquery": "^3.5.29",
+    "@types/jquery": "^3.5.30",
     "@typescript-eslint/eslint-plugin": "^7.8.0",
     "@typescript-eslint/parser": "^7.8.0",
     "esbuild": "^0.20.2",
