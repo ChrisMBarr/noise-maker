@@ -28,21 +28,21 @@
     "bundle": "node esbuild.config.mjs",
     "lint": "npx eslint .",
     "update": "ncu -u && npm i",
-    "watch":"npm-run-all --parallel watch:sass watch:bundle",
+    "watch": "npm-run-all --parallel watch:sass watch:bundle",
     "watch:bundle": "node esbuild-watch.config.mjs",
     "watch:sass": "sass -w src:app",
     "watch:scss": "npm run watch sass",
     "watch:ts": "tsc -w"
   },
   "devDependencies": {
+    "@eslint/js": "^9.4.0",
     "@types/bootstrap": "^5.2.10",
-    "@types/jquery": "^3.5.29",
-    "@typescript-eslint/eslint-plugin": "^7.7.1",
-    "@typescript-eslint/parser": "^7.7.1",
-    "esbuild": "^0.20.2",
+    "@types/eslint__js": "^8.42.3",
+    "@types/jquery": "^3.5.30",
     "eslint": "^8.57.0",
     "npm-run-all": "^4.1.5",
-    "sass": "^1.75.0",
-    "typescript": "^5.4.5"
+    "sass": "^1.77.4",
+    "typescript": "^5.4.5",
+    "typescript-eslint": "^7.11.0"
   }
 }
