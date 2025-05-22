@@ -27,7 +27,7 @@
     "build:ts": "npm-run-all lint tsc",
     "bundle": "node esbuild.config.mjs",
     "lint": "npx eslint .",
-    "update": "ncu -u && npm i",
+    "update": " npx npm-check-updates -u",
     "watch": "npm-run-all --parallel watch:sass watch:bundle",
     "watch:bundle": "node esbuild-watch.config.mjs",
     "watch:sass": "sass -w src:app",
@@ -35,15 +35,15 @@
     "watch:ts": "tsc -w"
   },
   "devDependencies": {
-    "@eslint/js": "^9.17.0",
+    "@eslint/js": "^9.27.0",
     "@types/bootstrap": "^5.2.10",
-    "@types/eslint__js": "^8.42.3",
+    "@types/eslint__js": "^9.14.0",
     "@types/jquery": "^3.5.32",
-    "esbuild": "^0.25.3",
-    "eslint": "^9.25.1",
+    "esbuild": "^0.25.4",
+    "eslint": "^9.27.0",
     "npm-run-all": "^4.1.5",
-    "sass": "^1.86.1",
+    "sass": "^1.89.0",
     "typescript": "^5.8.3",
-    "typescript-eslint": "^8.31.1"
+    "typescript-eslint": "^8.32.1"
   }
 }
